@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+header, .main, footer{
+    padding-left: 300px;
+}
+
+@media only screen and (max-width: 992px){
+    header, .main, footer{
+        padding-left: 0px;
+    }
+}
+
+@import "../node_modules/ngx-toastr/toastr.css";

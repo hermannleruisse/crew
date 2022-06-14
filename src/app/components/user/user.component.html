@@ -1,0 +1,209 @@
+<!-- <p>user works!</p> -->
+<table class="striped highlight responsive-table">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Username</th>
+            <th>Profile</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr data-target="modalEdit" *ngFor="let u of users" (click)="getCurrentUser(u)" class="modal-trigger">
+            <td>{{u.nom}}</td>
+            <td>{{u.prenom}}</td>
+            <td>{{u.username}}</td>
+            <td>{{u.profile.libelle}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="fixed-action-btn">
+    <a data-target="modalAdd" (click)="createUserForm()" class="modal-trigger btn-floating btn-large red">
+      <i class="large material-icons">mode_edit</i>
+    </a>
+</div>
+
+<div id="modalAdd" class="modal modal-fixed-footer">
+    <form [formGroup]="userForm" [matchValue]= "['password', 'confpass']">
+        <div class="modal-content">
+            <h4>Utilisateur</h4>
+            <p>Ajouter un utilisateur</p>
+
+            <!-- <pre>{{userForm.value | json}}</pre> -->
+
+            <div class="row">
+                <div class="col s4">
+                    <div class="col s12 user-view">
+                        <a href="#user"><img class="circle" src="assets/img/avatar.png"></a>
+                        <div class="file-field input-field">
+                            <div class="btn">
+                                <span>Fichier</span>
+                                <input type="file">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text" placeholder="Charger un fichier">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col s4">
+                    <div class="input-field col s12">
+                        <input id="nom" type="text" formControlName="nom" class="validate" [ngClass]="{ 'invalid': nom.invalid && (nom.dirty || nom.touched)}">
+                        <label for="nom">Nom</label>
+                        <span *ngIf="nom.invalid && (nom.dirty || nom.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="nom.errors.required">* Le nom est obligatoire</p>
+                        </span>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="prenom" type="text" formControlName="prenom" class="validate" [ngClass]="{ 'invalid': prenom.invalid && (prenom.dirty || prenom.touched)}">
+                        <label for="prenom">Prenom</label>
+                        <span *ngIf="prenom.invalid && (prenom.dirty || prenom.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="prenom.errors.required">* Le prenom est obligatoire</p>
+                        </span>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="username" type="text" formControlName="username" class="validate" [ngClass]="{ 'invalid': username.invalid && (username.dirty || username.touched)}">
+                        <label for="username">Nom d'utilisateur</label>
+                        <span *ngIf="username.invalid && (username.dirty || username.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="username.errors.required">* Le nom d'utilisateur est obligatoire</p>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col s4">
+                    <div class="input-field col s12">
+                        <input id="password" type="password" formControlName="password" class="validate" [ngClass]="{ 'invalid': password.invalid && (password.dirty || password.touched)}">
+                        <label for="password">Mot de passe</label>
+                        <span *ngIf="password.invalid && (password.dirty || password.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="password.errors.required">* Le mots de passe est obligatoire</p>
+                            <p *ngIf="password.errors.minlength">* Le nombre de caractère doit depasser 5</p>
+                        </span>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <input id="confpass" type="password" formControlName="confpass" class="validate">
+                        <label for="confpass">Confirmer le mot de passe</label>
+                        <span *ngIf="confpass.invalid && (confpass.dirty || confpass.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="confpass.errors.required">* La confirmation du mots de passe est obligatoire</p>
+                            <p *ngIf="confpass.errors.matchValueError">* Revoir la confirmation de mot de passe saisie</p>
+                        </span>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <select (change)="changeProfile()" formControlName="selectedProfile" id="profiles">
+                            <option value="" disabled selected>Choisir un profile</option>
+                            <option *ngFor="let p of profiles; let i = index" [value]="profiles[i].id">
+                                {{profiles[i].libelle}}
+                            </option>
+                        </select>
+                        
+                        <label>Profile</label>
+                        <span *ngIf="selectedProfile.invalid && (selectedProfile.errors || selectedProfile.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="selectedProfile.errors.required">* Le profile est obligatoire</p>
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn"  (click)="onSubmitForm()">Ajouter</button>
+            <button class="btn modal-close waves-greeb btn-flat">Fermer</button>
+        </div>
+    </form>
+</div>
+
+<div id="modalEdit" class="modal modal-fixed-footer">
+    <form [formGroup]="editModeUserForm" [matchValue]= "['password', 'confpass']">
+        <div class="modal-content">
+            <h4>Utilisateur</h4>
+            <p>{{editFormTitle}}</p>
+
+            <!-- <pre>{{userForm.value | json}}</pre> -->
+
+            <div class="row">
+                <div class="col s4">
+                    <div class="col s12 user-view">
+                        <a href="#user"><img class="circle" src="assets/img/avatar.png"></a>
+                        <div class="file-field input-field">
+                            <div class="btn">
+                                <span>Fichier</span>
+                                <input type="file">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text" placeholder="Charger un fichier">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col s4">
+                    <div class="input-field col s12">
+                        <input id="nomE" type="text" formControlName="nom" class="validate">
+                        <label for="nomE" class="active">Nom</label>
+                        <span *ngIf="nomEdit.invalid && (nomEdit.dirty || nomEdit.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="nomEdit.errors.required">* Le nom est obligatoire</p>
+                        </span>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="prenomE" type="text" formControlName="prenom" class="validate">
+                        <label for="prenomE" class="active">Prenom</label>
+                        <span *ngIf="prenomEdit.invalid && (prenomEdit.dirty || prenomEdit.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="prenomEdit.errors.required">* Le prenom est obligatoire</p>
+                        </span>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="usernameE" type="text" formControlName="username" class="validate">
+                        <label for="usernameE" class="active">Nom d'utilisateur</label>
+                        <span *ngIf="usernameEdit.invalid && (usernameEdit.dirty || usernameEdit.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="usernameEdit.errors.required">* Le nom d'utilisateur est obligatoire</p>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col s4">
+                    <div class="input-field col s12">
+                        <input id="passwordE" type="password" formControlName="password" class="validate">
+                        <label for="passwordE" class="active">Mot de passe</label>
+                        <span *ngIf="passwordEdit.invalid && (passwordEdit.dirty || passwordEdit.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="passwordEdit.errors.required">* Le mots de passe est obligatoire</p>
+                            <p *ngIf="passwordEdit.errors.minlength">* Le nombre de caractère doit depasser 5</p>
+                        </span>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <input id="confpassE" type="password" formControlName="confpass" class="validate">
+                        <label for="confpassE" class="active">Confirmer le mot de passe</label>
+                        <span *ngIf="confpassEdit.invalid && (confpassEdit.dirty || confpassEdit.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="confpassEdit.errors.required">* La confirmation du mots de passe est obligatoire</p>
+                            <p *ngIf="confpassEdit.errors.matchValueError">* Revoir la confirmation de mot de passe saisie</p>
+                        </span>
+                    </div>
+
+                    <div class="col s12">
+                        <label>Profile</label>
+                        <select class="browser-default" formControlName="selectedProfile" id="profilesEdit">
+                            <option value="" disabled="disabled" selected="true">Choisir un profile</option>
+                            <option *ngFor="let p of profiles; let i = index" [value]="profiles[i].id">
+                                {{profiles[i].libelle}}
+                            </option>
+                        </select>
+                        
+                        <span *ngIf="selectedProfileEdit.invalid && (selectedProfileEdit.dirty || selectedProfileEdit.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="selectedProfileEdit.errors.required">* Le profile est obligatoire</p>
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button *ngIf="editMode" (click)="onUpdateForm()" class="btn waves-effect">Valider</button>
+            <button *ngIf="!editMode" (click)="enableEditMode()" class="btn waves-effect">Editer</button>
+            <button *ngIf="!editMode" (click)="deleteProfile()" class="btn waves-effect">Supprimer</button>
+            <button (click)="onModalClose()" #closeBtnEdit class="btn modal-close waves-greeb btn-flat">Fermer</button>
+        </div>
+    </form>
+</div>

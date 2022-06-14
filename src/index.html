@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Crew</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <app-root></app-root>
+  <script>
+    
+
+    document.addEventListener('DOMContentLoaded', function(){
+      // M.AutoInit();
+      var elems = document.querySelectorAll('.sidenav');
+      var instances = M.Sidenav.init(elems);
+
+      var elem1 = document.querySelectorAll('.fixed-action-btn');
+      var instance1 = M.FloatingActionButton.init(elem1, {
+        direction : 'left',
+        hoverEnabled: false
+      });
+
+      var elem2 = document.querySelectorAll('select');
+      var instance2 = M.FormSelect.init(elem2);
+
+      var elem3 = document.querySelectorAll('.modal');
+      var instance3 = M.Modal.init(elem3, {
+        dismissible : false
+      });
+      
+    });
+  </script>
+</body>
+</html>

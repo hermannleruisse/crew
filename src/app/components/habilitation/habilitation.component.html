@@ -1,0 +1,59 @@
+<!-- <p>habilitation works!</p> -->
+<!-- <p>profile works!</p> -->
+<form [formGroup]="habilitationForm">
+    <div class="row">
+        <div class="input-field col s4">
+            <select (change)="changeProfile()" formControlName="selectedProfile" id="profil">
+                <option value="" disabled selected>Choisir un profile</option>
+                <option *ngFor="let p of profiles; let i = index" [value]="profiles[i].id">
+                    {{profiles[i].libelle}}
+                </option>
+            </select>
+            
+            <label>Profile</label>
+            <span *ngIf="profileSelectedList.invalid" class="help-text" data-error="wrong">
+                <p *ngIf="profileSelectedList.errors.required">* Le profile est obligatoire</p>
+            </span>
+        </div>
+        
+    </div>
+
+    <p><b>Fonctionnalites</b></p>
+
+    <div *ngFor="let f of fonctions; let j = index" class="col s6">
+        <table class="striped highlight responsive-table">
+            <thead>
+                <tr>
+                    <th>{{f.libelle}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let a of f.action; let k = index">
+                    <td>
+                        <label>
+                            <input type="checkbox" [value]="f.action[j].checked" (change)="onCheckboxChange(j, k)" [checked]="a.checked"/>
+                            <span>{{a.libelle}}</span>
+                        </label>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    
+    <div class="col s12">
+        <pre>{{habilitationForm.value | json}}</pre>
+        <pre>{{fonctions | json}}</pre>
+    </div>
+
+    <div class="col s12 card-action center">
+        <button class="btn waves-effect" [disabled]="habilitationForm.invalid" (click)="saveHabilitation()">Valider</button>
+    </div>
+
+    <div class="fixed-action-btn">
+        <button [disabled]="habilitationForm.invalid" (click)="saveHabilitation()" class="btn-floating btn-large red">
+          <i class="large material-icons">mode_edit</i>
+        </button>
+    </div>
+    
+</form>
