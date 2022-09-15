@@ -8,16 +8,21 @@
                 <a href="#user"><img class="circle" src="assets/img/avatar.png"></a>
                 <a><span class="white-text name">Nom prenom</span></a>
                 <a><span class="white-text email">Profil</span></a>
+
+                <a data-target="modalEdit" class="waves-effect modal-trigger" routerLinkActive="active"><span>Mon profile</span></a>
+                <li><div class="divider"></div></li>
                 <a class="waves-effect" (click)="authService.logout()" routerLinkActive="active"><span>Se deconnecter</span></a>
-                <!-- <button class="btn">Se deconnecter</button> -->
+                <!-- <button (click)="authService.logout()" class="btn waves-effect">Se deconnecter</button> -->
             </div>
         </li>
-        <li><a class="waves-effect" routerLink="liste-des-membres" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Membre</a></li>
+        <li><a routerLink="liste-des-membres" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Membre</a></li>
+        <li><a routerLink="ministere" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Ministere</a></li>
+
         <li><div class="divider"></div></li>
         <li><a class="subheader">Sécurité</a></li>
         <li><a routerLink="profile" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="material-icons">cloud</i>Profile</a></li>
-        <li><a routerLink="user" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="material-icons">cloud</i>Utilisateur</a></li>
-        <li><a routerLink="habilitation" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="material-icons">cloud</i>Habilitation</a></li>
+        <li><a routerLink="user" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="material-icons">perm_identity</i>Utilisateur</a></li>
+        <li><a routerLink="habilitation" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="material-icons">security</i>Habilitation</a></li>
         
 </ul>
 <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons menu">menu</i></a>

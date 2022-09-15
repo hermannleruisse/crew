@@ -8,6 +8,8 @@ import { NotFound404Component } from "./components/not-found404/not-found404.com
 import { ProfileComponent } from "./components/profile/profile.component";
 import { UserComponent } from "./components/user/user.component";
 import { HomeLayoutComponent } from "./components/home-layout/home-layout.component";
+import { MinistereComponent } from "./components/ministere/ministere.component";
+import { AuthGuard } from "./auth-guard";
 
 const routes : Routes = [
     {
@@ -26,10 +28,11 @@ const routes : Routes = [
         path: 'home',
         component: HomeLayoutComponent,
         children:[
-            { path :'profile', component: ProfileComponent, /* canActivate: [AuthGuard]*/},
-            { path :'user', component: UserComponent, /* canActivate: [AuthGuard]*/},
-            { path :'habilitation', component: HabilitationComponent, /* canActivate: [AuthGuard]*/},
-            { path :'liste-des-membres', component: MembreListComponent, /* canActivate: [AuthGuard]*/}
+            { path :'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+            { path :'user', component: UserComponent, canActivate: [AuthGuard]},
+            { path :'habilitation', component: HabilitationComponent, canActivate: [AuthGuard]},
+            { path :'liste-des-membres', component: MembreListComponent, canActivate: [AuthGuard]},
+            { path :'ministere', component: MinistereComponent, canActivate: [AuthGuard]}
         ]
     },
     // {

@@ -6,7 +6,8 @@ import { User } from 'src/app/models/user';
 import { ToolService } from 'src/app/services/tool.service';
 import Swal from 'sweetalert2';
 import * as M from 'materialize-css';
-import { map } from 'rxjs/operators';
+import { ApiService } from 'src/app/services/api.service';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-user',
@@ -23,7 +24,9 @@ export class UserComponent implements OnInit, AfterViewInit {
   editMode: boolean = false;
   editFormTitle?:string;
   profiles: Profile[];
-
+  url = "./assets/img/avatar.png";
+  selectedFile:File = null;
+  
   get nom(){ return this.userForm.get("nom");}
   get prenom(){ return this.userForm.get("prenom");}
   get username(){ return this.userForm.get("username");}
@@ -40,7 +43,7 @@ export class UserComponent implements OnInit, AfterViewInit {
   get selectedProfileEdit(){ return this.editModeUserForm.get("selectedProfile");}
   
 
-  constructor(private formBuilder: FormBuilder, private toolService:ToolService) { }
+  constructor(private formBuilder: FormBuilder, private toolService:ToolService, private apiService:ApiService) { }
 
   ngAfterViewInit(): void {
     this.instance = M.AutoInit();
@@ -65,6 +68,32 @@ export class UserComponent implements OnInit, AfterViewInit {
 
     
     // this.editModeUserForm.controls.selectedProfile.patchValue('0001');
+  }
+
+  onSelectFile(e){
+    if(e.target.files){
+      var reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onload = (event:any)=>{
+        this.url = event.target.result;
+        this.selectedFile = <File> event.target.files[0];
+        console.log("file "+JSON.stringify(this.selectedFile.name.split('.').pop()));
+      }
+    }
+  }
+
+  onUpload(){
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Accept', 'application/json');
+    headers.append('Access-Control-Allow-Origin', '*');
+
+    const fd = new FormData();
+    fd.append('image', this.selectedFile, this.selectedFile.name);
+    this.apiService.post('sds', fd, { headers: headers, responseType: 'json' })
+    .subscribe(res => {
+      console.log(res);
+    });
   }
 
   /**

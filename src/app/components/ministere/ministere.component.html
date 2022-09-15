@@ -1,4 +1,3 @@
-<!-- <p>profile works!</p> -->
 <table class="striped highlight responsive-table">
     <thead>
         <tr>
@@ -8,32 +7,27 @@
         </tr>
     </thead>
     <tbody>
-        <tr data-target="modalEdit" *ngFor="let p of profiles" (click)="getCurrentProfile(p)" class="modal-trigger">
-            <td>{{p.code}}</td>
-            <td>{{p.libelle}}</td>
-            <td>{{p.description}}</td>
+        <tr data-target="modalEdit" *ngFor="let m of ministeres" (click)="getCurrentMinister(m)" class="modal-trigger">
+            <td>{{m.code}}</td>
+            <td>{{m.libelle}}</td>
+            <td>{{m.description}}</td>
         </tr>
     </tbody>
 </table>
 
 <div class="fixed-action-btn">
-    <a data-target="modalAdd" (click)="createProfilForm()" class="modal-trigger btn-floating btn-large red">
+    <a data-target="modalAdd" (click)="createMinisterForm()" class="modal-trigger btn-floating btn-large red">
       <i class="large material-icons">add</i>
     </a>
-    <!-- <ul>
-      <li data-target="modal1" class="modal-trigger"><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
-      <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-      <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-    </ul> -->
 </div>
 
 <div id="modalAdd" class="modal modal-fixed-footer">
-    <form [formGroup]="profileForm">
+    <form [formGroup]="ministerForm">
         <div class="modal-content">
-            <h4>Profile</h4>
-            <p>Ajouter un profile</p>
+            <h4>Ministere</h4>
+            <p>Ajouter un ministere</p>
 
-            <pre>{{profileForm.value | json}}</pre>
+            <pre>{{ministerForm.value | json}}</pre>
 
             <div class="row">
                 <div class="input-field col s6">
@@ -57,17 +51,16 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn" [disabled]="profileForm.invalid" (click)="onSubmitForm()">Ajouter</button>
+            <button class="btn" [disabled]="ministerForm.invalid" (click)="onSubmitForm()">Ajouter</button>
             <button class="btn modal-close waves-greeb btn-flat">Fermer</button>
         </div>
-        <!-- <p *ngIf="profilePreview$ | async as profile">{{profile.code}}</p> -->
     </form>
 </div>
 
 <div id="modalEdit" class="modal modal-fixed-footer">
-    <form [formGroup]="editModeProfileForm">
+    <form [formGroup]="editModeMinisterForm">
         <div class="modal-content">
-            <h4>Profile</h4>
+            <h4>Ministere</h4>
             <p>{{editFormTitle}}</p>
             <div class="row">
                 <!-- <input id="id" type="text" formControlName="id"  name="id"> -->
@@ -94,7 +87,7 @@
         <div class="modal-footer">
             <button *ngIf="editMode" (click)="onUpdateForm()" class="btn waves-effect">Valider</button>
             <button *ngIf="!editMode" (click)="enableEditMode()" class="btn waves-effect">Editer</button>
-            <button *ngIf="!editMode" (click)="deleteProfile()" class="btn waves-effect">Supprimer</button>
+            <button *ngIf="!editMode" (click)="deleteMinister()" class="btn waves-effect">Supprimer</button>
             <button (click)="onModalClose()" #closeBtnEdit class="btn modal-close waves-greeb btn-flat">Fermer</button>
         </div>
     </form>

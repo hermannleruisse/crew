@@ -27,6 +27,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { materialize } from 'rxjs/operators';
 import { UserComponent } from './components/user/user.component';
 import { MatchValueDirective } from './directives/match-value.directive';
+import { MinistereComponent } from './components/ministere/ministere.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,7 @@ import { MatchValueDirective } from './directives/match-value.directive';
     NotFound404Component,
     UserComponent,
     MatchValueDirective,
+    MinistereComponent,
   ],
   imports: [
     ToastrModule.forRoot({
@@ -60,6 +63,7 @@ import { MatchValueDirective } from './directives/match-value.directive';
     ReactiveFormsModule,
     AppRoutingModule,
     NgxSpinnerModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     ToastrService,

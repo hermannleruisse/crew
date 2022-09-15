@@ -13,7 +13,10 @@ export class TokenInterceptorService implements HttpInterceptor{
     // const authService = this.injector.get(AuthService);
     let tokenizedReq = req.clone({
       setHeaders: {
-        Authorization: `Bearer ${this.authService.getToken()}`
+        Authorization: `Bearer ${this.authService.getToken()}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Access-Control-Allow-Origin': '*'
       }
     });
 
@@ -34,15 +37,11 @@ export class TokenInterceptorService implements HttpInterceptor{
         };
 
         console.log('erreur <=> ' + JSON.stringify(error));
-        /*if (error.error.check_login === ToolsService.CHECK_LOGIN) {
-          localStorage.removeItem('token');
-          localStorage.removeItem('username');
-          localStorage.removeItem('permission');
-          this.router.navigate(['login']);
-          this.router.navigateByUrl('/login');
-        }*/
-        /* toast pour afficher l'erreur*/
-
+        localStorage.removeItem('token');
+        localStorage.removeItem('username');
+        localStorage.removeItem('permission');
+          // this.router.navigate(['login']);
+        this.router.navigateByUrl('/login');
         // throw new Error("Method not implemented."+error);
          return throwError(error);
       }));

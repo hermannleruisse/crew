@@ -1,3 +1,4 @@
+import { HttpHeaderResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -25,8 +26,11 @@ export class LoginComponent implements OnInit {
   }
 
   seConnecter(form: NgForm){
-    console.log(form.value.login);
-    this.loginUser(form.value.login, form.value.password);
+    if(form.value.login != '' && form.value.password != ''){
+      this.loginUser(form.value.login, form.value.password);
+    }else{
+      this.toolService.showToast(ToolService.TOAST_ERROR, 'Login ou mot de passe incorrecte', 'Connexion');
+    }
   }
 
   loginUser(login:string, pass:string) {
@@ -35,21 +39,22 @@ export class LoginComponent implements OnInit {
     this.toastrService.clear();
     this.authService.onSignIn(this.loginUserData.login, this.loginUserData.password).subscribe(
       (data) => {
-        console.log('data => ' + JSON.stringify(data));
+        console.log('data => ' + JSON.stringify(data.body?.user));
         this.toolService.hideLoading();
-        this.router.navigateByUrl('/home');
-        // this.router.navigate(['home']);
-        this.toolService.showToast(ToolService.TOAST_INFO, data.message, 'Connexion');
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('username', data.username);
-        localStorage.setItem('permission', data.permission);
+        if(data.body.user == undefined){
+          this.toolService.showToast(ToolService.TOAST_ERROR, data.body.msg, 'Connexion');
+        }else{
+          localStorage.setItem('token', data.headers.get("Authorization"));
+          localStorage.setItem('username', data.body.user?.username);
+          localStorage.setItem('profile', data.body.user?.profile?.libelle);
+          localStorage.setItem('permission', data.body.user?.permission);
+          this.router.navigateByUrl('/home');
+        }
       }, (error) => {
-        console.log('erreur ' + JSON.stringify(error));
         this.toolService.hideLoading();
         this.toolService.showToast(ToolService.TOAST_ERROR, error.message, 'Connexion');
       }, () => {
         this.toolService.hideLoading();
-        console.log('complete');
       });
   }
 }

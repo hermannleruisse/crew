@@ -1,5 +1,5 @@
 
-<app-membre-item *ngFor="let membre of membres" [membre]="membre"></app-membre-item>
+<app-membre-item *ngFor="let membre of membres" (click)="getCurrentMembre(membre)" [membre]="membre"></app-membre-item>
 <div class="col s12">
     <ul class="center pagination">
         <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
@@ -11,13 +11,38 @@
     </ul>
 </div>
 
+<!-- <footer class="page-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Footer Content</h5>
+          <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+        </div>
+        <div class="col l4 offset-l2 s12">
+          <h5 class="white-text">Links</h5>
+          <ul>
+            <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      © 2014 Copyright Text
+      <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+      </div>
+    </div>
+  </footer> -->
 
 <div class="fixed-action-btn">
     <a class="btn-floating btn-large red">
-      <i class="large material-icons">mode_edit</i>
+      <i class="large material-icons">settings</i>
     </a>
     <ul>
-      <li data-target="modal1" class="modal-trigger"><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+      <li data-target="modalAddMember" class="modal-trigger"><a class="btn-floating red"><i class="material-icons">add</i></a></li>
       <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
       <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
     </ul>
@@ -32,6 +57,219 @@
     <div class="modal-footer">
         <a class="modal-close waves-greeb btn-flat">Agree</a>
     </div>
+</div>
+
+<div id="modalAddMember" class="modal modal-fixed-footer">
+    <form [formGroup]="memberForm">
+        <div class="modal-content">
+            <h4>Membre</h4>
+            <p>Ajouter un membre</p>
+
+            <!-- <pre>{{userForm.value | json}}</pre> -->
+
+            <div class="row">
+                <div class="col s4">
+                    <div class="col s12 user-view">
+                        <a href="#user"><img class="circle" width="215" height="215" height="215" [src]="url"></a>
+                        <div class="file-field input-field">
+                            <div class="btn">
+                                <span>Fichier</span>
+                                <input type="file" formControlName="photo" (change)="onSelectFile($event)">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text" placeholder="Charger un fichier">
+                            </div>
+                            <span *ngIf="photo.invalid && (photo.errors || photo.touched)" class="help-text" data-error="wrong">
+                                <p *ngIf="photo.errors.required">* La photo est obligatoire</p>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col s4">
+                    <div class="input-field col s12">
+                        <input id="nom" type="text" formControlName="nom" class="validate" [ngClass]="{ 'invalid': nom.invalid && (nom.dirty || nom.touched)}">
+                        <label for="nom">Nom</label>
+                        <span *ngIf="nom.invalid && (nom.dirty || nom.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="nom.errors.required">* Le nom est obligatoire</p>
+                        </span>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="prenom" type="text" formControlName="prenom" class="validate" [ngClass]="{ 'invalid': prenom.invalid && (prenom.dirty || prenom.touched)}">
+                        <label for="prenom">Prenom</label>
+                        <span *ngIf="prenom.invalid && (prenom.dirty || prenom.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="prenom.errors.required">* Le prenom est obligatoire</p>
+                        </span>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="dateNaissance" type="date" formControlName="dateNaissance" class="validate" [ngClass]="{ 'invalid': dateNaissance.invalid && (dateNaissance.dirty || dateNaissance.touched)}">
+                        <label for="dateNaissance">Date de naissance</label>
+                        <span *ngIf="dateNaissance.invalid && (dateNaissance.dirty || dateNaissance.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="dateNaissance.errors.required">* Le date de naissance est obligatoire</p>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col s4">
+                    <div class="input-field col s12">
+                        <input id="telephone" type="text" formControlName="telephone" class="validate" [ngClass]="{ 'invalid': telephone.invalid && (telephone.dirty || telephone.touched)}">
+                        <label for="telephone">Telephone</label>
+                        <span *ngIf="telephone.invalid && (telephone.dirty || telephone.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="telephone.errors.required">* Le telephone est obligatoire</p>
+                        </span>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <input id="adresse" type="text" formControlName="adresse" class="validate" [ngClass]="{ 'invalid': adresse.invalid && (adresse.dirty || adresse.touched)}">
+                        <label for="adresse">Adresse</label>
+                        <span *ngIf="adresse.invalid && (adresse.dirty || adresse.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="adresse.errors.required">* L'adresse est obligatoire</p>
+                        </span>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <select formControlName="selectedSexe" id="sexe">
+                            <option value="" disabled selected>Choisir le sexe</option>
+                            <option value="F">Feminin</option>
+                            <option value="M">Masculin</option>
+                        </select>
+                        
+                        <label>Sexe</label>
+                        <span *ngIf="selectedSexe.invalid && (selectedSexe.errors || selectedSexe.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="selectedSexe.errors.required">* Le genre est obligatoire</p>
+                        </span>
+                    </div>
+                    
+                    <div class="input-field col s12">
+                        <select formControlName="selectedMinister" id="ministeres">
+                            <option value="" disabled selected>Choisir un profile</option>
+                            <option *ngFor="let m of ministeres; let i = index" [value]="ministeres[i].id">
+                                {{ministeres[i].libelle}}
+                            </option>
+                        </select>
+                        
+                        <label>Ministere</label>
+                        <span *ngIf="selectedMinister.invalid && (selectedMinister.errors || selectedMinister.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="selectedMinister.errors.required">* Le ministere est obligatoire</p>
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn"  (click)="onSubmitForm()">Ajouter</button>
+            <button class="btn modal-close waves-greeb btn-flat">Fermer</button>
+        </div>
+    </form>
+</div>
+
+
+<div id="modalEdit" class="modal modal-fixed-footer">
+    <form [formGroup]="editModeMemberForm">
+        <div class="modal-content">
+            <h4>Membre</h4>
+            <p>{{editFormTitle}}</p>
+
+            <pre>{{editModeMemberForm.value | json}}</pre>
+
+            <div class="row">
+                <div class="col s4">
+                    <div class="col s12 user-view">
+                        <a href="#user"><img class="circle" width="215" height="215" height="215" [src]="url"></a>
+                        <div class="file-field input-field">
+                            <div class="btn">
+                                <span>Fichier</span>
+                                <input type="file" formControlName="photo" (change)="onSelectFile($event)">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text" placeholder="Charger un fichier">
+                            </div>
+                            <span *ngIf="photoEdit.invalid && (photoEdit.errors || photoEdit.touched)" class="help-text" data-error="wrong">
+                                <p *ngIf="photoEdit.errors.required">* La photo est obligatoire</p>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col s4">
+                    <div class="input-field col s12">
+                        <input id="nomE" type="text" formControlName="nom" class="validate">
+                        <label for="nomE" class="active">Nom</label>
+                        <span *ngIf="nomEdit.invalid && (nomEdit.dirty || nomEdit.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="nomEdit.errors.required">* Le nom est obligatoire</p>
+                        </span>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="prenomE" type="text" formControlName="prenom" class="validate" >
+                        <label for="prenomE" class="active">Prenom</label>
+                        <span *ngIf="prenomEdit.invalid && (prenomEdit.dirty || prenomEdit.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="prenomEdit.errors.required">* Le prenom est obligatoire</p>
+                        </span>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="dateNaissanceE" type="date" formControlName="dateNaissance" class="validate" >
+                        <label for="dateNaissanceE">Date de naissance</label>
+                        <span *ngIf="dateNaissanceEdit.invalid && (dateNaissanceEdit.dirty || dateNaissanceEdit.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="dateNaissanceEdit.errors.required">* Le date de naissance est obligatoire</p>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col s4">
+                    <div class="input-field col s12">
+                        <input id="telephoneEdit" type="text" formControlName="telephone" class="validate" >
+                        <label for="telephoneEdit" class="active">Telephone</label>
+                        <span *ngIf="telephoneEdit.invalid && (telephoneEdit.dirty || telephoneEdit.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="telephoneEdit.errors.required">* Le telephone est obligatoire</p>
+                        </span>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <input id="adresseEdit" type="text" formControlName="adresse" class="validate">
+                        <label for="adresseEdit" class="active">Adresse</label>
+                        <span *ngIf="adresseEdit.invalid && (adresseEdit.dirty || adresseEdit.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="adresseEdit.errors.required">* L'adresse est obligatoire</p>
+                        </span>
+                    </div>
+
+                    <div class="col s12">
+                        <label>Sexe</label>
+                        <select class="browser-default" formControlName="selectedSexe" id="sexeE">
+                            <option value="" disabled selected>Choisir le sexe</option>
+                            <option value="F">Feminin</option>
+                            <option value="M">Masculin</option>
+                        </select>
+                        
+                        <span *ngIf="selectedSexeEdit.invalid && (selectedSexeEdit.errors || selectedSexeEdit.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="selectedSexeEdit.errors.required">* Le genre est obligatoire</p>
+                        </span>
+                    </div>
+                    
+                    <div class="col s12">
+                        <label>Ministere</label>
+                        <select class="browser-default" formControlName="selectedMinister" id="ministeresE">
+                            <option value="" disabled selected>Choisir un ministere</option>
+                            <option *ngFor="let m of ministeres; let i = index" [value]="ministeres[i].id">
+                                {{ministeres[i].libelle}}
+                            </option>
+                        </select>
+                        
+                        <span *ngIf="selectedMinisterEdit.invalid && (selectedMinisterEdit.errors || selectedMinisterEdit.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="selectedMinisterEdit.errors.required">* Le ministere est obligatoire</p>
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button *ngIf="editMode" (click)="onUpdateForm()" class="btn waves-effect">Valider</button>
+            <button *ngIf="!editMode" (click)="enableEditMode()" class="btn waves-effect">Editer</button>
+            <button *ngIf="!editMode" (click)="deleteMember()" class="btn waves-effect">Supprimer</button>
+            <button (click)="onModalClose()" #closeBtnEdit class="btn modal-close waves-greeb btn-flat">Fermer</button>
+        </div>
+    </form>
 </div>
 
 <!-- <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>

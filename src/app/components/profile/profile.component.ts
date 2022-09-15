@@ -5,8 +5,10 @@ import { map } from 'rxjs/operators';
 import { Profile } from 'src/app/models/profile';
 import { ToolService } from 'src/app/services/tool.service';
 import Swal from 'sweetalert2';
-
-declare const M: any;
+import * as M from 'materialize-css';
+import { ApiService } from 'src/app/services/api.service';
+import { Url } from 'src/app/models/url';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-profile',
@@ -18,7 +20,11 @@ export class ProfileComponent implements OnInit {
   editModeProfileForm: FormGroup;
   editFormTitle?:string;
   @ViewChild('closeBtnEdit') closeBtnEdit: ElementRef;
-  
+    // const headers = new HttpHeaders();
+    // headers.append('Content-Type', 'application/json');
+    // headers.append('Accept', 'application/json');
+    // // headers.append('Authorization', 'Bearer ' + '');
+    // headers.append('Access-Control-Allow-Origin', '*');
 
   profile: Profile = {
     id: '',
@@ -31,14 +37,16 @@ export class ProfileComponent implements OnInit {
   editMode: boolean = false;
   get code(){ return this.profileForm.get("code");}
   get libelle(){ return this.profileForm.get("libelle");}
+  get description(){ return this.profileForm.get("description");}
 
   get idEdit(){ return this.editModeProfileForm.get("id");}
   get codeEdit(){ return this.editModeProfileForm.get("code");}
   get libelleEdit(){ return this.editModeProfileForm.get("libelle");}
+  get descriptionEdit(){ return this.editModeProfileForm.get("description");}
 
   profiles = [];
 
-  constructor(private formBuilder: FormBuilder, private toolService:ToolService) {
+  constructor(private formBuilder: FormBuilder, private toolService:ToolService, private apiService:ApiService) {
   }
 
   /**
@@ -74,20 +82,21 @@ export class ProfileComponent implements OnInit {
     this.createProfilForm();
     this.editProfilForm();
 
-    this.profiles = [
-      {
-        id: '0001',
-        code: 'ADM',
-        libelle: 'ADMIN',
-        description: 'Administrateur du systeme'
-      },
-      {
-        id: '0002',
-        code: 'USR',
-        libelle: 'USER',
-        description: 'Utilisateur du systeme'
-      }
-    ]
+    this.getProfilesList();
+    // this.profiles = [
+    //   {
+    //     id: '0001',
+    //     code: 'ADM',
+    //     libelle: 'ADMIN',
+    //     description: 'Administrateur du systeme'
+    //   },
+    //   {
+    //     id: '0002',
+    //     code: 'USR',
+    //     libelle: 'USER',
+    //     description: 'Utilisateur du systeme'
+    //   }
+    // ]
 
     this.profilePreview$ = this.profileForm.valueChanges.pipe(
       map(formValue => ({
@@ -99,12 +108,44 @@ export class ProfileComponent implements OnInit {
     )
   }
 
+  getProfilesList(){
+    this.toolService.showLoading();
+    this.apiService.get(Url.PROFILE_LIST_URL, null).subscribe(
+      (data) => {
+        console.log('data => ' + JSON.stringify(data));
+        this.profiles = data;
+      }, (error) => {
+        console.log('erreur ' + JSON.stringify(error));
+        this.toolService.hideLoading();
+        this.toolService.showToast(ToolService.TOAST_ERROR, error.message, 'Profile');
+      }, () => {
+        this.toolService.hideLoading();
+        console.log('complete');
+      });
+  }
+
   /**
    * click sur le bouton Ajouter du modal pour enregister un profile
    */
   onSubmitForm(){
     if(this.profileForm.valid){
+      this.profile.code = this.code.value;
+      this.profile.libelle = this.libelle.value;
+      this.profile.description = this.description.value;
+      
       console.log(this.profileForm.value);
+      this.apiService.post(Url.PROFILE_ADD_URL, this.profile, null).subscribe(
+        (data) => {
+          console.log('data => ' + JSON.stringify(data));
+          this.toolService.showToast(ToolService.TOAST_SUCCESS, 'Nouveau profile enregistrer', 'Profile');
+        }, (error) => {
+          console.log('erreur ' + JSON.stringify(error));
+          this.toolService.hideLoading();
+          this.toolService.showToast(ToolService.TOAST_ERROR, error.message, 'Profile');
+        }, () => {
+          this.toolService.hideLoading();
+          console.log('complete');
+        });
     }
   }
 
