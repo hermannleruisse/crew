@@ -9,13 +9,9 @@ import { ApiService } from 'src/app/services/api.service';
 import { Url } from 'src/app/models/url';
 import { HttpHeaders } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
-
-export interface IProfile {
-  id: string;
-  code: number;
-  libelle: number;
-  description: string;
-}
+import { MatDialog } from '@angular/material/dialog';
+import { DialogProfileAddComponent } from '../dialog-profile-add/dialog-profile-add.component';
+import { DialogProfileEditComponent } from '../dialog-profile-edit/dialog-profile-edit.component';
 
 @Component({
   selector: 'app-profile',
@@ -38,66 +34,61 @@ export class ProfileComponent implements OnInit {
   };
  
   profilePreview$!: Observable<Profile>;
-  editMode: boolean = false;
-  get code(){ return this.profileForm.get("code");}
-  get libelle(){ return this.profileForm.get("libelle");}
-  get description(){ return this.profileForm.get("description");}
+  // editMode: boolean = false;
+  // get code(){ return this.profileForm.get("code");}
+  // get libelle(){ return this.profileForm.get("libelle");}
+  // get description(){ return this.profileForm.get("description");}
 
-  get idEdit(){ return this.editModeProfileForm.get("id");}
-  get codeEdit(){ return this.editModeProfileForm.get("code");}
-  get libelleEdit(){ return this.editModeProfileForm.get("libelle");}
-  get descriptionEdit(){ return this.editModeProfileForm.get("description");}
+  // get idEdit(){ return this.editModeProfileForm.get("id");}
+  // get codeEdit(){ return this.editModeProfileForm.get("code");}
+  // get libelleEdit(){ return this.editModeProfileForm.get("libelle");}
+  // get descriptionEdit(){ return this.editModeProfileForm.get("description");}
 
   profiles = [];
   displayedColumns: string[] = ['code', 'libelle', 'description', 'option'];
-  // dataSource = this.profiles;
 
-  constructor(private formBuilder: FormBuilder, private toolService:ToolService, private apiService:ApiService, private authService:AuthService) {
+  constructor(private formBuilder: FormBuilder, private toolService:ToolService, private apiService:ApiService, private authService:AuthService, public dialog: MatDialog) {
   }
 
-  /**
-   * Initialisation du formulaire d'ajout de profile avec les validations
-   */
-  createProfilForm(){
-    this.profileForm = this.formBuilder.group({
-      code: [null, [Validators.required]],
-      libelle: [null, [Validators.required]],
-      description: [null]
-    },{
-      updateOn: 'blur'
+  openDialogAddProfile() {
+    const dialogRef = this.dialog.open(DialogProfileAddComponent, {disableClose: true });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      this.getProfilesList();
     });
   }
 
-  /**
-   * Initialisation du formulaire d'edition de profile avec les validations
-   */
-  editProfilForm(){
-    this.editModeProfileForm = this.formBuilder.group({
-      id: [{ value: '', disabled:true}],
-      code: [{ value: '', disabled:true}, [Validators.required]],
-      libelle: [{ value: '', disabled:true}, [Validators.required]],
-      description: [{ value: '', disabled:true}]
-    },{
-      updateOn: 'change'
+  openDialogEditProfile(profile: Profile) {
+    
+    const dialogRef = this.dialog.open(DialogProfileEditComponent, { data : {
+      animal : 'panda'
+   }, disableClose: true });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      this.getProfilesList();
     });
   }
+
+  
 
   ngOnInit(): void {
     // M.AutoInit();
     console.log("profile");
-    this.createProfilForm();
-    this.editProfilForm();
+    // this.createProfilForm();
+    // this.editProfilForm();
 
     this.getProfilesList();
 
-    this.profilePreview$ = this.profileForm.valueChanges.pipe(
-      map(formValue => ({
-        formValue,
-        code:formValue.code,
-        libelle:'',
-        description:''
-      }))
-    )
+    // this.profilePreview$ = this.profileForm.valueChanges.pipe(
+    //   map(formValue => ({
+    //     formValue,
+    //     code:formValue.code,
+    //     libelle:'',
+    //     description:''
+    //   }))
+    // )
   }
 
   getProfilesList(){
@@ -116,105 +107,40 @@ export class ProfileComponent implements OnInit {
       });
   }
 
-  /**
-   * click sur le bouton Ajouter du modal pour enregister un profile
-   */
-  onSubmitForm(){
-    if(this.profileForm.valid){
-      this.toolService.showLoading();
-      this.profile.code = this.code.value;
-      this.profile.libelle = this.libelle.value;
-      this.profile.description = this.description.value;
-      
-      // console.log(this.profileForm.value);
-      this.apiService.post(Url.PROFILE_ADD_URL, this.profile, {}).subscribe(
-        (data) => {
-          this.closeModalAdd();
-          // this.toolService.showToast(ToolService.TOAST_SUCCESS, 'Nouveau profile enregistrer', 'Profile');
-        }, (error) => {
-          console.log('erreur ' + JSON.stringify(error));
-          this.toolService.hideLoading();
-          // this.toolService.showToast(ToolService.TOAST_ERROR, error.message, 'Profile');
-        }, () => {
-          this.toolService.hideLoading();
-          this.getProfilesList();
-        });
-    }
-  }
+  
 
-  /**
-   * click sur le bouton Valider du modal pour edition
-   */
-  onUpdateForm(){
-    // console.log(this.code.errors.required);
-    if(this.editModeProfileForm.valid){
-      this.toolService.showLoading();
-      this.profile.code = this.codeEdit.value;
-      this.profile.libelle = this.libelleEdit.value;
-      this.profile.description = this.descriptionEdit.value;
-      
-      console.log(this.profileForm.value);
-      this.apiService.put(Url.PROFILE_EDIT_URL+"/"+this.idEdit.value, this.profile, {}).subscribe(
-        (data) => {
-          this.closeModalEdit();
-          // this.toolService.showToast(ToolService.TOAST_SUCCESS, 'Edition de profile reussie', 'Profile');
-        }, (error) => {
-          // console.log('erreur ' + JSON.stringify(error));
-          this.toolService.hideLoading();
-          // this.toolService.showToast(ToolService.TOAST_ERROR, error.message, 'Profile');
-        }, () => {
-          this.toolService.hideLoading();
-          console.log('complete');
-        });
-    }
-  }
+  
 
-  /**
-   * click sur le bouton Fermer du modal
-   */
-  onModalClose(){
-    this.editMode = false;
-    this.editModeProfileForm.disable();
-    this.editModeProfileForm.reset();
-  }
+  // /**
+  //  * click sur le bouton Fermer du modal
+  //  */
+  // onModalClose(){
+  //   this.editMode = false;
+  //   this.editModeProfileForm.disable();
+  //   this.editModeProfileForm.reset();
+  // }
 
-  /**
-   * 
-   * @param profile 
-   * reccuperer le profil actuel en cliquant sur une ligne du tableau 
-   */
-  getCurrentProfile(profile: Profile){
-    this.editFormTitle = "Detail";
-    this.editModeProfileForm.get("id").setValue(profile.id);
-    this.editModeProfileForm.get("code").setValue(profile.code);
-    this.editModeProfileForm.get("libelle").setValue(profile.libelle);
-    this.editModeProfileForm.get("description").setValue(profile.description);
-    
-    if(profile != null){
-      console.log(profile);
-      this.profile = profile;
-    }
-  }
+  
 
-  /**
-   * click sur le bouton Editer pour passer en mode edition
-   */
-  enableEditMode(){
-    this.editMode = true;
-    this.editFormTitle = "Edition";
-    // this.editModeProfileForm.get("code").enable();
-    this.editModeProfileForm.enable();
-  }
+  // /**
+  //  * click sur le bouton Editer pour passer en mode edition
+  //  */
+  // enableEditMode(){
+  //   this.editMode = true;
+  //   this.editFormTitle = "Edition";
+  //   // this.editModeProfileForm.get("code").enable();
+  //   this.editModeProfileForm.enable();
+  // }
 
   /**
    * Fermerture du modal automatique
    */
-  closeModalEdit(): void {
-    this.closeBtnEdit.nativeElement.click();
-  }
-  closeModalAdd(): void {
-    this.closeBtnAdd.nativeElement.click();
-  }
+  // closeModalEdit(): void {
+  //   this.closeBtnEdit.nativeElement.click();
+  // }
+  // closeModalAdd(): void {
+  //   this.closeBtnAdd.nativeElement.click();
+  // }
 
   /**
    * click sur le bouton Supprimer pour supprimmer un profile
@@ -245,7 +171,7 @@ export class ProfileComponent implements OnInit {
         }
       }).finally(()=>{
         //fermerture du modal
-        this.closeModalEdit();
+        // this.closeModalEdit();
       })
   }
 

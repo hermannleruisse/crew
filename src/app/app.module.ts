@@ -34,6 +34,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatMenuModule} from '@angular/material/menu';
+import { DialogProfileAddComponent } from './components/dialog-profile-add/dialog-profile-add.component';
+import { DialogProfileEditComponent } from './components/dialog-profile-edit/dialog-profile-edit.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,8 @@ import {MatMenuModule} from '@angular/material/menu';
     UserComponent,
     MatchValueDirective,
     MinistereComponent,
+    DialogProfileAddComponent,
+    DialogProfileEditComponent,
   ],
   imports: [
     BrowserModule,
