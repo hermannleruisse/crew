@@ -5,10 +5,17 @@ import { map } from 'rxjs/operators';
 import { Profile } from 'src/app/models/profile';
 import { ToolService } from 'src/app/services/tool.service';
 import Swal from 'sweetalert2';
-import * as M from 'materialize-css';
 import { ApiService } from 'src/app/services/api.service';
 import { Url } from 'src/app/models/url';
 import { HttpHeaders } from '@angular/common/http';
+import { AuthService } from 'src/app/services/auth.service';
+
+export interface IProfile {
+  id: string;
+  code: number;
+  libelle: number;
+  description: string;
+}
 
 @Component({
   selector: 'app-profile',
@@ -19,12 +26,9 @@ export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
   editModeProfileForm: FormGroup;
   editFormTitle?:string;
+  
   @ViewChild('closeBtnEdit') closeBtnEdit: ElementRef;
-    // const headers = new HttpHeaders();
-    // headers.append('Content-Type', 'application/json');
-    // headers.append('Accept', 'application/json');
-    // // headers.append('Authorization', 'Bearer ' + '');
-    // headers.append('Access-Control-Allow-Origin', '*');
+  @ViewChild('closeBtnAdd') closeBtnAdd: ElementRef;
 
   profile: Profile = {
     id: '',
@@ -45,8 +49,10 @@ export class ProfileComponent implements OnInit {
   get descriptionEdit(){ return this.editModeProfileForm.get("description");}
 
   profiles = [];
+  displayedColumns: string[] = ['code', 'libelle', 'description', 'option'];
+  // dataSource = this.profiles;
 
-  constructor(private formBuilder: FormBuilder, private toolService:ToolService, private apiService:ApiService) {
+  constructor(private formBuilder: FormBuilder, private toolService:ToolService, private apiService:ApiService, private authService:AuthService) {
   }
 
   /**
@@ -77,26 +83,12 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    M.AutoInit();
+    // M.AutoInit();
     console.log("profile");
     this.createProfilForm();
     this.editProfilForm();
 
     this.getProfilesList();
-    // this.profiles = [
-    //   {
-    //     id: '0001',
-    //     code: 'ADM',
-    //     libelle: 'ADMIN',
-    //     description: 'Administrateur du systeme'
-    //   },
-    //   {
-    //     id: '0002',
-    //     code: 'USR',
-    //     libelle: 'USER',
-    //     description: 'Utilisateur du systeme'
-    //   }
-    // ]
 
     this.profilePreview$ = this.profileForm.valueChanges.pipe(
       map(formValue => ({
@@ -110,14 +102,14 @@ export class ProfileComponent implements OnInit {
 
   getProfilesList(){
     this.toolService.showLoading();
-    this.apiService.get(Url.PROFILE_LIST_URL, null).subscribe(
+    this.apiService.get(Url.PROFILE_LIST_URL, {}).subscribe(
       (data) => {
         console.log('data => ' + JSON.stringify(data));
         this.profiles = data;
       }, (error) => {
         console.log('erreur ' + JSON.stringify(error));
         this.toolService.hideLoading();
-        this.toolService.showToast(ToolService.TOAST_ERROR, error.message, 'Profile');
+        // this.toolService.showToast(ToolService.TOAST_ERROR, error.message, 'Profile');
       }, () => {
         this.toolService.hideLoading();
         console.log('complete');
@@ -129,22 +121,23 @@ export class ProfileComponent implements OnInit {
    */
   onSubmitForm(){
     if(this.profileForm.valid){
+      this.toolService.showLoading();
       this.profile.code = this.code.value;
       this.profile.libelle = this.libelle.value;
       this.profile.description = this.description.value;
       
-      console.log(this.profileForm.value);
-      this.apiService.post(Url.PROFILE_ADD_URL, this.profile, null).subscribe(
+      // console.log(this.profileForm.value);
+      this.apiService.post(Url.PROFILE_ADD_URL, this.profile, {}).subscribe(
         (data) => {
-          console.log('data => ' + JSON.stringify(data));
-          this.toolService.showToast(ToolService.TOAST_SUCCESS, 'Nouveau profile enregistrer', 'Profile');
+          this.closeModalAdd();
+          // this.toolService.showToast(ToolService.TOAST_SUCCESS, 'Nouveau profile enregistrer', 'Profile');
         }, (error) => {
           console.log('erreur ' + JSON.stringify(error));
           this.toolService.hideLoading();
-          this.toolService.showToast(ToolService.TOAST_ERROR, error.message, 'Profile');
+          // this.toolService.showToast(ToolService.TOAST_ERROR, error.message, 'Profile');
         }, () => {
           this.toolService.hideLoading();
-          console.log('complete');
+          this.getProfilesList();
         });
     }
   }
@@ -155,7 +148,24 @@ export class ProfileComponent implements OnInit {
   onUpdateForm(){
     // console.log(this.code.errors.required);
     if(this.editModeProfileForm.valid){
-      console.log(this.editModeProfileForm.value);
+      this.toolService.showLoading();
+      this.profile.code = this.codeEdit.value;
+      this.profile.libelle = this.libelleEdit.value;
+      this.profile.description = this.descriptionEdit.value;
+      
+      console.log(this.profileForm.value);
+      this.apiService.put(Url.PROFILE_EDIT_URL+"/"+this.idEdit.value, this.profile, {}).subscribe(
+        (data) => {
+          this.closeModalEdit();
+          // this.toolService.showToast(ToolService.TOAST_SUCCESS, 'Edition de profile reussie', 'Profile');
+        }, (error) => {
+          // console.log('erreur ' + JSON.stringify(error));
+          this.toolService.hideLoading();
+          // this.toolService.showToast(ToolService.TOAST_ERROR, error.message, 'Profile');
+        }, () => {
+          this.toolService.hideLoading();
+          console.log('complete');
+        });
     }
   }
 
@@ -202,17 +212,30 @@ export class ProfileComponent implements OnInit {
   closeModalEdit(): void {
     this.closeBtnEdit.nativeElement.click();
   }
+  closeModalAdd(): void {
+    this.closeBtnAdd.nativeElement.click();
+  }
 
   /**
    * click sur le bouton Supprimer pour supprimmer un profile
    */
-  deleteProfile(){
-    console.log("idProfile => "+this.idEdit.value)
+  deleteProfile(profile: Profile){
+    // console.log("idProfile => "+this.idEdit.value)
     this.toolService.showConfirmation("Suppression", "Voulez-vous supprimer ce profile ?", "question", "Oui",
       "Non", false).then((result) =>{
         if(result.isConfirmed){
-          this.toolService.removeElementFromObjectArray(this.profiles, this.idEdit.value);
-          
+          this.toolService.showLoading();
+          this.apiService.delete(Url.PROFILE_DELETE_URL+"/"+profile.id, {}).subscribe(
+            (data) => {
+              // this.toolService.removeElementFromObjectArray(this.profiles, this.idEdit.value);
+              // this.toolService.showToast(ToolService.TOAST_SUCCESS, 'Suppression de profile reussie', 'Profile');
+              this.getProfilesList();
+            }, (error) => {
+              this.toolService.hideLoading();
+              // this.toolService.showToast(ToolService.TOAST_ERROR, error.message, 'Profile');
+            }, () => {
+              this.toolService.hideLoading();
+            });
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           Swal.fire(
             '',

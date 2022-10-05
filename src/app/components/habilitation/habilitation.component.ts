@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { of } from 'rxjs';
 import { Fonction } from 'src/app/models/fonction';
 import { Profile } from 'src/app/models/profile';
-import * as M from 'materialize-css';
+// import * as M from 'materialize-css';
 
 @Component({
   selector: 'app-habilitation',
@@ -21,7 +21,7 @@ export class HabilitationComponent implements OnInit, AfterViewInit {
   
   ngAfterViewInit(): void {
     // this.instance = M.FormSelect.init(document.querySelector('select'));
-    this.instance = M.AutoInit();
+    // this.instance = M.AutoInit();
   }
 
   ngOnInit(): void {

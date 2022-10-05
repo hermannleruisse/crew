@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Ministere } from 'src/app/models/ministere';
 import { ToolService } from 'src/app/services/tool.service';
-import * as M from 'materialize-css';
+// import * as M from 'materialize-css';
 import Swal from 'sweetalert2';
 import { of } from 'rxjs';
 
@@ -64,7 +64,7 @@ export class MinistereComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    M.AutoInit();
+    // M.AutoInit();
     console.log("profile");
     this.createMinisterForm();
     this.editMinisterForm();

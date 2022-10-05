@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Membre } from '../../models/membre';
-import * as M from 'materialize-css';
+// import * as M from 'materialize-css';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Ministere } from 'src/app/models/ministere';
 import { ToolService } from 'src/app/services/tool.service';
@@ -49,15 +49,15 @@ export class MembreListComponent implements OnInit, AfterViewInit {
   constructor(private formBuilder: FormBuilder, private toolService:ToolService, private apiService:ApiService) { }
 
   ngAfterViewInit(): void {
-    this.instance = M.AutoInit();
-    this.instance1 = M.Modal.init(document.querySelectorAll('.modal'), {
-      dismissible : false
-    });
-    this.instance = M.FormSelect.init(document.querySelector('select'));
-    this.instance1 = M.FloatingActionButton.init(document.querySelectorAll('.fixed-action-btn'), {
-      direction : 'left',
-      hoverEnabled: false
-    });
+    // this.instance = M.AutoInit();
+    // this.instance1 = M.Modal.init(document.querySelectorAll('.modal'), {
+    //   dismissible : false
+    // });
+    // this.instance = M.FormSelect.init(document.querySelector('select'));
+    // this.instance1 = M.FloatingActionButton.init(document.querySelectorAll('.fixed-action-btn'), {
+    //   direction : 'left',
+    //   hoverEnabled: false
+    // });
 
   }
 

@@ -1,5 +1,9 @@
 export class Url {
-    static LOGIN_URL = 'http://localhost:8080/login';
-    static PROFILE_LIST_URL = 'http://127.0.0.1:8000/api/login';
-    static PROFILE_ADD_URL = 'http://127.0.0.1:8000/api/login';
+    static SERVER_URL = 'http://localhost:8080/';
+    static LOGIN_URL = Url.SERVER_URL+'login';
+    static PROFILE_LIST_URL = Url.SERVER_URL+'api/security/profiles';
+    static PROFILE_ADD_URL = Url.SERVER_URL+'api/security/save-profile';
+    static PROFILE_EDIT_URL = Url.SERVER_URL+'api/security/edit-profile';
+    static PROFILE_DELETE_URL = Url.SERVER_URL+'api/security/delete-profile';
+    static PROFILE_GET_URL = Url.SERVER_URL+'api/security/profile';
 }

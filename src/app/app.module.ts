@@ -1,13 +1,8 @@
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule, Renderer2 } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
-import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
-import { ActionBtnComponent } from './components/action-btn/action-btn.component';
-import { PreloaderLinearComponent } from './components/preloader-linear/preloader-linear.component';
-import { PreloaderCircleComponent } from './components/preloader-circle/preloader-circle.component';
-import { CardComponent } from './components/card/card.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptorService } from './services/token-interceptor.service';
@@ -22,23 +17,28 @@ import { LoginLayoutComponent } from './components/login-layout/login-layout.com
 import { HomeLayoutComponent } from './components/home-layout/home-layout.component';
 import { NotFound404Component } from './components/not-found404/not-found404.component';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
-import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { materialize } from 'rxjs/operators';
 import { UserComponent } from './components/user/user.component';
 import { MatchValueDirective } from './directives/match-value.directive';
 import { MinistereComponent } from './components/ministere/ministere.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
+import {MatCardModule} from '@angular/material/card';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatTableModule} from '@angular/material/table';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
     AppComponent,
     SideMenuComponent,
-    NavMenuComponent,
-    ActionBtnComponent,
-    PreloaderLinearComponent,
-    PreloaderCircleComponent,
-    CardComponent,
     MembreListComponent,
     MembreItemComponent,
     ProfileComponent,
@@ -52,11 +52,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MinistereComponent,
   ],
   imports: [
-    ToastrModule.forRoot({
-      timeOut: 10000,
-      positionClass: 'toast-top-right',
-      preventDuplicates: true
-    }),
     BrowserModule,
     HttpClientModule,
     FormsModule,
@@ -64,9 +59,20 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     NgxSpinnerModule,
     BrowserAnimationsModule,
+    MatSidenavModule,
+    MatListModule,
+    MatCardModule,
+    MatGridListModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatButtonModule,
+    MatSnackBarModule,
+    MatTableModule,
+    MatDividerModule,
+    MatMenuModule
   ],
   providers: [
-    ToastrService,
     NgxSpinnerService,
     {
       provide: HTTP_INTERCEPTORS,

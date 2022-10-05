@@ -5,9 +5,10 @@ import { Profile } from 'src/app/models/profile';
 import { User } from 'src/app/models/user';
 import { ToolService } from 'src/app/services/tool.service';
 import Swal from 'sweetalert2';
-import * as M from 'materialize-css';
+// import * as M from 'materialize-css';
 import { ApiService } from 'src/app/services/api.service';
 import { HttpHeaders } from '@angular/common/http';
+import { Url } from 'src/app/models/url';
 
 @Component({
   selector: 'app-user',
@@ -43,14 +44,18 @@ export class UserComponent implements OnInit, AfterViewInit {
   get selectedProfileEdit(){ return this.editModeUserForm.get("selectedProfile");}
   
 
-  constructor(private formBuilder: FormBuilder, private toolService:ToolService, private apiService:ApiService) { }
+  constructor(private formBuilder: FormBuilder, private toolService:ToolService, private apiService:ApiService) {
+    
+  }
 
   ngAfterViewInit(): void {
-    this.instance = M.AutoInit();
-    this.instance1 = M.Modal.init(document.querySelectorAll('.modal'), {
-      dismissible : false
-    });
-    this.instance = M.FormSelect.init(document.querySelector('select'));
+    this.getProfiles();
+    // this.instance = M.AutoInit();
+    // this.instance1 = M.Modal.init(document.querySelectorAll('.modal'), {
+    //   dismissible : false
+    // });
+    // console.log("profile view init =>"+JSON.stringify(this.profiles));
+    // this.instance = M.FormSelect.init(document.querySelector('select'));
   }
 
   ngOnInit(): void {
@@ -61,10 +66,11 @@ export class UserComponent implements OnInit, AfterViewInit {
       this.users = users;
     });
 
-    //async profiles
-    of(this.getProfiles()).subscribe(profiles => {
-      this.profiles = profiles;
-    });
+    // async profiles
+    // of(this.getProfiles()).subscribe(profiles => {
+    //   this.profiles = profiles;
+    // });
+     
 
     
     // this.editModeUserForm.controls.selectedProfile.patchValue('0001');
@@ -186,11 +192,22 @@ export class UserComponent implements OnInit, AfterViewInit {
    * retourne la liste des profiles
    * @returns 
    */
-   getProfiles(){
-    return [
-      { id: '0001', code: 'ADM', libelle: 'ADMIN', description: 'Administrateur du systeme' },
-      { id: '0002', code: 'USR', libelle: 'USER', description: 'Utilisateur du systeme' }
-    ]
+    getProfiles(){
+      this.apiService.get(Url.PROFILE_LIST_URL, {})
+      .subscribe(
+      (data) => {
+        // console.log("profile =>"+JSON.stringify(data));
+        // this.profiles.map(item => new Profile(item.code, item.libelle, item.description));
+        this.profiles = data;
+        // console.log("profile =>"+JSON.stringify(this.profiles));
+        // M.FormSelect.init(document.querySelector('select1'));
+      });
+    
+      // return this.apiService.get(Url.PROFILE_LIST_URL, {});
+    // return [
+    //   { id: '0001', code: 'ADM', libelle: 'ADMIN', description: 'Administrateur du systeme' },
+    //   { id: '0002', code: 'USR', libelle: 'USER', description: 'Utilisateur du systeme' }
+    // ]
   }
 
   /**
