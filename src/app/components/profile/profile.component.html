@@ -126,7 +126,7 @@
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button (click)="getCurrentProfile(modal, element)" mat-menu-item>
+                <button (click)="openDialogEditProfile(element)" mat-menu-item>
                   <mat-icon>dialpad</mat-icon>
                   <span>Modifier</span>
                 </button>
@@ -142,3 +142,9 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+
+  <div class="example-button-container">
+    <button (click)="openDialogAddProfile()" mat-fab color="primary" aria-label="icon button with a add icon">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
