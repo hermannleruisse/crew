@@ -8,6 +8,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export interface DialogData {
   animal: 'panda' | 'unicorn' | 'lion';
+  selectedProfile: Profile;
 }
 
 @Component({
@@ -25,27 +26,28 @@ export class DialogProfileEditComponent implements OnInit {
     description: ''
   };
 
-  get idEdit(){ return this.editModeProfileForm.get("id");}
-  get codeEdit(){ return this.editModeProfileForm.get("code");}
-  get libelleEdit(){ return this.editModeProfileForm.get("libelle");}
-  get descriptionEdit(){ return this.editModeProfileForm.get("description");}
+  get idEdit() { return this.editModeProfileForm.get("id"); }
+  get codeEdit() { return this.editModeProfileForm.get("code"); }
+  get libelleEdit() { return this.editModeProfileForm.get("libelle"); }
+  get descriptionEdit() { return this.editModeProfileForm.get("description"); }
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, private toolService:ToolService, private apiService:ApiService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, private toolService: ToolService, private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.editProfilForm();
+    this.getCurrentProfile(this.data.selectedProfile);
   }
 
   /**
    * Initialisation du formulaire d'edition de profile avec les validations
    */
-   editProfilForm(){
+  editProfilForm() {
     this.editModeProfileForm = this.formBuilder.group({
-      id: [{ value: '', disabled:true}],
-      code: [{ value: '', disabled:true}, [Validators.required]],
-      libelle: [{ value: '', disabled:true}, [Validators.required]],
-      description: [{ value: '', disabled:true}]
-    },{
+      id: [{ value: '', disabled: true }],
+      code: [{ value: '', disabled: true }, [Validators.required]],
+      libelle: [{ value: '', disabled: true }, [Validators.required]],
+      description: [{ value: '', disabled: true }]
+    }, {
       updateOn: 'change'
     });
   }
@@ -55,13 +57,13 @@ export class DialogProfileEditComponent implements OnInit {
    * @param profile 
    * reccuperer le profil actuel en cliquant sur une ligne du tableau 
    */
-   getCurrentProfile(profile: Profile){
+  getCurrentProfile(profile: Profile) {
     this.editModeProfileForm.get("id").setValue(profile.id);
     this.editModeProfileForm.get("code").setValue(profile.code);
     this.editModeProfileForm.get("libelle").setValue(profile.libelle);
     this.editModeProfileForm.get("description").setValue(profile.description);
-    
-    if(profile != null){
+
+    if (profile != null) {
       console.log(profile);
       this.profile = profile;
     }
@@ -70,16 +72,16 @@ export class DialogProfileEditComponent implements OnInit {
   /**
    * click sur le bouton Valider du modal pour edition
    */
-   onUpdateForm(){
+  onUpdateForm() {
     // console.log(this.code.errors.required);
-    if(this.editModeProfileForm.valid){
+    if (this.editModeProfileForm.valid) {
       this.toolService.showLoading();
       this.profile.code = this.codeEdit.value;
       this.profile.libelle = this.libelleEdit.value;
       this.profile.description = this.descriptionEdit.value;
-      
+
       // console.log(this.profileForm.value);
-      this.apiService.put(Url.PROFILE_EDIT_URL+"/"+this.idEdit.value, this.profile, {}).subscribe(
+      this.apiService.put(Url.PROFILE_EDIT_URL + "/" + this.idEdit.value, this.profile, {}).subscribe(
         (data) => {
           // this.closeModalEdit();
           this.toolService.showToast('Edition de profile reussie', 'OK', 3000);

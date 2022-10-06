@@ -2,9 +2,11 @@
 <mat-drawer-container class="example-container" autosize>
     <mat-drawer #drawer class="example-sidenav" mode="side" opened>
         
-        <div style="text-align: center;">
-            <p>{{authService.getUsername()}}</p>
-            <p>{{authService.getProfile()}}</p> 
+        <div style="align-items: center;">
+            <img class="avatar mat-elevation-z8" src="https://source.unsplash.com/c_GmwfHBDzk/200x200" />
+
+            <h4 class="name">{{authService.getUsername()}}</h4>
+            <p class="designation">{{authService.getProfile()}}</p>
             <button mat-button (click)="authService.logout()">Se deconnecter</button>
         </div>
         

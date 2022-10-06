@@ -34,6 +34,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatDialogModule} from '@angular/material/dialog';
 import { DialogProfileAddComponent } from './components/dialog-profile-add/dialog-profile-add.component';
 import { DialogProfileEditComponent } from './components/dialog-profile-edit/dialog-profile-edit.component';
 
@@ -74,7 +75,8 @@ import { DialogProfileEditComponent } from './components/dialog-profile-edit/dia
     MatSnackBarModule,
     MatTableModule,
     MatDividerModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDialogModule
   ],
   providers: [
     NgxSpinnerService,
