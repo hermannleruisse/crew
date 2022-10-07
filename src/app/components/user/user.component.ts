@@ -40,7 +40,7 @@ export class UserComponent implements OnInit, AfterViewInit {
     // this.editModeUserForm.controls.selectedProfile.patchValue('0001');
   }
 
-  openDialogAddProfile() {
+  openDialogAddUser() {
     const dialogRef = this.dialog.open(DialogUserAddComponent, {
       height: '400px',
       width: '600px',
@@ -52,14 +52,13 @@ export class UserComponent implements OnInit, AfterViewInit {
     });
   }
 
-  openDialogEditProfile(profile: Profile) {
+  openDialogEditUser(user: User) {
     
     const dialogRef = this.dialog.open(DialogUserEditComponent, { 
       height: '400px',
       width: '600px',
       data : {
-        animal : 'panda',
-        selectedProfile: profile
+        selectedUser: user
       }, disableClose: true 
     });
 
@@ -144,8 +143,7 @@ export class UserComponent implements OnInit, AfterViewInit {
           )
         }
       }).finally(()=>{
-        //fermerture du modal
-        // this.closeModalEdit();
+        this.getUsersList();
       })
   }
 

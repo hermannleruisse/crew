@@ -100,13 +100,13 @@
     </form>
 </div> -->
 
-<div id="modalEdit" class="modal modal-fixed-footer">
+<!-- <div id="modalEdit" class="modal modal-fixed-footer">
     <form [formGroup]="editModeUserForm" [matchValue]= "['password', 'confpass']">
         <div class="modal-content">
             <h4>Utilisateur</h4>
             <p>{{editFormTitle}}</p>
 
-            <!-- <pre>{{userForm.value | json}}</pre> -->
+            <pre>{{userForm.value | json}}</pre>
 
             <div class="row">
                 <div class="col s4">
@@ -192,7 +192,7 @@
             <button (click)="onModalClose()" #closeBtnEdit class="btn modal-close waves-greeb btn-flat">Fermer</button>
         </div>
     </form>
-</div>
+</div> -->
 
 <table mat-table [dataSource]="users" class="mat-elevation-z8">
     <!-- Name Column -->
