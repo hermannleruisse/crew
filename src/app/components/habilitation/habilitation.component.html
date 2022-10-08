@@ -1,7 +1,6 @@
-<!-- <p>habilitation works!</p> -->
-<!-- <p>profile works!</p> -->
+
 <form [formGroup]="habilitationForm">
-    <div class="row">
+    <!-- <div class="row">
         <div class="input-field col s4">
             <select (change)="changeProfile()" formControlName="selectedProfile" id="profil">
                 <option value="" disabled selected>Choisir un profile</option>
@@ -16,11 +15,37 @@
             </span>
         </div>
         
-    </div>
+    </div> -->
+
+    <mat-form-field appearance="fill">
+        <mat-label>Favorite animal</mat-label>
+        <mat-select formControlName="selectedProfile" required>
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let p of profiles; let i = index" [value]="profiles[i].id">
+            {{profiles[i].libelle}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="profileSelectedList.errors.required">Le profile est obligatoire</mat-error>
+    </mat-form-field>
 
     <p><b>Fonctionnalites</b></p>
 
-    <div *ngFor="let f of fonctions; let j = index" class="col s6">
+    <section *ngFor="let f of fonctions; let j = index" class="example-section">
+        <span class="example-list-section">
+            {{f.libelle}}
+        </span>
+        <span class="example-list-section">
+          <ul>
+            <li *ngFor="let a of f.action; let k = index">
+              <mat-checkbox [value]="f.action[j].checked" (change)="onCheckboxChange(j, k)" [checked]="a.checked" color="primary">
+                    {{a.libelle}}
+              </mat-checkbox>
+            </li>
+          </ul>
+        </span>
+      </section>
+
+    <!-- <div *ngFor="let f of fonctions; let j = index" class="col s6">
         <table class="striped highlight responsive-table">
             <thead>
                 <tr>
@@ -38,10 +63,10 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+    </div> -->
     
     
-    <div class="col s12">
+    <!-- <div class="col s12">
         <pre>{{habilitationForm.value | json}}</pre>
         <pre>{{fonctions | json}}</pre>
     </div>
@@ -54,6 +79,11 @@
         <button [disabled]="habilitationForm.invalid" (click)="saveHabilitation()" class="btn-floating btn-large red">
           <i class="large material-icons">save</i>
         </button>
+    </div> -->
+    <div class="example-button-container">
+        <button (click)="saveHabilitation()" mat-fab color="primary" aria-label="icon button with a add icon">
+            <mat-icon>delete</mat-icon>
+        </button>
     </div>
-    
+
 </form>

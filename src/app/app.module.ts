@@ -41,6 +41,7 @@ import { DialogUserAddComponent } from './components/dialog-user-add/dialog-user
 import { DialogUserEditComponent } from './components/dialog-user-edit/dialog-user-edit.component';
 import { DialogMinisterAddComponent } from './components/dialog-minister-add/dialog-minister-add.component';
 import { DialogMinisterEditComponent } from './components/dialog-minister-edit/dialog-minister-edit.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { DialogMinisterEditComponent } from './components/dialog-minister-edit/d
     MatTableModule,
     MatDividerModule,
     MatMenuModule,
-    MatDialogModule
+    MatDialogModule,
+    MatCheckboxModule
   ],
   providers: [
     NgxSpinnerService,
