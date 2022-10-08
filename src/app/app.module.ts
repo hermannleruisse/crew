@@ -39,6 +39,8 @@ import { DialogProfileAddComponent } from './components/dialog-profile-add/dialo
 import { DialogProfileEditComponent } from './components/dialog-profile-edit/dialog-profile-edit.component';
 import { DialogUserAddComponent } from './components/dialog-user-add/dialog-user-add.component';
 import { DialogUserEditComponent } from './components/dialog-user-edit/dialog-user-edit.component';
+import { DialogMinisterAddComponent } from './components/dialog-minister-add/dialog-minister-add.component';
+import { DialogMinisterEditComponent } from './components/dialog-minister-edit/dialog-minister-edit.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,8 @@ import { DialogUserEditComponent } from './components/dialog-user-edit/dialog-us
     DialogProfileEditComponent,
     DialogUserAddComponent,
     DialogUserEditComponent,
+    DialogMinisterAddComponent,
+    DialogMinisterEditComponent,
   ],
   imports: [
     BrowserModule,
