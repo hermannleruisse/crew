@@ -23,8 +23,8 @@ export class ProfileComponent implements OnInit {
   editModeProfileForm: FormGroup;
   editFormTitle?:string;
   
-  @ViewChild('closeBtnEdit') closeBtnEdit: ElementRef;
-  @ViewChild('closeBtnAdd') closeBtnAdd: ElementRef;
+  // @ViewChild('closeBtnEdit') closeBtnEdit: ElementRef;
+  // @ViewChild('closeBtnAdd') closeBtnAdd: ElementRef;
 
   profile: Profile = {
     id: '',
@@ -51,7 +51,10 @@ export class ProfileComponent implements OnInit {
   }
 
   openDialogAddProfile() {
-    const dialogRef = this.dialog.open(DialogProfileAddComponent, {disableClose: true });
+    const dialogRef = this.dialog.open(DialogProfileAddComponent, {
+      height: '400px',
+      width: '600px',
+      disableClose: true });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -61,9 +64,14 @@ export class ProfileComponent implements OnInit {
 
   openDialogEditProfile(profile: Profile) {
     
-    const dialogRef = this.dialog.open(DialogProfileEditComponent, { data : {
-      animal : 'panda'
-   }, disableClose: true });
+    const dialogRef = this.dialog.open(DialogProfileEditComponent, { 
+      height: '400px',
+      width: '600px',
+      data : {
+        animal : 'panda',
+        selectedProfile: profile
+      }, disableClose: true 
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

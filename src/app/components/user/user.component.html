@@ -1,5 +1,5 @@
 <!-- <p>user works!</p> -->
-<table class="striped highlight responsive-table">
+<!-- <table class="striped highlight responsive-table">
     <thead>
         <tr>
             <th>Nom</th>
@@ -16,7 +16,7 @@
             <td>{{u.profile.libelle}}</td>
         </tr>
     </tbody>
-</table>
+</table> -->
 
 <div class="fixed-action-btn">
     <a data-target="modalAdd" (click)="createUserForm()" class="modal-trigger btn-floating btn-large red">
@@ -24,13 +24,13 @@
     </a>
 </div>
 
-<div id="modalAdd" class="modal modal-fixed-footer">
+<!-- <div id="modalAdd" class="modal modal-fixed-footer">
     <form [formGroup]="userForm" [matchValue]= "['password', 'confpass']">
         <div class="modal-content">
             <h4>Utilisateur</h4>
             <p>Ajouter un utilisateur</p>
 
-            <!-- <pre>{{userForm.value | json}}</pre> -->
+            <pre>{{userForm.value | json}}</pre>
 
             <div class="row">
                 <div class="col s6">
@@ -98,15 +98,15 @@
             <button class="btn modal-close waves-greeb btn-flat">Fermer</button>
         </div>
     </form>
-</div>
+</div> -->
 
-<div id="modalEdit" class="modal modal-fixed-footer">
+<!-- <div id="modalEdit" class="modal modal-fixed-footer">
     <form [formGroup]="editModeUserForm" [matchValue]= "['password', 'confpass']">
         <div class="modal-content">
             <h4>Utilisateur</h4>
             <p>{{editFormTitle}}</p>
 
-            <!-- <pre>{{userForm.value | json}}</pre> -->
+            <pre>{{userForm.value | json}}</pre>
 
             <div class="row">
                 <div class="col s4">
@@ -192,4 +192,58 @@
             <button (click)="onModalClose()" #closeBtnEdit class="btn modal-close waves-greeb btn-flat">Fermer</button>
         </div>
     </form>
+</div> -->
+
+<table mat-table [dataSource]="users" class="mat-elevation-z8">
+    <!-- Name Column -->
+    <ng-container matColumnDef="nom">
+        <th mat-header-cell *matHeaderCellDef> Nom </th>
+        <td mat-cell *matCellDef="let element"> {{element.nom}} </td>
+    </ng-container>
+
+    <!-- libelle Column -->
+    <ng-container matColumnDef="prenom">
+        <th mat-header-cell *matHeaderCellDef> Prénom </th>
+        <td mat-cell *matCellDef="let element"> {{element.prenom}} </td>
+    </ng-container>
+
+    <!-- description Column -->
+    <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef> Username </th>
+        <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="profile">
+        <th mat-header-cell *matHeaderCellDef> Profile </th>
+        <td mat-cell *matCellDef="let element"> {{element.profile.libelle}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="option" stickyEnd>
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button (click)="openDialogEditUser(element)" mat-menu-item>
+                    <mat-icon>dialpad</mat-icon>
+                    <span>Modifier</span>
+                </button>
+
+                <button (click)="deleteUser(element)" mat-menu-item>
+                    <mat-icon>notifications_off</mat-icon>
+                    <span>Supprimer</span>
+                </button>
+            </mat-menu>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<div class="example-button-container">
+    <button (click)="openDialogAddUser()" mat-fab color="primary" aria-label="icon button with a add icon">
+        <mat-icon>delete</mat-icon>
+    </button>
 </div>
