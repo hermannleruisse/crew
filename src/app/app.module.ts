@@ -42,6 +42,8 @@ import { DialogUserEditComponent } from './components/dialog-user-edit/dialog-us
 import { DialogMinisterAddComponent } from './components/dialog-minister-add/dialog-minister-add.component';
 import { DialogMinisterEditComponent } from './components/dialog-minister-edit/dialog-minister-edit.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { DialogMembreAddComponent } from './components/dialog-membre-add/dialog-membre-add.component';
+import { DialogMembreEditComponent } from './components/dialog-membre-edit/dialog-membre-edit.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +66,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     DialogUserEditComponent,
     DialogMinisterAddComponent,
     DialogMinisterEditComponent,
+    DialogMembreAddComponent,
+    DialogMembreEditComponent,
   ],
   imports: [
     BrowserModule,
