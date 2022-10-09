@@ -1,0 +1,110 @@
+<h2 mat-dialog-title>Mettre a jour un membre</h2>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="editModeMemberForm" class="example-form">
+    <mat-grid-list cols="4" rowHeight="4:2" gutterSize="30px">
+        <!-- <div class="col s4">
+            <div class="col s12 user-view">
+                <a href="#user"><img class="circle" width="215" height="215" height="215" [src]="url"></a>
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>Fichier</span>
+                        <input type="file" formControlName="photo" (change)="onSelectFile($event)">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text" placeholder="Charger un fichier">
+                    </div>
+                    <span *ngIf="photoEdit.invalid && (photoEdit.errors || photoEdit.touched)" class="help-text" data-error="wrong">
+                        <p *ngIf="photoEdit.errors.required">* La photo est obligatoire</p>
+                    </span>
+                </div>
+            </div>
+        </div> -->
+      
+        <mat-grid-tile colspan="2" rowspan="1">
+        <mat-form-field class="example-full-width">
+          <mat-label>Nom</mat-label>
+          <input name="nom" type="text" matInput formControlName="nom" *ngIf="nomEdit.invalid && (nomEdit.dirty || nomEdit.touched)">
+          <mat-error *ngIf="nomEdit.errors.required">
+            Le nom est <strong>obligatoire</strong>
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2" rowspan="1">
+        <mat-form-field class="example-full-width">
+          <mat-label>Prénom</mat-label>
+          <input name="prenom" type="text" matInput formControlName="prenom" *ngIf="prenomEdit.invalid && (prenomEdit.dirty || prenomEdit.touched)">
+          <mat-error *ngIf="prenomEdit.errors.required">
+            Le prénom est <strong>obligatoire</strong>
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2" rowspan="1">
+        <mat-form-field class="example-full-width">
+          <mat-label>Date de naissance</mat-label>
+          <input name="dateNaissance" type="text" matInput formControlName="dateNaissance" *ngIf="dateNaissanceEdit.invalid && (dateNaissanceEdit.dirty || dateNaissanceEdit.touched)">
+          <mat-error *ngIf="dateNaissanceEdit.errors.required">
+            La date de naissance est <strong>obligatoire</strong>
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2" rowspan="1">
+        <mat-form-field class="example-full-width">
+          <mat-label>Date de naissance</mat-label>
+          <input name="telephone" type="text" matInput formControlName="telephone" *ngIf="telephoneEdit.invalid && (telephoneEdit.dirty || telephoneEdit.touched)">
+          <mat-error *ngIf="telephoneEdit.errors.required">
+            Le telephone est <strong>obligatoire</strong>
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2" rowspan="1">
+        <mat-form-field class="example-full-width">
+          <mat-label>Date de naissance</mat-label>
+          <input name="adresse" type="text" matInput formControlName="adresse" *ngIf="adresseEdit.invalid && (adresseEdit.dirty || adresseEdit.touched)">
+          <mat-error *ngIf="adresseEdit.errors.required">
+            L'adresse est <strong>obligatoire</strong>
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+      
+      <mat-grid-tile colspan="2" rowspan="1">
+        <mat-form-field appearance="fill">
+            <mat-label>Sexe</mat-label>
+            <mat-select formControlName="selectedSexe" required>
+              <mat-option>Choisir un profile</mat-option>
+              <mat-option value="F">Feminin</mat-option>
+              <mat-option value="M">Masculin</mat-option>
+            </mat-select>
+            <mat-error *ngIf="selectedSexeEdit.errors.required">
+                Le genre est obligatoire
+            </mat-error>
+          </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2" rowspan="1">
+        <mat-form-field appearance="fill">
+            <mat-label>Ministere</mat-label>
+            <mat-select formControlName="selectedMinister" required>
+              <mat-option>Choisir un ministere</mat-option>
+              <mat-option *ngFor="let m of ministeres; let i = index" [value]="ministeres[i].id">
+                {{ministeres[i].libelle}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="selectedMinisterEdit.errors.required">
+                Le ministere est obligatoire
+            </mat-error>
+          </mat-form-field>
+      </mat-grid-tile>
+
+    </mat-grid-list>
+
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Annuler</button>
+  <button mat-button cdkFocusInitial (click)="onUpdateForm()">Valider</button>
+</mat-dialog-actions>
+
