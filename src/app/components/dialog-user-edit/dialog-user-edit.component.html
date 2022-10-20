@@ -1,0 +1,84 @@
+<h2 mat-dialog-title>Editer un utilisateur</h2>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="editModeUserForm" [matchValue]= "['password', 'confpass']" class="example-form">
+    <mat-grid-list cols="4" rowHeight="4:2" gutterSize="30px">
+      <mat-grid-tile colspan="2" rowspan="1">
+        <mat-form-field class="example-full-width">
+          <mat-label>Nom</mat-label>
+          <input name="nom" type="text" matInput formControlName="nom" *ngIf="nomEdit.invalid && (nomEdit.dirty || nomEdit.touched)">
+          <mat-error *ngIf="nomEdit.errors.required">
+            Le nom est <strong>obligatoire</strong>
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2" rowspan="1">
+        <mat-form-field class="example-full-width">
+          <mat-label>Prénom</mat-label>
+          <input name="prenom" type="text" matInput formControlName="prenom" *ngIf="prenomEdit.invalid && (prenomEdit.dirty || prenomEdit.touched)">
+          <mat-error *ngIf="prenomEdit.errors.required">
+            Le prénom est <strong>obligatoire</strong>
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2" rowspan="1">
+        <mat-form-field class="example-full-width">
+          <mat-label>Username</mat-label>
+          <input name="username" type="text" matInput formControlName="username" *ngIf="usernameEdit.invalid && (usernameEdit.dirty || usernameEdit.touched)">
+          <mat-error *ngIf="usernameEdit.errors.required">
+            Le nom d'utilisateur est <strong>obligatoire</strong>
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2" rowspan="1">
+        <mat-form-field class="example-full-width">
+          <mat-label>Mot de passe</mat-label>
+          <input name="password" type="text" matInput formControlName="password" *ngIf="passwordEdit.invalid && (passwordEdit.dirty || passwordEdit.touched)">
+          <mat-error *ngIf="passwordEdit.errors.required">
+            Le mot de passe est <strong>obligatoire</strong>
+          </mat-error>
+          <mat-error *ngIf="passwordEdit.errors.minlength">
+            Le nombre de caractère doit depasser <strong>5</strong>
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2" rowspan="1">
+        <mat-form-field class="example-full-width">
+          <mat-label>Confirmer le mot de passe</mat-label>
+          <input name="confpass" type="text" matInput formControlName="confpass" *ngIf="passwordEdit.invalid && (passwordEdit.dirty || passwordEdit.touched)">
+          <mat-error *ngIf="confpassEdit.errors.required">
+            La confirmation du mot de passe est <strong>obligatoire</strong>
+          </mat-error>
+          <mat-error *ngIf="confpassEdit.errors.matchValueError">
+            Revoir la confirmation de mot de passe saisie
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2" rowspan="1">
+        <mat-form-field appearance="fill">
+            <mat-label>Profile</mat-label>
+            <mat-select (change)="changeProfile()" formControlName="selectedProfile" required>
+              <mat-option>Choisir un profile</mat-option>
+              <mat-option *ngFor="let p of profiles; let i = index" [value]="profiles[i].id">
+                {{profiles[i].libelle}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="selectedProfileEdit.errors.required">
+                Le profile est obligatoire
+            </mat-error>
+          </mat-form-field>
+      </mat-grid-tile>
+
+    </mat-grid-list>
+
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Annuler</button>
+  <button mat-button cdkFocusInitial (click)="onUpdateForm()">Modifier</button>
+</mat-dialog-actions>
+

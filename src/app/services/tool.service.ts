@@ -1,19 +1,14 @@
 import { Injectable } from "@angular/core";
-import { ToastrService } from "ngx-toastr";
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
+import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToolService{
-  public static TOAST_SUCCESS = 'success';
-  public static TOAST_INFO = 'info';
-  public static TOAST_WARNING = 'warning';
-  public static TOAST_INDIVIDUAL = 'individual';
-  public static TOAST_ERROR = 'error';
 
-    constructor(public toastrService: ToastrService, private spinerService: NgxSpinnerService){
+  constructor(private spinerService: NgxSpinnerService, private _snackBar: MatSnackBar){
         console.log('Hello ToolProvider Provider');
     }
 
@@ -35,50 +30,29 @@ export class ToolService{
   /**
    *  toast parametrage
    */
-   toastOptions = {
-    timeOut: 3000,
-    closeButton: true,
-    enableHtml: true,
-    progressBar: true
-  };
+  //  toastOptions = {
+  //   timeOut: 3000,
+  //   closeButton: true,
+  //   enableHtml: true,
+  //   progressBar: true
+  // };
 
-  individualToastOptions = {
-    disableTimeOut: true,
-    closeButton: true,
-    enableHtml: true
-  };
+  // individualToastOptions = {
+  //   disableTimeOut: true,
+  //   closeButton: true,
+  //   enableHtml: true
+  // };
 
   /**
    * affiche une notification
-   * @param type
-   * @param msg
-   * @param titre
    */
-   showToast(type: string, msg?: string, titre?: string) {
-    switch (type) {
-      case ToolService.TOAST_ERROR:
-        this.toastrService.error(msg, titre, this.toastOptions);
-        break;
-
-      case ToolService.TOAST_SUCCESS:
-        this.toastrService.success(msg, titre, this.toastOptions);
-        break;
-
-      case ToolService.TOAST_INFO:
-        this.toastrService.info(msg, titre, this.toastOptions);
-        break;
-
-      case ToolService.TOAST_WARNING:
-        this.toastrService.warning(msg, titre, this.toastOptions);
-        break;
-
-      case ToolService.TOAST_INDIVIDUAL:
-        this.toastrService.error(msg, titre, this.individualToastOptions);
-        break;
-
-      default:
-        break;
-    }
+  
+  showToast(msg?: string, actionText?: string, miliSecond?: number) {
+    this._snackBar.open(msg, actionText, {
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      duration: miliSecond
+    });
   }
 
   showLoading() {
