@@ -68,21 +68,6 @@ export class UserComponent implements OnInit, AfterViewInit {
     });
   }
 
-  
-
-  // /**
-  //  * click sur le bouton Editer pour passer en mode edition
-  //  */
-  //  enableEditMode(){
-  //   this.editMode = true;
-  //   this.editFormTitle = "Edition";
-  //   this.editModeUserForm.enable();
-  // }
-
-  
-
-  
-
   /**
    * retourne la liste des utilisateurs
    * @returns 
@@ -102,19 +87,6 @@ export class UserComponent implements OnInit, AfterViewInit {
         console.log('complete');
       });
   }
-
-  
-
-  
-
-  // /**
-  //  * click sur le bouton Fermer du modal
-  //  */
-  //  onModalClose(){
-  //   this.editMode = false;
-  //   this.editModeUserForm.disable();
-  //   this.editModeUserForm.reset();
-  // }
 
   /**
    * click sur le bouton Supprimer pour supprimmer un utilisateur
