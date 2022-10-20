@@ -11,6 +11,11 @@ export interface Habilitation{
   fonctions: Fonction[]
 }
 
+export interface CheckHabilitation{
+  profile: string,
+  permission: string
+}
+
 @Component({
   selector: 'app-habilitation',
   templateUrl: './habilitation.component.html',
@@ -21,6 +26,7 @@ export class HabilitationComponent implements OnInit {
   fonctions: Fonction[];
   habilitationForm: FormGroup;
   habilitation: Habilitation;
+  checkhabilitation: CheckHabilitation;
 
   get profileSelectedList(){ return this.habilitationForm.get("selectedProfile");}
   
@@ -79,7 +85,7 @@ export class HabilitationComponent implements OnInit {
       this.habilitation.profile = this.profileSelectedList.value;
       this.habilitation.fonctions = this.fonctions;
       
-      this.apiService.post(Url.PROFILE_ADD_URL, this.habilitation, {}).subscribe(
+      this.apiService.post(Url.HABILIT_ADD_URL, this.habilitation, {}).subscribe(
         (data) => {
           this.toolService.showToast('Mise a jour de reussie', 'OK', 3000);
         }, (error) => {
@@ -110,7 +116,7 @@ export class HabilitationComponent implements OnInit {
    */
   getFonctions(){
     this.toolService.showLoading();
-    this.apiService.get(Url.PROFILE_LIST_URL, {}).subscribe(
+    this.apiService.get(Url.HABILIT_LIST_URL, {}).subscribe(
       (data) => {
         console.log('data => ' + JSON.stringify(data));
         this.fonctions = data;
@@ -121,6 +127,21 @@ export class HabilitationComponent implements OnInit {
         this.toolService.hideLoading();
         console.log('complete');
       });
+  }
+
+  /**
+   * vérifie si le profil est habilité
+   * @returns 
+   */
+   checkAuthority():boolean{
+    this.apiService.post(Url.HABILIT_CHECK_URL, this.checkhabilitation, {}).subscribe(
+      (data) => {
+        console.log('data => ' + JSON.stringify(data));
+        return data;
+      }, (error) => {
+        console.log('erreur ' + JSON.stringify(error));
+      });
+      return false;
   }
 
 }

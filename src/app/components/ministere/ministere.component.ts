@@ -63,7 +63,7 @@ export class MinistereComponent implements OnInit {
 
   getMinistersList(){
     this.toolService.showLoading();
-    this.apiService.get(Url.PROFILE_LIST_URL, {}).subscribe(
+    this.apiService.get(Url.MINIS_LIST_URL, {}).subscribe(
       (data) => {
         console.log('data => ' + JSON.stringify(data));
         this.ministeres = data;
@@ -86,7 +86,7 @@ export class MinistereComponent implements OnInit {
       "Non", false).then((result) =>{
         if(result.isConfirmed){
           this.toolService.showLoading();
-          this.apiService.delete(Url.PROFILE_DELETE_URL+"/"+minister.id, {}).subscribe(
+          this.apiService.delete(Url.MINIS_DELETE_URL+"/"+minister.id, {}).subscribe(
             (data) => {
               this.toolService.showToast('Suppression réussie', 'OK', 3000);
               this.getMinistersList();

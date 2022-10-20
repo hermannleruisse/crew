@@ -137,7 +137,7 @@ export class MembreListComponent implements OnInit {
       "Non", false).then((result) =>{
         if(result.isConfirmed){
           this.toolService.showLoading();
-          this.apiService.delete(Url.PROFILE_DELETE_URL+"/"+member.id, {}).subscribe(
+          this.apiService.delete(Url.MEMBR_DELETE_URL+"/"+member.id, {}).subscribe(
             (data) => {
               this.toolService.showToast('Suppression reussie', 'OK', 3000);
               this.getMembres();

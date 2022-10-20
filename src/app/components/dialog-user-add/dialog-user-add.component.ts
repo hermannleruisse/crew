@@ -80,7 +80,7 @@ export class DialogUserAddComponent implements OnInit {
       this.user.profile = this.selectedProfile.value;
       
       // console.log(this.profileForm.value);
-      this.apiService.post(Url.PROFILE_ADD_URL, this.user, {}).subscribe(
+      this.apiService.post(Url.USER_ADD_URL, this.user, {}).subscribe(
         (data) => {
           this.toolService.showToast('Nouveau utilisateur enregistrer', 'OK', 3000);
         }, (error) => {

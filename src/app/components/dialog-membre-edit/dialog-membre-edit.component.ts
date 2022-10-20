@@ -48,7 +48,7 @@ export class DialogMembreEditComponent implements OnInit {
    * @returns 
    */
    getMinisteres(){
-    this.apiService.get(Url.PROFILE_LIST_URL, {})
+    this.apiService.get(Url.MINIS_LIST_URL, {})
       .subscribe((data) => {
         this.ministeres = data;
       });
@@ -117,7 +117,7 @@ export class DialogMembreEditComponent implements OnInit {
       this.member.photo = this.photoEdit.value;
 
       // console.log(this.profileForm.value);
-      this.apiService.put(Url.PROFILE_EDIT_URL + "/" + this.idEdit.value, this.member, {}).subscribe(
+      this.apiService.put(Url.MEMBR_EDIT_URL + "/" + this.idEdit.value, this.member, {}).subscribe(
         (data) => {
           // this.closeModalEdit();
           this.toolService.showToast('Mise a jour reussie', 'OK', 3000);

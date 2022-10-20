@@ -131,7 +131,7 @@ export class DialogUserEditComponent implements OnInit {
       this.user.profile.id = this.selectedProfileEdit.value;
 
       // console.log(this.profileForm.value);
-      this.apiService.put(Url.PROFILE_EDIT_URL + "/" + this.idEdit.value, this.user, {}).subscribe(
+      this.apiService.put(Url.USER_EDIT_URL + "/" + this.idEdit.value, this.user, {}).subscribe(
         (data) => {
           // this.closeModalEdit();
           this.toolService.showToast('Edition de profile reussie', 'OK', 3000);

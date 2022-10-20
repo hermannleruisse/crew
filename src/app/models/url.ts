@@ -25,5 +25,9 @@ export class Url {
     static MEMBR_EDIT_URL = Url.SERVER_URL+'api/manager/edit-member';
     static MEMBR_DELETE_URL = Url.SERVER_URL+'api/manager/delete-member';
     static MEMBR_GET_URL = Url.SERVER_URL+'api/manager/member';
+    //habilitation
+    static HABILIT_LIST_URL = Url.SERVER_URL+'api/security/liste-habilitation';
+    static HABILIT_ADD_URL = Url.SERVER_URL+'api/security/save-habilitation';
+    static HABILIT_CHECK_URL = Url.SERVER_URL+'api/security/verifier-habilitation';
     
 }

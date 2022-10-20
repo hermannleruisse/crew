@@ -55,7 +55,7 @@ export class DialogMinisterAddComponent implements OnInit {
       this.minister.libelle = this.libelle.value;
       this.minister.description = this.description.value;
       
-      this.apiService.post(Url.PROFILE_ADD_URL, this.minister, {}).subscribe(
+      this.apiService.post(Url.MINIS_ADD_URL, this.minister, {}).subscribe(
         (data) => {
           this.toolService.showToast('Nouveau element enregistrer', 'OK', 3000);
         }, (error) => {

@@ -74,7 +74,7 @@ export class UserComponent implements OnInit, AfterViewInit {
    */
    getUsersList(){
     this.toolService.showLoading();
-    this.apiService.get(Url.PROFILE_LIST_URL, {}).subscribe(
+    this.apiService.get(Url.USER_LIST_URL, {}).subscribe(
       (data) => {
         console.log('data => ' + JSON.stringify(data));
         this.users = data;
@@ -97,7 +97,7 @@ export class UserComponent implements OnInit, AfterViewInit {
       "Non", false).then((result) =>{
         if(result.isConfirmed){
           this.toolService.showLoading();
-          this.apiService.delete(Url.PROFILE_DELETE_URL+"/"+user.id, {}).subscribe(
+          this.apiService.delete(Url.USER_DELETE_URL+"/"+user.id, {}).subscribe(
             (data) => {
               this.toolService.showToast('Suppression reussie', 'OK', 3000);
               this.getUsersList();

@@ -75,7 +75,7 @@ export class DialogMinisterEditComponent implements OnInit {
       this.minister.libelle = this.libelleEdit.value;
       this.minister.description = this.descriptionEdit.value;
 
-      this.apiService.put(Url.PROFILE_EDIT_URL + "/" + this.idEdit.value, this.minister, {}).subscribe(
+      this.apiService.put(Url.MINIS_EDIT_URL + "/" + this.idEdit.value, this.minister, {}).subscribe(
         (data) => {
           // this.closeModalEdit();
           this.toolService.showToast('Edition réussie', 'OK', 3000);

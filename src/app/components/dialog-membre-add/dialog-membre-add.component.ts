@@ -41,7 +41,7 @@ export class DialogMembreAddComponent implements OnInit {
    * @returns 
    */
    getMinisteres(){
-    this.apiService.get(Url.PROFILE_LIST_URL, {})
+    this.apiService.get(Url.MINIS_LIST_URL, {})
       .subscribe((data) => {
         this.ministeres = data;
       });
@@ -112,7 +112,7 @@ export class DialogMembreAddComponent implements OnInit {
       this.member.photo = this.photo.value;
       this.member.telephone = this.telephone.value;
       
-      this.apiService.post(Url.PROFILE_ADD_URL, this.member, {}).subscribe(
+      this.apiService.post(Url.MEMBR_ADD_URL, this.member, {}).subscribe(
         (data) => {
           this.toolService.showToast('Enregistrer reussie', 'OK', 3000);
         }, (error) => {
