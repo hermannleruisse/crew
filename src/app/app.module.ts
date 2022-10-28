@@ -44,6 +44,7 @@ import { DialogMinisterEditComponent } from './components/dialog-minister-edit/d
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DialogMembreAddComponent } from './components/dialog-membre-add/dialog-membre-add.component';
 import { DialogMembreEditComponent } from './components/dialog-membre-edit/dialog-membre-edit.component';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { DialogMembreEditComponent } from './components/dialog-membre-edit/dialo
     MatDividerModule,
     MatMenuModule,
     MatDialogModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSelectModule
   ],
   providers: [
     NgxSpinnerService,
