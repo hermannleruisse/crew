@@ -120,12 +120,12 @@
             </button>
             <mat-menu #menu="matMenu">
                 <button (click)="openDialogEditMinister(element)" mat-menu-item>
-                    <mat-icon>dialpad</mat-icon>
+                    <!-- <mat-icon>dialpad</mat-icon> -->
                     <span>Modifier</span>
                 </button>
 
                 <button (click)="deleteMinister(element)" mat-menu-item>
-                    <mat-icon>notifications_off</mat-icon>
+                    <!-- <mat-icon>notifications_off</mat-icon> -->
                     <span>Supprimer</span>
                 </button>
             </mat-menu>
@@ -137,7 +137,7 @@
 </table>
 
 <div class="example-button-container">
-    <button (click)="openDialogAddMinister()" mat-fab color="primary" aria-label="icon button with a add icon">
-        <mat-icon>delete</mat-icon>
+    <button (click)="openDialogAddMinister()" class="custom-fab" mat-fab color="primary" aria-label="icon button with a add icon">
+        <mat-icon>playlist_add</mat-icon>
     </button>
 </div>

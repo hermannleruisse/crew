@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Profile } from 'src/app/models/profile';
 import { Url } from 'src/app/models/url';
 import { User } from 'src/app/models/user';
@@ -14,7 +15,13 @@ import { ToolService } from 'src/app/services/tool.service';
 export class DialogUserAddComponent implements OnInit {
   userForm: FormGroup;
   profiles: Profile[];
-  user: User;
+  user: User = {
+    nom: '',
+    prenom: '',
+    username: '',
+    password: '',
+    profile: ''
+  };
 
   get nom() { return this.userForm.get("nom"); }
   get prenom() { return this.userForm.get("prenom"); }
@@ -23,7 +30,7 @@ export class DialogUserAddComponent implements OnInit {
   get confpass() { return this.userForm.get("confpass"); }
   get selectedProfile() { return this.userForm.get("selectedProfile"); }
 
-  constructor(private formBuilder: FormBuilder, private toolService: ToolService, private apiService: ApiService) { }
+  constructor(private formBuilder: FormBuilder, private toolService: ToolService, private apiService: ApiService, private dialogRef: MatDialogRef<DialogUserAddComponent>) { }
 
   ngOnInit(): void {
     this.getProfiles();
@@ -82,6 +89,7 @@ export class DialogUserAddComponent implements OnInit {
       // console.log(this.profileForm.value);
       this.apiService.post(Url.USER_ADD_URL, this.user, {}).subscribe(
         (data) => {
+          this.dialogRef.close();
           this.toolService.showToast('Nouveau utilisateur enregistrer', 'OK', 3000);
         }, (error) => {
           console.log('erreur ' + JSON.stringify(error));

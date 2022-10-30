@@ -226,12 +226,12 @@
             </button>
             <mat-menu #menu="matMenu">
                 <button (click)="openDialogEditUser(element)" mat-menu-item>
-                    <mat-icon>dialpad</mat-icon>
+                    <!-- <mat-icon>dialpad</mat-icon> -->
                     <span>Modifier</span>
                 </button>
 
                 <button (click)="deleteUser(element)" mat-menu-item>
-                    <mat-icon>notifications_off</mat-icon>
+                    <!-- <mat-icon>notifications_off</mat-icon> -->
                     <span>Supprimer</span>
                 </button>
             </mat-menu>
@@ -243,7 +243,7 @@
 </table>
 
 <div class="example-button-container">
-    <button (click)="openDialogAddUser()" mat-fab color="primary" aria-label="icon button with a add icon">
-        <mat-icon>delete</mat-icon>
+    <button (click)="openDialogAddUser()" class="custom-fab" mat-fab color="primary" aria-label="icon button with a add icon">
+        <mat-icon>playlist_add</mat-icon>
     </button>
 </div>

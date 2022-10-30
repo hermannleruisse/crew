@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Ministere } from 'src/app/models/ministere';
 import { Url } from 'src/app/models/url';
 import { ApiService } from 'src/app/services/api.service';
@@ -26,7 +27,7 @@ export class DialogMinisterAddComponent implements OnInit {
   get description(){ return this.ministerForm.get("description");}
   
   constructor(private formBuilder: FormBuilder, private toolService:ToolService,
-  private apiService:ApiService) { }
+  private apiService:ApiService, private dialogRef: MatDialogRef<DialogMinisterAddComponent>) { }
 
   ngOnInit(): void {
     this.createMinisterForm();
@@ -57,6 +58,7 @@ export class DialogMinisterAddComponent implements OnInit {
       
       this.apiService.post(Url.MINIS_ADD_URL, this.minister, {}).subscribe(
         (data) => {
+          this.dialogRef.close();
           this.toolService.showToast('Nouveau element enregistrer', 'OK', 3000);
         }, (error) => {
           console.log('erreur ' + JSON.stringify(error));

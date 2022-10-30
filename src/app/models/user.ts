@@ -1,14 +1,14 @@
 import { Profile } from "./profile";
 
 export class User {
-    id: string;
+    id?: string;
     nom: string;
     prenom: string;
     username: string;
     password: string;
-    profile: Profile;
+    profile: string;
 
-    constructor(id:string, nom:string, prenom: string, username:string, password:string, profile:Profile){
+    constructor(nom:string, prenom: string, username:string, password:string, profile:string, id?:string){
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;

@@ -1,13 +1,11 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Profile } from 'src/app/models/profile';
 import { ToolService } from 'src/app/services/tool.service';
 import Swal from 'sweetalert2';
 import { ApiService } from 'src/app/services/api.service';
 import { Url } from 'src/app/models/url';
-import { HttpHeaders } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogProfileAddComponent } from '../dialog-profile-add/dialog-profile-add.component';
@@ -162,11 +160,11 @@ export class ProfileComponent implements OnInit {
           this.apiService.delete(Url.PROFILE_DELETE_URL+"/"+profile.id, {}).subscribe(
             (data) => {
               // this.toolService.removeElementFromObjectArray(this.profiles, this.idEdit.value);
-              // this.toolService.showToast(ToolService.TOAST_SUCCESS, 'Suppression de profile reussie', 'Profile');
+              this.toolService.showToast('Suppression de profile reussie', 'OK', 3000);
               this.getProfilesList();
             }, (error) => {
               this.toolService.hideLoading();
-              // this.toolService.showToast(ToolService.TOAST_ERROR, error.message, 'Profile');
+              this.toolService.showToast('Echec de supprèssion', 'OK');
             }, () => {
               this.toolService.hideLoading();
             });

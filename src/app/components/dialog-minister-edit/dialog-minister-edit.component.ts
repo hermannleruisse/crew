@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Ministere } from 'src/app/models/ministere';
 import { Url } from 'src/app/models/url';
 import { ApiService } from 'src/app/services/api.service';
@@ -30,7 +30,7 @@ export class DialogMinisterEditComponent implements OnInit {
   get libelleEdit() { return this.editModeMinisterForm.get("libelle"); }
   get descriptionEdit() { return this.editModeMinisterForm.get("description"); }
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, private toolService: ToolService, private apiService: ApiService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, private toolService: ToolService, private apiService: ApiService, private dialogRef: MatDialogRef<DialogMinisterEditComponent>) { }
 
   ngOnInit(): void {
     this.editMinisterForm();
@@ -42,10 +42,10 @@ export class DialogMinisterEditComponent implements OnInit {
    */
   editMinisterForm() {
     this.editModeMinisterForm = this.formBuilder.group({
-      id: [{ value: '', disabled: true }],
-      code: [{ value: '', disabled: true }, [Validators.required]],
-      libelle: [{ value: '', disabled: true }, [Validators.required]],
-      description: [{ value: '', disabled: true }]
+      id: [{ value: '', disabled: false }],
+      code: [{ value: '', disabled: false }, [Validators.required]],
+      libelle: [{ value: '', disabled: false }, [Validators.required]],
+      description: [{ value: '', disabled: false }]
     }, {
       updateOn: 'change'
     });
@@ -77,7 +77,7 @@ export class DialogMinisterEditComponent implements OnInit {
 
       this.apiService.put(Url.MINIS_EDIT_URL + "/" + this.idEdit.value, this.minister, {}).subscribe(
         (data) => {
-          // this.closeModalEdit();
+          this.dialogRef.close();
           this.toolService.showToast('Edition réussie', 'OK', 3000);
         }, (error) => {
           // console.log('erreur ' + JSON.stringify(error));

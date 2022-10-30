@@ -80,7 +80,7 @@ export class MinistereComponent implements OnInit {
   /**
    * click sur le bouton Supprimer pour supprimmer un ministère
    */
-  deleteProfile(minister: Ministere){
+  deleteMinister(minister: Ministere){
     // console.log("id => "+this.idEdit.value)
     this.toolService.showConfirmation("Suppression", "Voulez-vous supprimer ce élément ?", "question", "Oui",
       "Non", false).then((result) =>{

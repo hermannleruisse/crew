@@ -1,7 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Profile } from 'src/app/models/profile';
 import { Url } from 'src/app/models/url';
 import { User } from 'src/app/models/user';
@@ -21,7 +21,13 @@ export class DialogUserEditComponent implements OnInit {
   editModeUserForm: FormGroup;
   url = "./assets/img/avatar.png";
   selectedFile:File = null;
-  user: User;
+  user: User = {
+    nom: '',
+    prenom: '',
+    username: '',
+    password: '',
+    profile: ''
+  };
   profiles: Profile[];
 
   get idEdit(){ return this.editModeUserForm.get("id");}
@@ -32,7 +38,7 @@ export class DialogUserEditComponent implements OnInit {
   get confpassEdit(){ return this.editModeUserForm.get("confpass");}
   get selectedProfileEdit(){ return this.editModeUserForm.get("selectedProfile");}
   
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, private toolService:ToolService, private apiService:ApiService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, private toolService:ToolService, private apiService:ApiService, private dialogRef: MatDialogRef<DialogUserEditComponent>) { }
 
   ngOnInit(): void {
     this.editUserForm();
@@ -82,7 +88,8 @@ export class DialogUserEditComponent implements OnInit {
    * @param user 
    * reccuperer l'utilisateur actuel en cliquant sur une ligne du tableau 
    */
-   getCurrentUser(user: User){
+   getCurrentUser(user: any){
+    console.log("user => "+JSON.stringify(user));
     this.editModeUserForm.get("id").setValue(user.id);
     this.editModeUserForm.get("nom").setValue(user.nom);
     this.editModeUserForm.get("prenom").setValue(user.prenom);
@@ -105,13 +112,13 @@ export class DialogUserEditComponent implements OnInit {
    */
    editUserForm(){
     this.editModeUserForm = this.formBuilder.group({
-      id: [{ value: '', disabled:true}],
-      nom: [{ value: '', disabled:true}, [Validators.required]],
-      prenom: [{ value: '', disabled:true}, [Validators.required]],
-      username: [{ value: '', disabled:true}, [Validators.required]],
-      password: [{ value: '', disabled:true}, [Validators.required, Validators.minLength(6)]],
-      confpass: [{ value: '', disabled:true}, [Validators.required]],
-      selectedProfile:[{ value: '', disabled:true}, [Validators.required]]
+      id: [{ value: '', disabled:false}],
+      nom: [{ value: '', disabled:false}, [Validators.required]],
+      prenom: [{ value: '', disabled:false}, [Validators.required]],
+      username: [{ value: '', disabled:false}, [Validators.required]],
+      password: [{ value: '', disabled:false}, [Validators.required, Validators.minLength(6)]],
+      confpass: [{ value: '', disabled:false}, [Validators.required]],
+      selectedProfile:[{ value: '', disabled:false}, [Validators.required]]
     },{
       updateOn: 'change'
     });
@@ -128,12 +135,12 @@ export class DialogUserEditComponent implements OnInit {
       this.user.nom = this.nomEdit.value;
       this.user.prenom = this.prenomEdit.value;
       this.user.password = this.passwordEdit.value;
-      this.user.profile.id = this.selectedProfileEdit.value;
+      this.user.profile = this.selectedProfileEdit.value;
 
       // console.log(this.profileForm.value);
       this.apiService.put(Url.USER_EDIT_URL + "/" + this.idEdit.value, this.user, {}).subscribe(
         (data) => {
-          // this.closeModalEdit();
+          this.dialogRef.close();
           this.toolService.showToast('Edition de profile reussie', 'OK', 3000);
         }, (error) => {
           // console.log('erreur ' + JSON.stringify(error));

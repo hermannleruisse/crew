@@ -4,7 +4,7 @@ import { Profile } from 'src/app/models/profile';
 import { Url } from 'src/app/models/url';
 import { ApiService } from 'src/app/services/api.service';
 import { ToolService } from 'src/app/services/tool.service';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export interface DialogData {
   animal: 'panda' | 'unicorn' | 'lion';
@@ -31,7 +31,7 @@ export class DialogProfileEditComponent implements OnInit {
   get libelleEdit() { return this.editModeProfileForm.get("libelle"); }
   get descriptionEdit() { return this.editModeProfileForm.get("description"); }
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, private toolService: ToolService, private apiService: ApiService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, private toolService: ToolService, private apiService: ApiService, private dialogRef: MatDialogRef<DialogProfileEditComponent>) { }
 
   ngOnInit(): void {
     this.editProfilForm();
@@ -43,10 +43,10 @@ export class DialogProfileEditComponent implements OnInit {
    */
   editProfilForm() {
     this.editModeProfileForm = this.formBuilder.group({
-      id: [{ value: '', disabled: true }],
-      code: [{ value: '', disabled: true }, [Validators.required]],
-      libelle: [{ value: '', disabled: true }, [Validators.required]],
-      description: [{ value: '', disabled: true }]
+      id: [{ value: '', disabled: false }],
+      code: [{ value: '', disabled: false }, [Validators.required]],
+      libelle: [{ value: '', disabled: false }, [Validators.required]],
+      description: [{ value: '', disabled: false }]
     }, {
       updateOn: 'change'
     });
@@ -83,7 +83,7 @@ export class DialogProfileEditComponent implements OnInit {
       // console.log(this.profileForm.value);
       this.apiService.put(Url.PROFILE_EDIT_URL + "/" + this.idEdit.value, this.profile, {}).subscribe(
         (data) => {
-          // this.closeModalEdit();
+          this.dialogRef.close();
           this.toolService.showToast('Edition de profile reussie', 'OK', 3000);
         }, (error) => {
           // console.log('erreur ' + JSON.stringify(error));

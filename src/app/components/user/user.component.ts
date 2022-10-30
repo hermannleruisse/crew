@@ -43,7 +43,7 @@ export class UserComponent implements OnInit, AfterViewInit {
   openDialogAddUser() {
     const dialogRef = this.dialog.open(DialogUserAddComponent, {
       height: '400px',
-      width: '600px',
+      width: '700px',
       disableClose: true });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -56,7 +56,7 @@ export class UserComponent implements OnInit, AfterViewInit {
     
     const dialogRef = this.dialog.open(DialogUserEditComponent, { 
       height: '400px',
-      width: '600px',
+      width: '700px',
       data : {
         selectedUser: user
       }, disableClose: true 

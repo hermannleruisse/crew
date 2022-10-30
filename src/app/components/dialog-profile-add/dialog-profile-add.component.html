@@ -2,21 +2,22 @@
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="profileForm" class="example-form">
     <mat-grid-list cols="4" rowHeight="4:2" gutterSize="30px">
-      <mat-grid-tile colspan="2" rowspan="1">
+      
+      <mat-grid-tile colspan="2" rowspan="2">
         <mat-form-field class="example-full-width">
           <mat-label>Code</mat-label>
-          <input name="code" type="text" matInput formControlName="code" *ngIf="code.invalid && (code.dirty || code.touched)">
-          <mat-error *ngIf="code.errors.required">
+          <input name="code" type="text" matInput formControlName="code">
+          <mat-error *ngIf="code.invalid && (code.dirty || code.touched)">
             Le code est <strong>obligatoire</strong>
           </mat-error>
         </mat-form-field>
       </mat-grid-tile>
 
-      <mat-grid-tile colspan="2" rowspan="1">
+      <mat-grid-tile colspan="2" rowspan="2">
         <mat-form-field class="example-full-width">
           <mat-label>Libellé</mat-label>
           <input name="libelle" type="text" matInput formControlName="libelle">
-          <mat-error *ngIf="libelle.errors.required">
+          <mat-error *ngIf="libelle.invalid && (libelle.dirty || libelle.touched)">
             Le libellé est <strong>obligatoire</strong>
           </mat-error>
         </mat-form-field>
