@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Fonction } from 'src/app/models/fonction';
 import { Profile } from 'src/app/models/profile';
@@ -28,7 +28,7 @@ export class HabilitationComponent implements OnInit {
   habilitation: Habilitation;
   checkhabilitation: CheckHabilitation;
 
-  get profileSelectedList(){ return this.habilitationForm.get("selectedProfile");}
+  get selectedProfile(){ return this.habilitationForm.get("selectedProfile");}
   
   constructor(private formBuilder: FormBuilder, private toolService: ToolService, private apiService: ApiService) { }
   
@@ -48,9 +48,9 @@ export class HabilitationComponent implements OnInit {
    * charge les fonctionnalités en fonction du profile selectionné
    */
   changeProfile(){
-    console.log(this.profileSelectedList.value);
+    console.log(this.selectedProfile.value);
     this.toolService.showLoading();
-    this.apiService.get(Url.PROFILE_LIST_URL+"/"+this.profileSelectedList.value, {}).subscribe(
+    this.apiService.get(Url.PROFILE_LIST_URL+"/"+this.selectedProfile.value, {}).subscribe(
       (data) => {
         console.log('data => ' + JSON.stringify(data));
         this.fonctions = data;
@@ -79,15 +79,15 @@ export class HabilitationComponent implements OnInit {
    */
   saveHabilitation(){
     if(this.habilitationForm.valid){
-      console.log('selected value '+this.profileSelectedList.value);
+      console.log('selected value '+this.selectedProfile.value);
       console.log(this.habilitationForm.value);
       this.toolService.showLoading();
-      this.habilitation.profile = this.profileSelectedList.value;
+      this.habilitation.profile = this.selectedProfile.value;
       this.habilitation.fonctions = this.fonctions;
       
       this.apiService.post(Url.HABILIT_ADD_URL, this.habilitation, {}).subscribe(
         (data) => {
-          this.toolService.showToast('Mise a jour de reussie', 'OK', 3000);
+          this.toolService.showToast('Mise à jour de réussie', 'OK', 3000);
         }, (error) => {
           console.log('erreur ' + JSON.stringify(error));
           this.toolService.hideLoading();
@@ -103,7 +103,7 @@ export class HabilitationComponent implements OnInit {
    * retourne la liste des profiles
    * @returns 
    */
-   getProfiles() {
+  getProfiles() {
     this.apiService.get(Url.PROFILE_LIST_URL, {})
       .subscribe((data) => {
         this.profiles = data;

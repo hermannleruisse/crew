@@ -2,6 +2,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Customerror } from 'src/app/models/customerror';
 import { Profile } from 'src/app/models/profile';
 import { Url } from 'src/app/models/url';
 import { User } from 'src/app/models/user';
@@ -135,6 +136,7 @@ export class DialogUserEditComponent implements OnInit {
       this.user.nom = this.nomEdit.value;
       this.user.prenom = this.prenomEdit.value;
       this.user.password = this.passwordEdit.value;
+      this.user.username = this.usernameEdit.value;
       this.user.profile = this.selectedProfileEdit.value;
 
       // console.log(this.profileForm.value);
@@ -142,10 +144,13 @@ export class DialogUserEditComponent implements OnInit {
         (data) => {
           this.dialogRef.close();
           this.toolService.showToast('Edition de profile reussie', 'OK', 3000);
-        }, (error) => {
-          // console.log('erreur ' + JSON.stringify(error));
+        }, (error:Customerror) => {
+          console.log('erreur =>' + JSON.stringify(error));
           this.toolService.hideLoading();
           this.toolService.showToast(error.message, 'OK');
+          error.error.errors.forEach(val => {
+            this.toolService.showToast(val, 'OK');
+          });
         }, () => {
           this.toolService.hideLoading();
           console.log('complete');
