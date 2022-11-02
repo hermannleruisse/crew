@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Action } from 'src/app/models/action';
 import { Fonction } from 'src/app/models/fonction';
+import { Habilitation } from 'src/app/models/habilitation';
 import { Profile } from 'src/app/models/profile';
 import { Url } from 'src/app/models/url';
 import { ApiService } from 'src/app/services/api.service';
 import { ToolService } from 'src/app/services/tool.service';
-
-export interface Habilitation{
-  profile: string,
-  fonctions: Fonction[]
-}
 
 export interface CheckHabilitation{
   profile: string,
@@ -25,7 +22,10 @@ export class HabilitationComponent implements OnInit {
   profiles: Profile[];
   fonctions: Fonction[];
   habilitationForm: FormGroup;
-  habilitation: Habilitation;
+  habilitation: Habilitation = {
+    profile: '',
+    permissions: []
+  };
   checkhabilitation: CheckHabilitation;
 
   get selectedProfile(){ return this.habilitationForm.get("selectedProfile");}
@@ -50,7 +50,7 @@ export class HabilitationComponent implements OnInit {
   changeProfile(){
     console.log(this.selectedProfile.value);
     this.toolService.showLoading();
-    this.apiService.get(Url.PROFILE_LIST_URL+"/"+this.selectedProfile.value, {}).subscribe(
+    this.apiService.get(Url.HABILIT_LIST_URL+"/"+this.selectedProfile.value, {}).subscribe(
       (data) => {
         console.log('data => ' + JSON.stringify(data));
         this.fonctions = data;
@@ -67,10 +67,10 @@ export class HabilitationComponent implements OnInit {
    * change le status des actions d'une fonctionnalite 
    */
   onCheckboxChange(j:number, k:number){
-    if(this.fonctions[j].action[k].checked == true){
-      this.fonctions[j].action[k].checked = false;
+    if(this.fonctions[j].permissions[k].checked == true){
+      this.fonctions[j].permissions[k].checked = false;
     }else{
-      this.fonctions[j].action[k].checked = true;
+      this.fonctions[j].permissions[k].checked = true;
     }
   }
 
@@ -80,11 +80,18 @@ export class HabilitationComponent implements OnInit {
   saveHabilitation(){
     if(this.habilitationForm.valid){
       console.log('selected value '+this.selectedProfile.value);
-      console.log(this.habilitationForm.value);
+      
       this.toolService.showLoading();
       this.habilitation.profile = this.selectedProfile.value;
-      this.habilitation.fonctions = this.fonctions;
-      
+      this.habilitation.permissions = [];
+
+      this.fonctions.forEach(element => {
+        console.log('element value '+JSON.stringify(element.permissions));
+        element.permissions.forEach(list =>{
+          this.habilitation.permissions.push(list);
+        })
+      });
+
       this.apiService.post(Url.HABILIT_ADD_URL, this.habilitation, {}).subscribe(
         (data) => {
           this.toolService.showToast('Mise à jour de réussie', 'OK', 3000);
@@ -94,7 +101,6 @@ export class HabilitationComponent implements OnInit {
           this.toolService.showToast(error.message, 'OK');
         }, () => {
           this.toolService.hideLoading();
-          
         });
     }
   }

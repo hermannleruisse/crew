@@ -18,7 +18,7 @@
     <div style="text-align: center;">
         <mat-form-field appearance="fill">
             <mat-label>Profile</mat-label>
-            <mat-select formControlName="selectedProfile" required>
+            <mat-select formControlName="selectedProfile" (selectionChange)="changeProfile()" required>
                 <mat-option>Choisir un profile</mat-option>
                 <mat-option *ngFor="let p of profiles; let i = index" [value]="profiles[i].id">
                     {{profiles[i].libelle}}
@@ -47,9 +47,9 @@
                 </span>
                 <span class="example-list-section">
                     <ul>
-                        <li *ngFor="let a of f.permission; let k = index">
+                        <li *ngFor="let a of f.permissions; let k = index">
                             <mat-checkbox [value]="a.checked" [checked]="a.checked" color="primary" (change)="onCheckboxChange(j, k)">
-                                {{a.code}}
+                                {{a.libelle}}
                             </mat-checkbox>
 
                             <!-- <mat-checkbox [value]="f.action[j].checked" (change)="onCheckboxChange(j, k)"
