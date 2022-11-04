@@ -36,17 +36,25 @@ export class TokenInterceptorService implements HttpInterceptor{
           message: error && error.message ? error.message : '',
           status: error.status
         };
-
+        switch (error.status) {
+          case 500:
+            // TODO:this.router.navigateByUrl('/login');
+            break;
+          case 403:
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            localStorage.removeItem('permission');
+            this.router.navigateByUrl('/login');
+            break;
+          case 404:
+            // TODO:this.router.navigateByUrl('/login');
+            break;
+          default:
+            break;
+        }
         console.log('erreur <=> ' + JSON.stringify(error));
-        localStorage.removeItem('token');
-        localStorage.removeItem('username');
-        localStorage.removeItem('permission');
           // this.router.navigate(['login']);
-        this.router.navigateByUrl('/login');
-        // throw new Error("Method not implemented."+error);
          return throwError(error);
       }));
-
-        // throw new Error("Method not implemented.");
     }
 }

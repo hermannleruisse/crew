@@ -29,9 +29,9 @@ export class HabilitationComponent implements OnInit {
   checkhabilitation: CheckHabilitation;
 
   get selectedProfile(){ return this.habilitationForm.get("selectedProfile");}
-  
+
   constructor(private formBuilder: FormBuilder, private toolService: ToolService, private apiService: ApiService) { }
-  
+
   ngOnInit(): void {
     console.log('habilitation');
     this.habilitationForm = this.formBuilder.group({
@@ -39,7 +39,7 @@ export class HabilitationComponent implements OnInit {
     },{
       updateOn: 'change'
     });
-    
+
     this.getProfiles();
     this.getFonctions();
   }
@@ -64,7 +64,7 @@ export class HabilitationComponent implements OnInit {
   }
 
   /**
-   * change le status des actions d'une fonctionnalite 
+   * change le status des actions d'une fonctionnalite
    */
   onCheckboxChange(j:number, k:number){
     if(this.fonctions[j].permissions[k].checked == true){
@@ -72,6 +72,7 @@ export class HabilitationComponent implements OnInit {
     }else{
       this.fonctions[j].permissions[k].checked = true;
     }
+    console.log('element value '+JSON.stringify(this.fonctions));
   }
 
   /**
@@ -80,13 +81,12 @@ export class HabilitationComponent implements OnInit {
   saveHabilitation(){
     if(this.habilitationForm.valid){
       console.log('selected value '+this.selectedProfile.value);
-      
+
       this.toolService.showLoading();
       this.habilitation.profile = this.selectedProfile.value;
       this.habilitation.permissions = [];
 
       this.fonctions.forEach(element => {
-        console.log('element value '+JSON.stringify(element.permissions));
         element.permissions.forEach(list =>{
           this.habilitation.permissions.push(list);
         })
@@ -107,7 +107,7 @@ export class HabilitationComponent implements OnInit {
 
   /**
    * retourne la liste des profiles
-   * @returns 
+   * @returns
    */
   getProfiles() {
     this.apiService.get(Url.PROFILE_LIST_URL, {})
@@ -118,7 +118,7 @@ export class HabilitationComponent implements OnInit {
 
   /**
    * retourne la liste des fonctions
-   * @returns 
+   * @returns
    */
   getFonctions(){
     this.toolService.showLoading();
@@ -137,7 +137,7 @@ export class HabilitationComponent implements OnInit {
 
   /**
    * vérifie si le profil est habilité
-   * @returns 
+   * @returns
    */
    checkAuthority():boolean{
     this.apiService.post(Url.HABILIT_CHECK_URL, this.checkhabilitation, {}).subscribe(
