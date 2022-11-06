@@ -31,14 +31,14 @@
         </mat-form-field>
     </div>
 
-    <p><b>Fonctionnalités</b></p>
+    <h3>Fonctionnalités ( Sélectionnez les actions selon le profile )</h3>
 
-    <div class="col s12">
+    <!-- <div class="col s12">
         <pre>{{habilitationForm.value | json}}</pre>
         <pre>{{fonctions | json}}</pre>
-    </div>
+    </div> -->
 
-    <mat-grid-list cols="2" rowHeight="2:1" gutterSize="30px">
+    <mat-grid-list cols="2" rowHeight="2:1">
         <mat-grid-tile *ngFor="let f of fonctions; let j = index">
 
             <section class="example-section">
@@ -51,11 +51,6 @@
                             <mat-checkbox [value]="a.checked" [checked]="a.checked" color="primary" (change)="onCheckboxChange(j, k)">
                                 {{a.libelle}}
                             </mat-checkbox>
-
-                            <!-- <mat-checkbox [value]="f.action[j].checked" (change)="onCheckboxChange(j, k)"
-                                [checked]="a.checked" color="primary">
-                                {{a.code}}
-                            </mat-checkbox> -->
                         </li>
                     </ul>
                 </span>

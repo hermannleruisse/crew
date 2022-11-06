@@ -107,7 +107,7 @@
 <h2 mat-dialog-title>Ajouter un membre</h2>
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="memberForm" class="example-form">
-    <mat-grid-list cols="4" rowHeight="4:2" gutterSize="30px">
+    <mat-grid-list cols="6" rowHeight="4:2" gutterSize="30px">
         <!-- <div class="col s4">
             <div class="col s12 user-view">
                 <a href="#user"><img class="circle" width="215" height="215" height="215" [src]="url"></a>
@@ -125,58 +125,72 @@
                 </div>
             </div>
         </div> -->
-      
-        <mat-grid-tile colspan="2" rowspan="1">
+      <!-- <mat-grid-tile colspan="2" rowspan="2">
+        <mat-form-field class="example-full-width">
+          <mat-label>photo</mat-label>
+          <input name="photo" type="file" formControlName="photo" (change)="onSelectFile($event)">
+          <mat-error *ngIf="photo.invalid && (photo.dirty || photo.touched)">
+            <span *ngIf="photo.errors.required">Le nom est <strong>obligatoire</strong></span>
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile> -->
+
+      <mat-form-field>
+        <ngx-mat-file-input formControlName="photo" placeholder="Basic Input" ></ngx-mat-file-input>
+        <mat-icon matSuffix>folder</mat-icon>
+      </mat-form-field>
+
+      <mat-grid-tile colspan="2" rowspan="2">
         <mat-form-field class="example-full-width">
           <mat-label>Nom</mat-label>
-          <input name="nom" type="text" matInput formControlName="nom" *ngIf="nom.invalid && (nom.dirty || nom.touched)">
-          <mat-error *ngIf="nom.errors.required">
-            Le nom est <strong>obligatoire</strong>
+          <input name="nom" type="text" matInput formControlName="nom">
+          <mat-error *ngIf="nom.invalid && (nom.dirty || nom.touched)">
+            <span *ngIf="nom.errors.required">Le nom est <strong>obligatoire</strong></span>
           </mat-error>
         </mat-form-field>
       </mat-grid-tile>
 
-      <mat-grid-tile colspan="2" rowspan="1">
+      <mat-grid-tile colspan="2" rowspan="2">
         <mat-form-field class="example-full-width">
           <mat-label>Prénom</mat-label>
-          <input name="prenom" type="text" matInput formControlName="prenom" *ngIf="prenom.invalid && (prenom.dirty || prenom.touched)">
-          <mat-error *ngIf="prenom.errors.required">
-            Le prénom est <strong>obligatoire</strong>
+          <input name="prenom" type="text" matInput formControlName="prenom">
+          <mat-error *ngIf="prenom.invalid && (prenom.dirty || prenom.touched)">
+            <span *ngIf="prenom.errors.required">Le prénom est <strong>obligatoire</strong></span>
           </mat-error>
         </mat-form-field>
       </mat-grid-tile>
 
-      <mat-grid-tile colspan="2" rowspan="1">
+      <mat-grid-tile colspan="2" rowspan="2">
         <mat-form-field class="example-full-width">
           <mat-label>Date de naissance</mat-label>
-          <input name="dateNaissance" type="text" matInput formControlName="dateNaissance" *ngIf="dateNaissance.invalid && (dateNaissance.dirty || dateNaissance.touched)">
-          <mat-error *ngIf="dateNaissance.errors.required">
-            La date de naissance est <strong>obligatoire</strong>
+          <input name="dateNaissance" type="text" matInput formControlName="dateNaissance">
+          <mat-error *ngIf="dateNaissance.invalid && (dateNaissance.dirty || dateNaissance.touched)">
+            <span *ngIf="dateNaissance.errors.required">La date de naissance est <strong>obligatoire</strong></span>
           </mat-error>
         </mat-form-field>
       </mat-grid-tile>
 
-      <mat-grid-tile colspan="2" rowspan="1">
+      <mat-grid-tile colspan="2" rowspan="2">
         <mat-form-field class="example-full-width">
-          <mat-label>Date de naissance</mat-label>
-          <input name="telephone" type="text" matInput formControlName="telephone" *ngIf="telephone.invalid && (telephone.dirty || telephone.touched)">
-          <mat-error *ngIf="telephone.errors.required">
-            Le telephone est <strong>obligatoire</strong>
+          <mat-label>Téléphone</mat-label>
+          <input name="telephone" type="text" matInput formControlName="telephone">
+          <mat-error *ngIf="telephone.invalid && (telephone.dirty || telephone.touched)">
+            <span *ngIf="telephone.errors.required">Le telephone est <strong>obligatoire</strong></span>
           </mat-error>
         </mat-form-field>
       </mat-grid-tile>
 
-      <mat-grid-tile colspan="2" rowspan="1">
+      <mat-grid-tile colspan="2" rowspan="2">
         <mat-form-field class="example-full-width">
-          <mat-label>Date de naissance</mat-label>
-          <input name="adresse" type="text" matInput formControlName="adresse" *ngIf="adresse.invalid && (adresse.dirty || adresse.touched)">
-          <mat-error *ngIf="adresse.errors.required">
-            L'adresse est <strong>obligatoire</strong>
+          <mat-label>Adresse</mat-label>
+          <input name="adresse" type="text" matInput formControlName="adresse">
+          <mat-error *ngIf="adresse.invalid && (adresse.dirty || adresse.touched)">
+            <span *ngIf="adresse.errors.required">L'adresse est <strong>obligatoire</strong></span>
           </mat-error>
         </mat-form-field>
       </mat-grid-tile>
       
-      <mat-grid-tile colspan="2" rowspan="1">
+      <mat-grid-tile colspan="2" rowspan="2">
         <mat-form-field appearance="fill">
             <mat-label>Sexe</mat-label>
             <mat-select formControlName="selectedSexe" required>
@@ -184,13 +198,13 @@
               <mat-option value="F">Feminin</mat-option>
               <mat-option value="M">Masculin</mat-option>
             </mat-select>
-            <mat-error *ngIf="selectedSexe.errors.required">
-                Le genre est obligatoire
+            <mat-error *ngIf="selectedSexe.invalid && (selectedSexe.dirty || selectedSexe.touched)">
+              <span *ngIf="selectedSexe.errors.required">Le genre est <strong>obligatoire</strong></span>
             </mat-error>
           </mat-form-field>
       </mat-grid-tile>
 
-      <mat-grid-tile colspan="2" rowspan="1">
+      <mat-grid-tile colspan="2" rowspan="2">
         <mat-form-field appearance="fill">
             <mat-label>Ministere</mat-label>
             <mat-select formControlName="selectedMinister" required>
@@ -199,8 +213,8 @@
                 {{ministeres[i].libelle}}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="selectedMinister.errors.required">
-                Le ministere est obligatoire
+            <mat-error *ngIf="selectedMinister.invalid && (selectedMinister.dirty || selectedMinister.touched)">
+                <span *ngIf="selectedMinister.errors.required">Le ministere est obligatoire</span>
             </mat-error>
           </mat-form-field>
       </mat-grid-tile>

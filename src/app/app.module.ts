@@ -45,6 +45,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DialogMembreAddComponent } from './components/dialog-membre-add/dialog-membre-add.component';
 import { DialogMembreEditComponent } from './components/dialog-membre-edit/dialog-membre-edit.component';
 import {MatSelectModule} from '@angular/material/select';
+import { MembreComponent } from './components/membre/membre.component';
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 
 @NgModule({
   declarations: [
@@ -69,6 +71,7 @@ import {MatSelectModule} from '@angular/material/select';
     DialogMinisterEditComponent,
     DialogMembreAddComponent,
     DialogMembreEditComponent,
+    MembreComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,7 +95,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatMenuModule,
     MatDialogModule,
     MatCheckboxModule,
-    MatSelectModule
+    MatSelectModule,
+    NgxMatFileInputModule
   ],
   providers: [
     NgxSpinnerService,

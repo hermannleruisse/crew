@@ -26,8 +26,7 @@
 </div> -->
 
 
-<mat-grid-list cols="3">
-    <mat-grid-tile></mat-grid-tile>
+<mat-grid-list cols="1" rowHeight="100vh">
     <mat-grid-tile style="background: pink;">
         <form #loginForm="ngForm" (ngSubmit)="seConnecter(loginForm)"> 
           <mat-card >
@@ -46,19 +45,18 @@
                 <mat-form-field appearance="outline">
                     <mat-label>Mots de passe</mat-label>
                     <input name="password" [(ngModel)]="loginUserData.password" matInput placeholder="Saisir le mots de passe" [type]="hide ? 'password' : 'text'">
-                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
                   </mat-form-field>
               </p>
             </mat-card-content>
             <mat-card-actions style="text-align: center;">
-              <button mat-flat-button color="primary">Se connecter</button>
+              <button mat-flat-button color="primary" type="submit">Se connecter</button>
             </mat-card-actions>
           </mat-card>
         </form>
     </mat-grid-tile>
-    <mat-grid-tile></mat-grid-tile>
 </mat-grid-list>
 
 

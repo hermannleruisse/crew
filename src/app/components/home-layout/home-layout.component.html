@@ -3,7 +3,7 @@
     <mat-drawer #drawer class="example-sidenav" mode="side" opened>
         
         <div style="text-align: center;">
-            <img class="avatar mat-elevation-z8" src="https://source.unsplash.com/c_GmwfHBDzk/200x200" />
+            <img class="avatar mat-elevation-z8" [src]="url_img" />
 
             <h4 class="name">{{authService.getUsername()}}</h4>
             <p class="designation">{{authService.getProfile()}}</p>
@@ -20,13 +20,13 @@
         <mat-divider></mat-divider>
 
         <mat-nav-list role="navigation" aria-label="navigation">
-            <a mat-list-item routerLink="profile" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><mat-icon aria-hidden="false">cloud</mat-icon> Profile</a>
-            <a mat-list-item routerLink="user" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="material-icons">perm_identity</i>Utilisateur</a>
-            <a mat-list-item routerLink="habilitation" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="material-icons">security</i>Habilitation</a>
+            <a mat-list-item routerLink="profile" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Profile</a>
+            <a mat-list-item routerLink="user" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Utilisateur</a>
+            <a mat-list-item routerLink="habilitation" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Habilitation</a>
         </mat-nav-list>   
         
     </mat-drawer>
-    <mat-drawer-content style="padding: 20px 50px">
+    <mat-drawer-content style="padding: 20px 20px">
         <router-outlet>
                 
         </router-outlet>

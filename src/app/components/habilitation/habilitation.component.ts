@@ -49,18 +49,25 @@ export class HabilitationComponent implements OnInit {
    */
   changeProfile(){
     console.log(this.selectedProfile.value);
-    this.toolService.showLoading();
-    this.apiService.get(Url.HABILIT_LIST_URL+"/"+this.selectedProfile.value, {}).subscribe(
-      (data) => {
-        console.log('data => ' + JSON.stringify(data));
-        this.fonctions = data;
-      }, (error) => {
-        console.log('erreur ' + JSON.stringify(error));
-        this.toolService.hideLoading();
-      }, () => {
-        this.toolService.hideLoading();
-        console.log('complete');
-      });
+    
+
+    if(this.habilitationForm.valid){
+      this.fonctions = [];
+      this.toolService.showLoading();
+      
+      this.apiService.get(Url.HABILIT_LIST_URL+"/"+this.selectedProfile.value, {}).subscribe(
+        (data) => {
+          console.log('data => ' + JSON.stringify(data));
+          this.fonctions = data;
+        }, (error) => {
+          console.log('erreur ' + JSON.stringify(error));
+          this.toolService.hideLoading();
+        }, () => {
+          this.toolService.hideLoading();
+          console.log('complete');
+        });
+    }
+    
   }
 
   /**

@@ -114,7 +114,7 @@ export class DialogMembreAddComponent implements OnInit {
       
       this.apiService.post(Url.MEMBR_ADD_URL, this.member, {}).subscribe(
         (data) => {
-          this.toolService.showToast('Enregistrer reussie', 'OK', 3000);
+          this.toolService.showToast('Enregistrement réussie', 'OK', 3000);
         }, (error) => {
           console.log('erreur ' + JSON.stringify(error));
           this.toolService.hideLoading();
