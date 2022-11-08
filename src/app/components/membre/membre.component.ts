@@ -28,7 +28,7 @@ export class MembreComponent implements OnInit {
   openDialogAddMember() {
     const dialogRef = this.dialog.open(DialogMembreAddComponent, {
       height: '400px',
-      width: '700px',
+      width: '900px',
       disableClose: true });
 
     dialogRef.afterClosed().subscribe(result => {

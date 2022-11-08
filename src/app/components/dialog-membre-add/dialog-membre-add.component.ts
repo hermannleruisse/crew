@@ -48,11 +48,13 @@ export class DialogMembreAddComponent implements OnInit {
   }
 
   onSelectFile(e){
+    
     if(e.target.files){
       var reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
       this.selectedFile = <File> e.target.files[0];
-      console.log("file "+JSON.stringify(this.selectedFile.name.split('.').pop()));
+      console.log("selectedFile =>"+JSON.stringify(e));
+      console.log("file =>"+JSON.stringify(this.selectedFile.name.split('.').pop()));
       reader.onload = (event:any)=>{
         this.url = event.target.result;
       }

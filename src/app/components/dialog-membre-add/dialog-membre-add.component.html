@@ -104,10 +104,11 @@
 </div> -->
 
 
-<h2 mat-dialog-title>Ajouter un membre</h2>
+<h2 mat-dialog-title></h2>
+<!-- <h2 mat-dialog-title>Ajouter un membre</h2> -->
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="memberForm" class="example-form">
-    <mat-grid-list cols="6" rowHeight="4:2" gutterSize="30px">
+    <mat-grid-list cols="6" rowHeight="6:2" gutterSize="30px">
         <!-- <div class="col s4">
             <div class="col s12 user-view">
                 <a href="#user"><img class="circle" width="215" height="215" height="215" [src]="url"></a>
@@ -135,15 +136,19 @@
         </mat-form-field>
       </mat-grid-tile> -->
 
-      <mat-grid-tile colspan="1" rowspan="2">
-        <img class="circle" width="215" height="215" [src]="url">
-        <mat-form-field>
-          <ngx-mat-file-input formControlName="photo" (change)="onSelectFile($event)" [accept]="'image/*'" placeholder="Charger un fichier" ></ngx-mat-file-input>
+      <mat-grid-tile colspan="2" rowspan="2">
+        <div><img class="circle" width="150px" height="150px" [src]="url"></div>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2" rowspan="2">
+        <input type="file" formControlName="photo" accept="image/png, image/jpeg" (change)="onSelectFile($event)">
+        <!-- <mat-form-field>
+          <ngx-mat-file-input formControlName="photo" (change)="onSelectFile($event)" accept="image/png, image/jpeg" placeholder="Charger un fichier" ></ngx-mat-file-input>
           <mat-icon matSuffix>folder</mat-icon>
           <mat-error *ngIf="photo.invalid && (photo.dirty || photo.touched)">
             <span *ngIf="photo.errors.required">Le nom est <strong>obligatoire</strong></span>
           </mat-error>
-        </mat-form-field>
+        </mat-form-field> -->
       </mat-grid-tile>
 
       <mat-grid-tile colspan="2" rowspan="2">
@@ -200,8 +205,8 @@
         <mat-form-field appearance="fill">
             <mat-label>Sexe</mat-label>
             <mat-select formControlName="selectedSexe" required>
-              <mat-option>Choisir un profile</mat-option>
-              <mat-option value="F">Feminin</mat-option>
+              <mat-option>Choisir un genre</mat-option>
+              <mat-option value="F">Féminin</mat-option>
               <mat-option value="M">Masculin</mat-option>
             </mat-select>
             <mat-error *ngIf="selectedSexe.invalid && (selectedSexe.dirty || selectedSexe.touched)">
@@ -214,7 +219,7 @@
         <mat-form-field appearance="fill">
             <mat-label>Ministere</mat-label>
             <mat-select formControlName="selectedMinister" required>
-              <mat-option>Choisir un ministere</mat-option>
+              <mat-option>Choisir un ministère</mat-option>
               <mat-option *ngFor="let m of ministeres; let i = index" [value]="ministeres[i].id">
                 {{ministeres[i].libelle}}
               </mat-option>
