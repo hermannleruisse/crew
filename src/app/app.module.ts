@@ -47,6 +47,7 @@ import { DialogMembreEditComponent } from './components/dialog-membre-edit/dialo
 import {MatSelectModule} from '@angular/material/select';
 import { MembreComponent } from './components/membre/membre.component';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -96,7 +97,8 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
     MatDialogModule,
     MatCheckboxModule,
     MatSelectModule,
-    NgxMatFileInputModule
+    NgxMatFileInputModule,
+    MatDatepickerModule
   ],
   providers: [
     NgxSpinnerService,

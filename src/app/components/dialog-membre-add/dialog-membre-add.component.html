@@ -172,9 +172,19 @@
       </mat-grid-tile>
 
       <mat-grid-tile colspan="2" rowspan="2">
-        <mat-form-field class="example-full-width">
+        <!-- <mat-form-field class="example-full-width">
           <mat-label>Date de naissance</mat-label>
           <input name="dateNaissance" type="text" matInput formControlName="dateNaissance">
+          <mat-error *ngIf="dateNaissance.invalid && (dateNaissance.dirty || dateNaissance.touched)">
+            <span *ngIf="dateNaissance.errors.required">La date de naissance est <strong>obligatoire</strong></span>
+          </mat-error>
+        </mat-form-field> -->
+
+        <mat-form-field appearance="fill" class="example-full-width">
+          <mat-label>Date de naissance</mat-label>
+          <input name="dateNaissance" matInput [matDatepicker]="picker">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
           <mat-error *ngIf="dateNaissance.invalid && (dateNaissance.dirty || dateNaissance.touched)">
             <span *ngIf="dateNaissance.errors.required">La date de naissance est <strong>obligatoire</strong></span>
           </mat-error>
