@@ -48,6 +48,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { MembreComponent } from './components/membre/membre.component';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -98,7 +99,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatCheckboxModule,
     MatSelectModule,
     NgxMatFileInputModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [
     NgxSpinnerService,
