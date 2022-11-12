@@ -13,7 +13,7 @@ import { ToolService } from 'src/app/services/tool.service';
   styleUrls: ['./dialog-membre-add.component.scss']
 })
 export class DialogMembreAddComponent implements OnInit {
-  url = "./assets/img/avatar.png";
+  url = "./assets/img/avatar1.png";
   selectedFile:File = null;
   member: Membre;
   memberForm: FormGroup;
