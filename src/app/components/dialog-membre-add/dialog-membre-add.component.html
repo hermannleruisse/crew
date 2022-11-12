@@ -106,6 +106,13 @@
 
 <h2 mat-dialog-title></h2>
 <!-- <h2 mat-dialog-title>Ajouter un membre</h2> -->
+<mat-grid-list cols="1" rowHeight="200px">
+  <mat-grid-tile>
+    <div><img class="circle" width="200px" height="200px" [src]="url"></div>
+  </mat-grid-tile>
+</mat-grid-list>
+
+
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="memberForm" class="example-form">
     <mat-grid-list cols="6" rowHeight="6:2" gutterSize="30px">
@@ -136,12 +143,15 @@
         </mat-form-field>
       </mat-grid-tile> -->
 
-      <mat-grid-tile colspan="2" rowspan="2">
+      <!-- <mat-grid-tile colspan="2" rowspan="2">
         <div><img class="circle" width="150px" height="150px" [src]="url"></div>
       </mat-grid-tile>
-
-      <mat-grid-tile colspan="2" rowspan="2">
+ -->
+      <mat-grid-tile colspan="4" rowspan="2">
         <input type="file" formControlName="photo" accept="image/png, image/jpeg" (change)="onSelectFile($event)">
+        <mat-error *ngIf="photo.invalid && (photo.dirty || photo.touched)">
+          <span *ngIf="photo.errors.required">Le nom est <strong>obligatoire</strong></span>
+        </mat-error>
         <!-- <mat-form-field>
           <ngx-mat-file-input formControlName="photo" (change)="onSelectFile($event)" accept="image/png, image/jpeg" placeholder="Charger un fichier" ></ngx-mat-file-input>
           <mat-icon matSuffix>folder</mat-icon>
@@ -171,27 +181,6 @@
         </mat-form-field>
       </mat-grid-tile>
 
-      <!-- https://www.techgeeknext.com/spring-boot/spring-boot-jasper-report -->
-      <mat-grid-tile colspan="2" rowspan="2">
-        <!-- <mat-form-field class="example-full-width">
-          <mat-label>Date de naissance</mat-label>
-          <input name="dateNaissance" type="text" matInput formControlName="dateNaissance">
-          <mat-error *ngIf="dateNaissance.invalid && (dateNaissance.dirty || dateNaissance.touched)">
-            <span *ngIf="dateNaissance.errors.required">La date de naissance est <strong>obligatoire</strong></span>
-          </mat-error>
-        </mat-form-field> -->
-
-        <mat-form-field appearance="fill" class="example-full-width">
-          <mat-label>Date de naissance</mat-label>
-          <input name="dateNaissance" matInput [matDatepicker]="picker" formControlName="dateNaissance">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-          <mat-error *ngIf="dateNaissance.invalid && (dateNaissance.dirty || dateNaissance.touched)">
-            <span *ngIf="dateNaissance.errors.required">La date de naissance est <strong>obligatoire</strong></span>
-          </mat-error>
-        </mat-form-field>
-      </mat-grid-tile>
-
       <mat-grid-tile colspan="2" rowspan="2">
         <mat-form-field class="example-full-width">
           <mat-label>Téléphone</mat-label>
@@ -211,7 +200,28 @@
           </mat-error>
         </mat-form-field>
       </mat-grid-tile>
-      
+
+      <!-- https://www.techgeeknext.com/spring-boot/spring-boot-jasper-report -->
+      <mat-grid-tile colspan="2" rowspan="2">
+        <!-- <mat-form-field class="example-full-width">
+          <mat-label>Date de naissance</mat-label>
+          <input name="dateNaissance" type="text" matInput formControlName="dateNaissance">
+          <mat-error *ngIf="dateNaissance.invalid && (dateNaissance.dirty || dateNaissance.touched)">
+            <span *ngIf="dateNaissance.errors.required">La date de naissance est <strong>obligatoire</strong></span>
+          </mat-error>
+        </mat-form-field> -->
+
+        <mat-form-field appearance="fill">
+          <mat-label>Date de naissance</mat-label>
+          <input name="dateNaissance" matInput [matDatepicker]="picker" formControlName="dateNaissance">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="dateNaissance.invalid && (dateNaissance.dirty || dateNaissance.touched)">
+            <span *ngIf="dateNaissance.errors.required">La date de naissance est <strong>obligatoire</strong></span>
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
       <mat-grid-tile colspan="2" rowspan="2">
         <mat-form-field appearance="fill">
             <mat-label>Sexe</mat-label>
