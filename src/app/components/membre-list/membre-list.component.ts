@@ -23,9 +23,9 @@ export class MembreListComponent implements OnInit {
   constructor(private toolService:ToolService, private apiService:ApiService, public dialog: MatDialog) { }
 
   ngOnInit() {
-    of(this.getMembres()).subscribe(membres => {
-      this.membres = membres;
-    });
+    // of(this.getMembres()).subscribe(membres => {
+    //   this.membres = membres;
+    // });
 
   }
 
@@ -64,7 +64,7 @@ export class MembreListComponent implements OnInit {
         nom: 'AKAKPO',
         prenom: 'Adje',
         sexe: 'M',
-        dateDeNaissance:new Date(),
+        dateDeNaissance:'',
         adresse:'Lome',
         telephone:'0022892106475',
         photo:'',
@@ -75,7 +75,7 @@ export class MembreListComponent implements OnInit {
         nom: 'AKAKPO1',
         prenom: 'Adjele',
         sexe: 'F',
-        dateDeNaissance:new Date(),
+        dateDeNaissance:'',
         adresse:'Lome',
         telephone:'0022898718111',
         photo:'',
@@ -86,7 +86,7 @@ export class MembreListComponent implements OnInit {
         nom: 'AKAKPO1',
         prenom: 'Adjele',
         sexe: 'F',
-        dateDeNaissance:new Date(),
+        dateDeNaissance:'',
         adresse:'Lome',
         telephone:'0022898718111',
         photo:'',
@@ -97,7 +97,7 @@ export class MembreListComponent implements OnInit {
         nom: 'AKAKPO1',
         prenom: 'Adjele',
         sexe: 'F',
-        dateDeNaissance:new Date(),
+        dateDeNaissance:'',
         adresse:'Lome',
         telephone:'0022898718111',
         photo:'',
@@ -108,7 +108,7 @@ export class MembreListComponent implements OnInit {
         nom: 'AKAKPO1',
         prenom: 'Adjele',
         sexe: 'F',
-        dateDeNaissance:new Date(),
+        dateDeNaissance:'',
         adresse:'Lome',
         telephone:'0022898718111',
         photo:'',
@@ -119,7 +119,7 @@ export class MembreListComponent implements OnInit {
         nom: 'AKAKPO1',
         prenom: 'Adjele',
         sexe: 'F',
-        dateDeNaissance:new Date(),
+        dateDeNaissance:'',
         adresse:'Lome',
         telephone:'0022898718111',
         photo:'',

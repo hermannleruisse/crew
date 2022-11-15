@@ -145,7 +145,7 @@ export class DialogMembreEditComponent implements OnInit {
     this.editModeMemberForm.get("selectedSexe").setValue(membre.sexe);
     this.editModeMemberForm.get("adresse").setValue(membre.adresse);
     this.editModeMemberForm.get("telephone").setValue(membre.telephone);
-    this.editModeMemberForm.get("selectedMinister").setValue(membre.ministere.id);
+    this.editModeMemberForm.get("selectedMinister").setValue(membre.ministere);
     this.editModeMemberForm.get("photo").setValue(membre.photo);
     
     if(membre != null){
