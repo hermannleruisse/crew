@@ -150,15 +150,8 @@
       <mat-grid-tile colspan="4" rowspan="2">
         <input type="file" formControlName="photo" accept="image/png, image/jpeg" (change)="onSelectFile($event)">
         <mat-error *ngIf="photo.invalid && (photo.dirty || photo.touched)">
-          <span *ngIf="photo.errors.required">Le nom est <strong>obligatoire</strong></span>
+          <span *ngIf="photo.errors.required">Le photo est <strong>obligatoire</strong></span>
         </mat-error>
-        <!-- <mat-form-field>
-          <ngx-mat-file-input formControlName="photo" (change)="onSelectFile($event)" accept="image/png, image/jpeg" placeholder="Charger un fichier" ></ngx-mat-file-input>
-          <mat-icon matSuffix>folder</mat-icon>
-          <mat-error *ngIf="photo.invalid && (photo.dirty || photo.touched)">
-            <span *ngIf="photo.errors.required">Le nom est <strong>obligatoire</strong></span>
-          </mat-error>
-        </mat-form-field> -->
       </mat-grid-tile>
 
       <mat-grid-tile colspan="2" rowspan="2">

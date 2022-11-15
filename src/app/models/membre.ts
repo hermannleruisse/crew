@@ -5,13 +5,13 @@ export class Membre {
     nom! : string;
     prenom! : string;
     sexe!: string;
-    dateDeNaissance! : Date;
+    dateDeNaissance! : string;
     adresse! : string;
-    ministere! : Ministere;
+    ministere! : string;
     telephone? : string;
-    photo? : string
+    photo? : string;
 
-    constructor(id:string, nom: string, prenom: string, sexe: string, dateDeNaissance: Date, adresse: string, telephone: string, ministere: Ministere, photo: string){
+    constructor(id:string, nom: string, prenom: string, sexe: string, dateDeNaissance: string, adresse: string, telephone: string, ministere: string, photo: string){
         this.id = id;
         this.nom = nom,
         this.prenom = prenom,

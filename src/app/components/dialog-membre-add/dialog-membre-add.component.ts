@@ -15,7 +15,17 @@ import { ToolService } from 'src/app/services/tool.service';
 export class DialogMembreAddComponent implements OnInit {
   url = "./assets/img/avatar1.png";
   selectedFile:File = null;
-  member: Membre;
+  member: Membre = {
+    id: '',
+    nom : '',
+    prenom : '',
+    sexe: '',
+    dateDeNaissance : '',
+    adresse : '',
+    ministere : '',
+    telephone : '',
+    photo : ''
+  };
   memberForm: FormGroup;
   ministeres: Ministere[];
 
@@ -48,7 +58,7 @@ export class DialogMembreAddComponent implements OnInit {
   }
 
   onSelectFile(e){
-    
+    // https://refine.dev/blog/how-to-base64-upload/
     if(e.target.files){
       var reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
@@ -56,6 +66,7 @@ export class DialogMembreAddComponent implements OnInit {
       console.log("selectedFile =>"+JSON.stringify(e));
       console.log("file =>"+JSON.stringify(this.selectedFile.name.split('.').pop()));
       reader.onload = (event:any)=>{
+        console.log("base64 =>"+JSON.stringify(event.target.result));
         this.url = event.target.result;
       }
     }
@@ -104,6 +115,9 @@ export class DialogMembreAddComponent implements OnInit {
     }
 
     if(this.memberForm.valid){
+      const fd = new FormData();
+      fd.append('image', this.selectedFile, this.selectedFile.name);
+
       this.toolService.showLoading();
       this.member.nom = this.nom.value;
       this.member.prenom = this.prenom.value;
@@ -111,7 +125,7 @@ export class DialogMembreAddComponent implements OnInit {
       this.member.dateDeNaissance = this.dateNaissance.value;
       this.member.ministere = this.selectedMinister.value;
       this.member.sexe = this.selectedSexe.value;
-      this.member.photo = this.photo.value;
+      this.member.photo = this.url;
       this.member.telephone = this.telephone.value;
       
       this.apiService.post(Url.MEMBR_ADD_URL, this.member, {}).subscribe(
