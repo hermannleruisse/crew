@@ -1,4 +1,4 @@
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Membre } from 'src/app/models/membre';
@@ -100,11 +100,8 @@ export class DialogMembreAddComponent implements OnInit {
     console.log(this.memberForm.valid);
     // console.log(this.selectedProfile.value);
     if(this.memberForm.valid){
-      console.log(this.memberForm.value);
-    }
-
-    if(this.memberForm.valid){
       this.toolService.showLoading();
+
       this.member.nom = this.nom.value;
       this.member.prenom = this.prenom.value;
       this.member.adresse = this.adresse.value;
@@ -113,6 +110,8 @@ export class DialogMembreAddComponent implements OnInit {
       this.member.sexe = this.selectedSexe.value;
       this.member.photo = this.photo.value;
       this.member.telephone = this.telephone.value;
+
+      // fd.append('member', JSON.stringify(this.member));
       
       this.apiService.post(Url.MEMBR_ADD_URL, this.member, {}).subscribe(
         (data) => {
