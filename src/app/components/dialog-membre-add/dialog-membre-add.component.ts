@@ -1,6 +1,8 @@
+import { DatePipe } from '@angular/common';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Membre } from 'src/app/models/membre';
 import { Ministere } from 'src/app/models/ministere';
 import { Url } from 'src/app/models/url';
@@ -38,7 +40,7 @@ export class DialogMembreAddComponent implements OnInit {
   get selectedMinister(){ return this.memberForm.get("selectedMinister");}
   get selectedSexe(){ return this.memberForm.get("selectedSexe");}
 
-  constructor(private formBuilder: FormBuilder, private toolService:ToolService, private apiService:ApiService) { }
+  constructor(private formBuilder: FormBuilder, private toolService:ToolService, private apiService:ApiService, private dialogRef: MatDialogRef<DialogMembreAddComponent>, private datePipe : DatePipe) { }
 
   ngOnInit(): void {
     this.createMemberForm();
@@ -100,7 +102,7 @@ export class DialogMembreAddComponent implements OnInit {
       selectedMinister:[null, [Validators.required]],
       photo:[null, [Validators.required]]
     },{
-      updateOn: 'change'
+      updateOn: 'blur'
     });
   }
 
@@ -112,29 +114,28 @@ export class DialogMembreAddComponent implements OnInit {
     // console.log(this.selectedProfile.value);
     
     if(this.memberForm.valid){
-      const fd = new FormData();
-      fd.append('image', this.selectedFile, this.selectedFile.name);
+      // const fd = new FormData();
+      // fd.append('image', this.selectedFile, this.selectedFile.name);
 
       this.toolService.showLoading();
 
       this.member.nom = this.nom.value;
       this.member.prenom = this.prenom.value;
       this.member.adresse = this.adresse.value;
-      this.member.dateDeNaissance = this.dateNaissance.value;
+      this.member.dateDeNaissance = this.datePipe.transform(this.dateNaissance.value, 'dd/MM/yyyy');
       this.member.ministere = this.selectedMinister.value;
       this.member.sexe = this.selectedSexe.value;
       this.member.photo = this.url;
       this.member.telephone = this.telephone.value;
-
-      // fd.append('member', JSON.stringify(this.member));
       
       this.apiService.post(Url.MEMBR_ADD_URL, this.member, {}).subscribe(
         (data) => {
+          this.dialogRef.close();
           this.toolService.showToast('Enregistrement réussie', 'OK', 3000);
         }, (error) => {
           console.log('erreur ' + JSON.stringify(error));
           this.toolService.hideLoading();
-          this.toolService.showToast(error.message, 'OK');
+          this.toolService.showToast(error.error.message, 'OK');
         }, () => {
           this.toolService.hideLoading();
           // this.getProfilesList();

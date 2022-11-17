@@ -18,7 +18,7 @@ export interface DialogData {
   styleUrls: ['./dialog-membre-edit.component.scss']
 })
 export class DialogMembreEditComponent implements OnInit {
-  url = "./assets/img/avatar.png";
+  url = "./assets/img/avatar1.png";
   selectedFile:File = null;
   editModeMemberForm: FormGroup;
   ministeres: Ministere[];
@@ -59,14 +59,14 @@ export class DialogMembreEditComponent implements OnInit {
    */
    editMemberForm(){
     this.editModeMemberForm = this.formBuilder.group({
-      id: [{ value: '', disabled:true}],
-      nom: [{ value: '', disabled:true}, [Validators.required]],
-      prenom: [{ value: '', disabled:true}, [Validators.required]],
-      dateNaissance: [{ value: '', disabled:true}, [Validators.required]],
-      selectedSexe: [{ value: '', disabled:true}, [Validators.required]],
-      adresse: [{ value: '', disabled:true}, [Validators.required]],
-      telephone: [{ value: '', disabled:true}, [Validators.required]],
-      selectedMinister:[{ value: '', disabled:true}, [Validators.required]],
+      id: [{ value: '', disabled:false}],
+      nom: [{ value: '', disabled:false}, [Validators.required]],
+      prenom: [{ value: '', disabled:false}, [Validators.required]],
+      dateNaissance: [{ value: '', disabled:false}, [Validators.required]],
+      selectedSexe: [{ value: '', disabled:false}, [Validators.required]],
+      adresse: [{ value: '', disabled:false}, [Validators.required]],
+      telephone: [{ value: '', disabled:false}, [Validators.required]],
+      selectedMinister:[{ value: '', disabled:false}, [Validators.required]],
       photo:[{ value: '', disabled:false}, [Validators.required]]
     },{
       updateOn: 'change'
@@ -120,7 +120,7 @@ export class DialogMembreEditComponent implements OnInit {
       this.apiService.put(Url.MEMBR_EDIT_URL + "/" + this.idEdit.value, this.member, {}).subscribe(
         (data) => {
           // this.closeModalEdit();
-          this.toolService.showToast('Mise a jour reussie', 'OK', 3000);
+          this.toolService.showToast('Mise à jour reussie', 'OK', 3000);
         }, (error) => {
           // console.log('erreur ' + JSON.stringify(error));
           this.toolService.hideLoading();
@@ -137,7 +137,8 @@ export class DialogMembreEditComponent implements OnInit {
    * @param membre 
    * reccuperer le membre actuel en cliquant sur une ligne du tableau 
    */
-   getCurrentMembre(membre: Membre){
+   getCurrentMembre(membre: any){
+    console.log(JSON.stringify(membre));
     this.editModeMemberForm.get("id").setValue(membre.id);
     this.editModeMemberForm.get("nom").setValue(membre.nom);
     this.editModeMemberForm.get("prenom").setValue(membre.prenom);
@@ -145,8 +146,9 @@ export class DialogMembreEditComponent implements OnInit {
     this.editModeMemberForm.get("selectedSexe").setValue(membre.sexe);
     this.editModeMemberForm.get("adresse").setValue(membre.adresse);
     this.editModeMemberForm.get("telephone").setValue(membre.telephone);
-    this.editModeMemberForm.get("selectedMinister").setValue(membre.ministere);
-    this.editModeMemberForm.get("photo").setValue(membre.photo);
+    this.editModeMemberForm.get("selectedMinister").setValue(membre.ministere.id);
+    this.url = '';
+    this.editModeMemberForm.get("photo").setValue(this.url);
     
     if(membre != null){
       console.log(membre);

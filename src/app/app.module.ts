@@ -8,7 +8,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { MembreListComponent } from './components/membre-list/membre-list.component';
 import { MembreItemComponent } from './components/membre-item/membre-item.component';
-import { registerLocaleData } from '@angular/common';
+import { DatePipe, registerLocaleData } from '@angular/common';
 import * as fr from '@angular/common/locales/fr';
 import { ProfileComponent } from './components/profile/profile.component';
 import { HabilitationComponent } from './components/habilitation/habilitation.component';
@@ -103,6 +103,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatNativeDateModule,
   ],
   providers: [
+    DatePipe,
     NgxSpinnerService,
     {
       provide: HTTP_INTERCEPTORS,

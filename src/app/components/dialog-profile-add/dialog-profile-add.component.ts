@@ -54,6 +54,7 @@ export class DialogProfileAddComponent implements OnInit {
    * click sur le bouton Ajouter du modal pour enregister un profile
    */
    onSubmitForm(){
+    console.log(this.profileForm.invalid);
     if(this.profileForm.valid){
       this.toolService.showLoading();
       this.profile.code = this.code.value;

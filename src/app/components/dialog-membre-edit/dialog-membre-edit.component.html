@@ -29,8 +29,8 @@
       
         <mat-grid-tile colspan="4" rowspan="2">
           <input type="file" formControlName="photo" accept="image/png, image/jpeg" (change)="onSelectFile($event)">
-          <mat-error *ngIf="photo.invalid && (photo.dirty || photo.touched)">
-            <span *ngIf="photo.errors.required">Le photo est <strong>obligatoire</strong></span>
+          <mat-error *ngIf="photoEdit.invalid && (photoEdit.dirty || photoEdit.touched)">
+            <span *ngIf="photoEdit.errors.required">Le photo est <strong>obligatoire</strong></span>
           </mat-error>
         </mat-grid-tile>
 

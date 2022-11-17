@@ -1,6 +1,6 @@
 export class Url {
-    // static SERVER_URL = 'http://localhost:2509/';
-    static SERVER_URL = 'https://springboot-crew-api.herokuapp.com/';
+    static SERVER_URL = 'http://localhost:2509/';
+    // static SERVER_URL = 'https://springboot-crew-api.herokuapp.com/';
     static LOGIN_URL = Url.SERVER_URL+'login';
     //profile
     static PROFILE_LIST_URL = Url.SERVER_URL+'api/security/profiles';

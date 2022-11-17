@@ -40,8 +40,8 @@ export class MembreComponent implements OnInit {
   openDialogEditMember(member: Membre) {
     
     const dialogRef = this.dialog.open(DialogMembreEditComponent, { 
-      height: '400px',
-      width: '700px',
+      height: '80vh',
+      width: '80vw',
       data : {
         selectedMember: member
       }, disableClose: true 
