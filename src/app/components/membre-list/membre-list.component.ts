@@ -7,7 +7,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { of } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
-import { Url } from 'src/app/models/url';
+import { Url } from 'src/app/url';
 import { DialogMembreEditComponent } from '../dialog-membre-edit/dialog-membre-edit.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogMembreAddComponent } from '../dialog-membre-add/dialog-membre-add.component';

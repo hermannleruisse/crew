@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Customerror } from 'src/app/models/customerror';
 import { Profile } from 'src/app/models/profile';
-import { Url } from 'src/app/models/url';
+import { Url } from 'src/app/url';
 import { User } from 'src/app/models/user';
 import { ApiService } from 'src/app/services/api.service';
 import { ToolService } from 'src/app/services/tool.service';

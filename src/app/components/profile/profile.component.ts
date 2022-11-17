@@ -5,7 +5,7 @@ import { Profile } from 'src/app/models/profile';
 import { ToolService } from 'src/app/services/tool.service';
 import Swal from 'sweetalert2';
 import { ApiService } from 'src/app/services/api.service';
-import { Url } from 'src/app/models/url';
+import { Url } from 'src/app/url';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogProfileAddComponent } from '../dialog-profile-add/dialog-profile-add.component';

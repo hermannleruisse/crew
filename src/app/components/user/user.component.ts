@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 // import * as M from 'materialize-css';
 import { ApiService } from 'src/app/services/api.service';
 import { HttpHeaders } from '@angular/common/http';
-import { Url } from 'src/app/models/url';
+import { Url } from 'src/app/url';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogUserAddComponent } from '../dialog-user-add/dialog-user-add.component';
 import { DialogUserEditComponent } from '../dialog-user-edit/dialog-user-edit.component';

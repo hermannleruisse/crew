@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Ministere } from 'src/app/models/ministere';
-import { Url } from 'src/app/models/url';
+import { Url } from 'src/app/url';
 import { ApiService } from 'src/app/services/api.service';
 import { ToolService } from 'src/app/services/tool.service';
 

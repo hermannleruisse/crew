@@ -4,7 +4,7 @@ import { Action } from 'src/app/models/action';
 import { Fonction } from 'src/app/models/fonction';
 import { Habilitation } from 'src/app/models/habilitation';
 import { Profile } from 'src/app/models/profile';
-import { Url } from 'src/app/models/url';
+import { Url } from 'src/app/url';
 import { ApiService } from 'src/app/services/api.service';
 import { ToolService } from 'src/app/services/tool.service';
 

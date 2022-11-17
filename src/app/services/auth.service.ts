@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { BehaviorSubject, Observable } from "rxjs";
-import { Url } from "../models/url";
+import { Url } from "../url";
 
 @Injectable({
     providedIn: 'root'

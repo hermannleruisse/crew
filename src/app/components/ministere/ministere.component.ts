@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogMinisterAddComponent } from '../dialog-minister-add/dialog-minister-add.component';
 import { ApiService } from 'src/app/services/api.service';
 import { DialogMinisterEditComponent } from '../dialog-minister-edit/dialog-minister-edit.component';
-import { Url } from 'src/app/models/url';
+import { Url } from 'src/app/url';
 
 @Component({
   selector: 'app-ministere',

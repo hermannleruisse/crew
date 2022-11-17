@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Membre } from 'src/app/models/membre';
 import { Ministere } from 'src/app/models/ministere';
-import { Url } from 'src/app/models/url';
+import { Url } from 'src/app/url';
 import { ApiService } from 'src/app/services/api.service';
 import { ToolService } from 'src/app/services/tool.service';
 

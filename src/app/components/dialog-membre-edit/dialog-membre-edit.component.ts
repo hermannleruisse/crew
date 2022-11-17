@@ -1,10 +1,11 @@
+import { DatePipe } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Membre } from 'src/app/models/membre';
 import { Ministere } from 'src/app/models/ministere';
-import { Url } from 'src/app/models/url';
+import { Url } from 'src/app/url';
 import { ApiService } from 'src/app/services/api.service';
 import { ToolService } from 'src/app/services/tool.service';
 
@@ -34,7 +35,7 @@ export class DialogMembreEditComponent implements OnInit {
   get selectedMinisterEdit(){ return this.editModeMemberForm.get("selectedMinister");}
   get selectedSexeEdit(){ return this.editModeMemberForm.get("selectedSexe");}
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, private toolService:ToolService, private apiService:ApiService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, private toolService:ToolService, private apiService:ApiService, private dialogRef: MatDialogRef<DialogMembreEditComponent>, private datePipe : DatePipe) { }
 
   ngOnInit(): void {
     this.editMemberForm();
@@ -74,11 +75,11 @@ export class DialogMembreEditComponent implements OnInit {
   }
 
   onSelectFile(e){
+    // https://refine.dev/blog/how-to-base64-upload/
     if(e.target.files){
       var reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
       this.selectedFile = <File> e.target.files[0];
-      console.log("file "+JSON.stringify(this.selectedFile.name.split('.').pop()));
       reader.onload = (event:any)=>{
         this.url = event.target.result;
       }
@@ -110,16 +111,17 @@ export class DialogMembreEditComponent implements OnInit {
       this.member.nom = this.nomEdit.value;
       this.member.prenom = this.prenomEdit.value;
       this.member.adresse = this.adresseEdit.value;
-      this.member.dateDeNaissance = this.dateNaissanceEdit.value;
+      this.member.dateDeNaissance = this.datePipe.transform(this.dateNaissanceEdit.value, 'dd/MM/yyyy');
+      // this.member.dateDeNaissance = this.datePipe.transform(this.dateNaissanceEdit.value, 'YYYY-MM-DDTHH:mm:ss.sssZ');
       this.member.sexe = this.selectedSexeEdit.value;
       this.member.ministere = this.selectedMinisterEdit.value;
       this.member.telephone = this.telephoneEdit.value;
-      this.member.photo = this.photoEdit.value;
+      this.member.photo = this.url;
 
       // console.log(this.profileForm.value);
       this.apiService.put(Url.MEMBR_EDIT_URL + "/" + this.idEdit.value, this.member, {}).subscribe(
         (data) => {
-          // this.closeModalEdit();
+          this.dialogRef.close();
           this.toolService.showToast('Mise à jour reussie', 'OK', 3000);
         }, (error) => {
           // console.log('erreur ' + JSON.stringify(error));
@@ -147,8 +149,8 @@ export class DialogMembreEditComponent implements OnInit {
     this.editModeMemberForm.get("adresse").setValue(membre.adresse);
     this.editModeMemberForm.get("telephone").setValue(membre.telephone);
     this.editModeMemberForm.get("selectedMinister").setValue(membre.ministere.id);
-    this.url = '';
-    this.editModeMemberForm.get("photo").setValue(this.url);
+    this.url = `${Url.FILE_URL}/${membre.photo}`;
+    // this.editModeMemberForm.get("photo").setValue(this.url);
     
     if(membre != null){
       console.log(membre);

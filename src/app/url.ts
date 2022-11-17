@@ -1,7 +1,10 @@
+import { environment } from "src/environments/environment";
+
 export class Url {
-    static SERVER_URL = 'http://localhost:2509/';
+    static SERVER_URL = environment.baseUrl;
     // static SERVER_URL = 'https://springboot-crew-api.herokuapp.com/';
     static LOGIN_URL = Url.SERVER_URL+'login';
+    static FILE_URL = Url.SERVER_URL+'api/manager/view';
     //profile
     static PROFILE_LIST_URL = Url.SERVER_URL+'api/security/profiles';
     static PROFILE_ADD_URL = Url.SERVER_URL+'api/security/save-profile';
