@@ -49,6 +49,7 @@ import { MembreComponent } from './components/membre/membre.component';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { getFrenchPaginatorIntl } from './services/french-paginator-intl';
 
@@ -103,6 +104,7 @@ import { getFrenchPaginatorIntl } from './services/french-paginator-intl';
     NgxMatFileInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatPaginatorModule,
   ],
   providers: [
     DatePipe,
