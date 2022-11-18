@@ -2,12 +2,13 @@
   "name": "crew",
   "version": "0.0.0",
   "engines": {
-    "node": "18.x"
+    "node": "14.17.6",
+    "npm": "6.14.15"
   },
   "scripts": {
     "ng": "ng",
     "heroku-postbuild": "ng build --prod && npm install -g http-server-spa",
-    "start": "http-server-spa dist/angular-crew index.html $PORT",
+    "start": "http-server-spa dist/crew index.html $PORT",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
