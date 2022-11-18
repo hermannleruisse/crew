@@ -49,6 +49,8 @@ import { MembreComponent } from './components/membre/membre.component';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { getFrenchPaginatorIntl } from './services/french-paginator-intl';
 
 @NgModule({
   declarations: [
@@ -113,6 +115,10 @@ import { MatNativeDateModule } from '@angular/material/core';
     {
       provide: LOCALE_ID,
       useValue: 'fr-FR'
+    },
+    {
+      provide: MatPaginatorIntl,
+      useValue: getFrenchPaginatorIntl()
     }
   ],
   bootstrap: [AppComponent]
