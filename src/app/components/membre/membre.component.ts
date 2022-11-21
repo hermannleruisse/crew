@@ -10,6 +10,7 @@ import { DialogMembreAddComponent } from '../dialog-membre-add/dialog-membre-add
 import { DialogMembreEditComponent } from '../dialog-membre-edit/dialog-membre-edit.component';
 import {MatAccordion} from '@angular/material/expansion';
 import { DialogMembreDetailComponent } from '../dialog-membre-detail/dialog-membre-detail.component';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-membre',
@@ -20,6 +21,7 @@ export class MembreComponent implements OnInit {
   // @ViewChild(MatAccordion) accordion: MatAccordion;
   members = [];
   ministers: Ministere[];
+  totalElements: number = 0;
   
   displayedColumns: string[] = ['nom', 'prenom', 'telephone', 'sexe', 'option'];
   constructor(private toolService:ToolService, private apiService:ApiService, public dialog: MatDialog) { }
@@ -27,6 +29,7 @@ export class MembreComponent implements OnInit {
   ngOnInit(): void {
     // this.accordion.openAll();
     this.getMembersList();
+    this.getMembers({ page: "0", size: "5"});
   }
 
   openDialogAddMember() {
@@ -74,7 +77,7 @@ export class MembreComponent implements OnInit {
   }
 
   /**
-   * retourne la liste des utilisateurs
+   * retourne la liste des membres
    * @returns 
    */
    getMembersList(){
@@ -91,6 +94,36 @@ export class MembreComponent implements OnInit {
         this.toolService.hideLoading();
         console.log('complete');
       });
+  }
+
+  /**
+   * retourne la liste des membres avec pagination
+   * @param request 
+   */
+  getMembers(request){
+    const params = request;
+    this.toolService.showLoading();
+    this.apiService.get(Url.MEMBR_LIST_URL, {params}).subscribe(
+      (data) => {
+        console.log('data => ' + JSON.stringify(data));
+        // this.members = data;
+        this.members = data.content;
+        this.totalElements = data?.totalElements;
+      }, (error) => {
+        console.log('erreur ' + JSON.stringify(error));
+        this.toolService.hideLoading();
+        this.toolService.showToast(error.message, 'OK');
+      }, () => {
+        this.toolService.hideLoading();
+        console.log('complete');
+      });
+  }
+
+  nextPage(event: PageEvent){
+    const request = {};
+    request['page'] = event.pageIndex.toString();
+    request['size'] = event.pageSize.toString();
+    this.getMembers(request);
   }
 
   /** 
