@@ -23,7 +23,17 @@ export class DialogMembreEditComponent implements OnInit {
   selectedFile:File = null;
   editModeMemberForm: FormGroup;
   ministeres: Ministere[];
-  member: Membre;
+  member: Membre = {
+    id: '',
+    nom : '',
+    prenom : '',
+    sexe: '',
+    dateDeNaissance : '',
+    adresse : '',
+    ministere : '',
+    telephone : '',
+    photo : ''
+  };
 
   get idEdit(){ return this.editModeMemberForm.get("id");}
   get nomEdit(){ return this.editModeMemberForm.get("nom");}
@@ -68,7 +78,7 @@ export class DialogMembreEditComponent implements OnInit {
       adresse: [{ value: '', disabled:false}, [Validators.required]],
       telephone: [{ value: '', disabled:false}, [Validators.required]],
       selectedMinister:[{ value: '', disabled:false}, [Validators.required]],
-      photo:[{ value: '', disabled:false}, [Validators.required]]
+      photo:[{ value: '', disabled:false}]
     },{
       updateOn: 'change'
     });
@@ -112,11 +122,10 @@ export class DialogMembreEditComponent implements OnInit {
       this.member.prenom = this.prenomEdit.value;
       this.member.adresse = this.adresseEdit.value;
       this.member.dateDeNaissance = this.datePipe.transform(this.dateNaissanceEdit.value, 'dd/MM/yyyy');
-      // this.member.dateDeNaissance = this.datePipe.transform(this.dateNaissanceEdit.value, 'YYYY-MM-DDTHH:mm:ss.sssZ');
       this.member.sexe = this.selectedSexeEdit.value;
       this.member.ministere = this.selectedMinisterEdit.value;
       this.member.telephone = this.telephoneEdit.value;
-      this.member.photo = this.url;
+      this.member.photo = this.url.startsWith("data:") ? this.url : null;
 
       // console.log(this.profileForm.value);
       this.apiService.put(Url.MEMBR_EDIT_URL + "/" + this.idEdit.value, this.member, {}).subscribe(
@@ -140,21 +149,17 @@ export class DialogMembreEditComponent implements OnInit {
    * reccuperer le membre actuel en cliquant sur une ligne du tableau 
    */
    getCurrentMembre(membre: any){
-    console.log(JSON.stringify(membre));
     this.editModeMemberForm.get("id").setValue(membre.id);
     this.editModeMemberForm.get("nom").setValue(membre.nom);
     this.editModeMemberForm.get("prenom").setValue(membre.prenom);
-    this.editModeMemberForm.get("dateNaissance").setValue(new Date(membre.dateDeNaissance));
+    const [day, month, year] = membre.dateDeNaissance.split('/');
+    this.editModeMemberForm.get("dateNaissance").setValue(new Date(+year, month - 1, +day));
     this.editModeMemberForm.get("selectedSexe").setValue(membre.sexe);
     this.editModeMemberForm.get("adresse").setValue(membre.adresse);
     this.editModeMemberForm.get("telephone").setValue(membre.telephone);
     this.editModeMemberForm.get("selectedMinister").setValue(membre.ministere.id);
     this.url = `${Url.FILE_URL}/${membre.photo}`;
-    // this.editModeMemberForm.get("photo").setValue(this.url);
     
-    if(membre != null){
-      console.log(membre);
-    }
   }
 
 }

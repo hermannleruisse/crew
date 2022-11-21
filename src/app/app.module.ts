@@ -52,6 +52,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { getFrenchPaginatorIntl } from './services/french-paginator-intl';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { DialogMembreDetailComponent } from './components/dialog-membre-detail/dialog-membre-detail.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +79,7 @@ import { getFrenchPaginatorIntl } from './services/french-paginator-intl';
     DialogMembreAddComponent,
     DialogMembreEditComponent,
     MembreComponent,
+    DialogMembreDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -105,6 +108,7 @@ import { getFrenchPaginatorIntl } from './services/french-paginator-intl';
     MatDatepickerModule,
     MatNativeDateModule,
     MatPaginatorModule,
+    MatExpansionModule,
   ],
   providers: [
     DatePipe,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Membre } from 'src/app/models/membre';
 import { Ministere } from 'src/app/models/ministere';
@@ -8,6 +8,8 @@ import { ToolService } from 'src/app/services/tool.service';
 import Swal from 'sweetalert2';
 import { DialogMembreAddComponent } from '../dialog-membre-add/dialog-membre-add.component';
 import { DialogMembreEditComponent } from '../dialog-membre-edit/dialog-membre-edit.component';
+import {MatAccordion} from '@angular/material/expansion';
+import { DialogMembreDetailComponent } from '../dialog-membre-detail/dialog-membre-detail.component';
 
 @Component({
   selector: 'app-membre',
@@ -15,6 +17,7 @@ import { DialogMembreEditComponent } from '../dialog-membre-edit/dialog-membre-e
   styleUrls: ['./membre.component.scss']
 })
 export class MembreComponent implements OnInit {
+  // @ViewChild(MatAccordion) accordion: MatAccordion;
   members = [];
   ministers: Ministere[];
   
@@ -22,6 +25,7 @@ export class MembreComponent implements OnInit {
   constructor(private toolService:ToolService, private apiService:ApiService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
+    // this.accordion.openAll();
     this.getMembersList();
   }
 
@@ -50,6 +54,22 @@ export class MembreComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
       this.getMembersList();
+    });
+  }
+
+  openDialogDetailMember(member: Membre){
+    
+    const dialogRef = this.dialog.open(DialogMembreDetailComponent, { 
+      height: '80vh',
+      width: '80vw',
+      data : {
+        selectedMember: member
+      }, disableClose: true 
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      // this.getMembersList();
     });
   }
 

@@ -1,3 +1,45 @@
+<div style="margin-bottom: 10px;">
+    <mat-accordion class="example-headers-align" multi>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header expanded="true">
+            <mat-panel-title>
+              Rechercher
+            </mat-panel-title>
+            <mat-panel-description>
+              Saisir les informations de recherche
+              <mat-icon>search</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+      
+          <mat-form-field>
+            <mat-label>Nom ou prénom</mat-label>
+            <input type="text" matInput>
+          </mat-form-field>
+      
+            <mat-form-field>
+                <mat-label>Sexe</mat-label>
+                <mat-select>
+                  <mat-option>Choisir un genre</mat-option>
+                  <mat-option value="F">Féminin</mat-option>
+                  <mat-option value="M">Masculin</mat-option>
+                </mat-select>
+              </mat-form-field>
+    
+            <mat-form-field>
+                <mat-label>Ministere</mat-label>
+                <mat-select>
+                  <mat-option>Choisir un ministère</mat-option>
+                  <mat-option value="F">Féminin</mat-option>
+                  <mat-option value="M">Masculin</mat-option>
+                </mat-select>
+              </mat-form-field>
+      
+        </mat-expansion-panel>
+        
+      </mat-accordion>
+</div>
+  
+
 <table mat-table [dataSource]="members" class="mat-elevation-z8">
     <!-- Name Column -->
     <ng-container matColumnDef="nom">
@@ -34,6 +76,9 @@
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
+                <button (click)="openDialogDetailMember(element)" mat-menu-item>
+                    <span>Détails</span>
+                </button>
                 <button (click)="openDialogEditMember(element)" mat-menu-item>
                     <!-- <mat-icon>dialpad</mat-icon> -->
                     <span>Modifier</span>
