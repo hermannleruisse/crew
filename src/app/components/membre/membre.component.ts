@@ -22,13 +22,14 @@ export class MembreComponent implements OnInit {
   members = [];
   ministers: Ministere[];
   totalElements: number = 0;
+  recherche: string = '';
   
   displayedColumns: string[] = ['nom', 'prenom', 'telephone', 'sexe', 'option'];
   constructor(private toolService:ToolService, private apiService:ApiService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     // this.accordion.openAll();
-    this.getMembersList();
+    // this.getMembersList();
     this.getMembers({ page: "0", size: "5"});
   }
 
@@ -40,7 +41,8 @@ export class MembreComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-      this.getMembersList();
+      // this.getMembersList();
+      this.getMembers({ page: "0", size: "5"});
     });
   }
 
@@ -56,15 +58,16 @@ export class MembreComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-      this.getMembersList();
+      // this.getMembersList();
+      this.getMembers({ page: "0", size: "5"});
     });
   }
 
   openDialogDetailMember(member: Membre){
     
     const dialogRef = this.dialog.open(DialogMembreDetailComponent, { 
-      height: '80vh',
-      width: '80vw',
+      height: '95vh',
+      width: '95vw',
       data : {
         selectedMember: member
       }, disableClose: true 
@@ -72,7 +75,6 @@ export class MembreComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-      // this.getMembersList();
     });
   }
 
@@ -103,10 +105,9 @@ export class MembreComponent implements OnInit {
   getMembers(request){
     const params = request;
     this.toolService.showLoading();
-    this.apiService.get(Url.MEMBR_LIST_URL, {params}).subscribe(
+    this.apiService.get(Url.MEMBR_LIST_PAGINATE_URL, {params}).subscribe(
       (data) => {
         console.log('data => ' + JSON.stringify(data));
-        // this.members = data;
         this.members = data.content;
         this.totalElements = data?.totalElements;
       }, (error) => {
@@ -153,7 +154,7 @@ export class MembreComponent implements OnInit {
           )
         }
       }).finally(()=>{
-        this.getMembersList();
+        this.getMembers({ page: "0", size: "5"});
       })
   }
 

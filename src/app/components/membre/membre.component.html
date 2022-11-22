@@ -1,4 +1,15 @@
 <div style="margin-bottom: 10px;">
+  <mat-card>
+    <!-- <mat-card-subtitle>Rechercher</mat-card-subtitle> -->
+    <mat-form-field class="example-form-field">
+      <mat-label>Clearable input</mat-label>
+      <input matInput type="text" [(ngModel)]="recherche">
+      <button mat-button *ngIf="recherche" matSuffix mat-icon-button aria-label="Clear" (click)="recherche=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </mat-card>
+
     <mat-accordion class="example-headers-align" multi>
         <mat-expansion-panel>
           <mat-expansion-panel-header expanded="true">
