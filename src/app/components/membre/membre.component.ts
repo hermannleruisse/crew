@@ -63,6 +63,11 @@ export class MembreComponent implements OnInit {
     });
   }
 
+  initializeSearch(){
+    this.recherche ='';
+    this.getMembers({ page: "0", size: "5"});
+  }
+
   openDialogDetailMember(member: Membre){
     
     const dialogRef = this.dialog.open(DialogMembreDetailComponent, { 
@@ -96,6 +101,38 @@ export class MembreComponent implements OnInit {
         this.toolService.hideLoading();
         console.log('complete');
       });
+  }
+
+  searchMot(recherche){
+    if(recherche.length >= 3){
+      this.getMembersBySearch(recherche, { page: "0", size: "10"});
+    }else if(recherche.length == 0){
+      this.getMembers({ page: "0", size: "5"});
+    }
+  }
+
+  /**
+   * retourne la liste des membres avec pagination en fonction des mot clé
+   * @param request 
+   */
+  getMembersBySearch(search: string, request){
+    const params = request;
+    this.toolService.showLoading();
+    
+      this.apiService.get(Url.MEMBR_SEARCH_LIST_PAGINATE_URL+"/"+search, {params}).subscribe(
+        (data) => {
+          // console.log('data => ' + JSON.stringify(data));
+          this.members = data.content;
+          this.totalElements = data?.totalElements;
+        }, (error) => {
+          // console.log('erreur ' + JSON.stringify(error));
+          this.toolService.hideLoading();
+          this.toolService.showToast(error.message, 'OK');
+        }, () => {
+          this.toolService.hideLoading();
+          console.log('complete');
+        });
+    
   }
 
   /**

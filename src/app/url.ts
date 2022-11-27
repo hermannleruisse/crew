@@ -26,6 +26,7 @@ export class Url {
     //membre
     static MEMBR_LIST_URL = Url.SERVER_URL+'api/manager/members';
     static MEMBR_LIST_PAGINATE_URL = Url.SERVER_URL+'api/manager/members-list';
+    static MEMBR_SEARCH_LIST_PAGINATE_URL = Url.SERVER_URL+'api/manager/search-members-list';
     static MEMBR_ADD_URL = Url.SERVER_URL+'api/manager/save-member';
     static MEMBR_EDIT_URL = Url.SERVER_URL+'api/manager/edit-member';
     static MEMBR_DELETE_URL = Url.SERVER_URL+'api/manager/delete-member';
