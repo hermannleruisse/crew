@@ -55,6 +55,7 @@ import { getFrenchPaginatorIntl } from './services/french-paginator-intl';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { DialogMembreDetailComponent } from './components/dialog-membre-detail/dialog-membre-detail.component';
 import { TableauDeBordComponent } from './components/tableau-de-bord/tableau-de-bord.component';
+import { ChartModule } from 'angular-highcharts';
 
 @NgModule({
   declarations: [
@@ -111,6 +112,7 @@ import { TableauDeBordComponent } from './components/tableau-de-bord/tableau-de-
     MatNativeDateModule,
     MatPaginatorModule,
     MatExpansionModule,
+    ChartModule,
   ],
   providers: [
     DatePipe,
