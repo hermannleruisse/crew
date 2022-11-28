@@ -13,6 +13,7 @@
         <mat-divider></mat-divider>
 
         <mat-nav-list role="navigation" aria-label="navigation">
+            <a mat-list-item routerLink="dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Tableau de bord</a>
             <a mat-list-item routerLink="liste-des-membres" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Membre</a>
             <a mat-list-item routerLink="ministere" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Ministere</a>
         </mat-nav-list>

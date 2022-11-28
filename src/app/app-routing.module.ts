@@ -11,6 +11,7 @@ import { HomeLayoutComponent } from "./components/home-layout/home-layout.compon
 import { MinistereComponent } from "./components/ministere/ministere.component";
 import { AuthGuard } from "./auth-guard";
 import { MembreComponent } from "./components/membre/membre.component";
+import { TableauDeBordComponent } from "./components/tableau-de-bord/tableau-de-bord.component";
 
 const routes : Routes = [
     {
@@ -33,7 +34,8 @@ const routes : Routes = [
             { path :'user', component: UserComponent, canActivate: [AuthGuard]},
             { path :'habilitation', component: HabilitationComponent, canActivate: [AuthGuard]},
             { path :'liste-des-membres', component: MembreComponent, canActivate: [AuthGuard]},
-            { path :'ministere', component: MinistereComponent, canActivate: [AuthGuard]}
+            { path :'ministere', component: MinistereComponent, canActivate: [AuthGuard]},
+            { path :'dashboard', component: TableauDeBordComponent, canActivate: [AuthGuard]}
         ]
     },
     // {
