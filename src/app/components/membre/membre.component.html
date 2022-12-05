@@ -1,6 +1,5 @@
 <div style="margin-bottom: 10px; background-color: white;">
 
-  <!-- <mat-card style="height: 5px;"> -->
     <mat-form-field class="example-form-field">
       <mat-label>Rechercher</mat-label>
       <input matInput type="text" (change)="searchMot(recherche)" [(ngModel)]="recherche">
@@ -8,9 +7,13 @@
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
-  <!-- </mat-card> -->
 
-    <!-- <mat-accordion class="example-headers-align" multi>
+  <!-- <div style="text-align: right;">
+    <button mat-raised-button color="primary">Liste des membres</button>
+  </div> -->
+  
+
+    <mat-accordion class="example-headers-align" multi>
         <mat-expansion-panel>
           <mat-expansion-panel-header expanded="true">
             <mat-panel-title>
@@ -21,33 +24,50 @@
               <mat-icon>search</mat-icon>
             </mat-panel-description>
           </mat-expansion-panel-header>
-      
-          <mat-form-field>
-            <mat-label>Nom ou prénom</mat-label>
-            <input type="text" matInput>
-          </mat-form-field>
-      
-            <mat-form-field>
+
+          <mat-grid-list cols="4" rowHeight="4:1">
+            <mat-grid-tile>
+              <mat-form-field class="example-form-field">
+                <mat-label>Rechercher(nom & Prénom)</mat-label>
+                <input matInput type="text" (change)="searchMot(recherche)" [(ngModel)]="recherche">
+                <button mat-button *ngIf="recherche" matSuffix mat-icon-button aria-label="Clear" (click)="initializeSearch()">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field>
                 <mat-label>Sexe</mat-label>
-                <mat-select>
+                <mat-select (selectionChange)="searchMot(recherche)" [(ngModel)]="sexe">
                   <mat-option>Choisir un genre</mat-option>
                   <mat-option value="F">Féminin</mat-option>
                   <mat-option value="M">Masculin</mat-option>
                 </mat-select>
               </mat-form-field>
-    
-            <mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field>
                 <mat-label>Ministere</mat-label>
-                <mat-select>
+                <mat-select (selectionChange)="searchMot(recherche)" [(ngModel)]="minister">
                   <mat-option>Choisir un ministère</mat-option>
-                  <mat-option value="F">Féminin</mat-option>
-                  <mat-option value="M">Masculin</mat-option>
+                  <mat-option *ngFor="let m of ministers; let i = index" [value]="ministers[i].id">
+                    {{ministers[i].libelle}}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <button mat-raised-button color="primary">Imprimer</button>
+            </mat-grid-tile>
+          </mat-grid-list>
+
       
         </mat-expansion-panel>
         
-      </mat-accordion> -->
+      </mat-accordion>
 </div>
   
 

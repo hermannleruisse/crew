@@ -23,6 +23,8 @@ export class MembreComponent implements OnInit {
   ministers: Ministere[];
   totalElements: number = 0;
   recherche: string = '';
+  minister: string = '';
+  sexe: string = '';
   
   displayedColumns: string[] = ['nom', 'prenom', 'telephone', 'sexe', 'option'];
   constructor(private toolService:ToolService, private apiService:ApiService, public dialog: MatDialog) { }
@@ -30,7 +32,19 @@ export class MembreComponent implements OnInit {
   ngOnInit(): void {
     // this.accordion.openAll();
     // this.getMembersList();
+    this.getMinisteres();
     this.getMembers({ page: "0", size: "5"});
+  }
+
+  /**
+   * retourne la liste des ministeres
+   * @returns 
+   */
+   getMinisteres(){
+    this.apiService.get(Url.MINIS_LIST_URL, {})
+      .subscribe((data) => {
+        this.ministers = data;
+      });
   }
 
   openDialogAddMember() {
@@ -65,6 +79,8 @@ export class MembreComponent implements OnInit {
 
   initializeSearch(){
     this.recherche ='';
+    this.sexe ='';
+    this.minister ='';
     this.getMembers({ page: "0", size: "5"});
   }
 
@@ -104,8 +120,10 @@ export class MembreComponent implements OnInit {
   }
 
   searchMot(recherche){
-    if(recherche.length >= 3){
-      this.getMembersBySearch(recherche, { page: "0", size: "10"});
+    console.log("minister search "+this.minister);
+    console.log("sexe search "+this.sexe);
+    if(recherche.length >= 3 || this.sexe.length > 0 || this.minister.length > 0){
+      this.getMembersBySearch(recherche, { page: "0", size: "10", sexe: this.sexe, minister:this.minister});
     }else if(recherche.length == 0){
       this.getMembers({ page: "0", size: "5"});
     }
@@ -115,11 +133,11 @@ export class MembreComponent implements OnInit {
    * retourne la liste des membres avec pagination en fonction des mot clé
    * @param request 
    */
-  getMembersBySearch(search: string, request){
+  getMembersBySearch(search?: string, request?){
     const params = request;
     this.toolService.showLoading();
     
-      this.apiService.get(Url.MEMBR_SEARCH_LIST_PAGINATE_URL+"/"+search, {params}).subscribe(
+      this.apiService.get(Url.MEMBR_SEARCH_MULTI_LIST_PAGINATE_URL+"/"+search, {params}).subscribe(
         (data) => {
           // console.log('data => ' + JSON.stringify(data));
           this.members = data.content;
