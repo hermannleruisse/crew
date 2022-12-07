@@ -119,9 +119,21 @@ export class MembreComponent implements OnInit {
       });
   }
 
+  /**
+   * lance la recherche lors de la saisie dans les champs de recherche
+   * @param recherche 
+   */
   searchMot(recherche){
     console.log("minister search "+this.minister);
     console.log("sexe search "+this.sexe);
+    if(typeof this.sexe === 'undefined'){
+      this.sexe = '';
+    }
+
+    if(typeof this.minister === 'undefined'){
+      this.minister = '';
+    }
+
     if(recherche.length >= 3 || this.sexe?.length > 0 || this.minister?.length > 0){
       this.getMembersBySearch(recherche, { page: "0", size: "10", sexe: this.sexe, minister:this.minister});
     }else if(recherche.length == 0){
