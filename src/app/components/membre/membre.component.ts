@@ -124,14 +124,15 @@ export class MembreComponent implements OnInit {
    * @param recherche 
    */
   searchMot(recherche){
+    console.log("recherche search "+recherche);
     console.log("minister search "+this.minister);
     console.log("sexe search "+this.sexe);
     if(typeof this.sexe === 'undefined'){
-      this.sexe = '';
+      this.sexe = "";
     }
 
     if(typeof this.minister === 'undefined'){
-      this.minister = '';
+      this.minister = "";
     }
 
     if(recherche.length >= 3 || this.sexe?.length > 0 || this.minister?.length > 0){

@@ -8,10 +8,7 @@ import { Url } from 'src/app/url';
 import { ApiService } from 'src/app/services/api.service';
 import { ToolService } from 'src/app/services/tool.service';
 
-export interface CheckHabilitation{
-  profile: string,
-  permission: string
-}
+
 
 @Component({
   selector: 'app-habilitation',
@@ -26,7 +23,7 @@ export class HabilitationComponent implements OnInit {
     profile: '',
     permissions: []
   };
-  checkhabilitation: CheckHabilitation;
+  
 
   get selectedProfile(){ return this.habilitationForm.get("selectedProfile");}
 
@@ -142,19 +139,5 @@ export class HabilitationComponent implements OnInit {
       });
   }
 
-  /**
-   * vérifie si le profil est habilité
-   * @returns
-   */
-   checkAuthority():boolean{
-    this.apiService.post(Url.HABILIT_CHECK_URL, this.checkhabilitation, {}).subscribe(
-      (data) => {
-        console.log('data => ' + JSON.stringify(data));
-        return data;
-      }, (error) => {
-        console.log('erreur ' + JSON.stringify(error));
-      });
-      return false;
-  }
-
+  
 }

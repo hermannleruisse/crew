@@ -59,11 +59,12 @@ export class DialogMinisterAddComponent implements OnInit {
       this.apiService.post(Url.MINIS_ADD_URL, this.minister, {}).subscribe(
         (data) => {
           this.dialogRef.close();
-          this.toolService.showToast('Nouveau element enregistrer', 'OK', 3000);
+          this.toolService.showToast('Nouveau élément enregistrer', 'OK', 3000);
         }, (error) => {
           console.log('erreur ' + JSON.stringify(error));
           this.toolService.hideLoading();
           this.toolService.showToast(error.message, 'OK');
+          this.toolService.showToast(error.error.message, 'OK');
         }, () => {
           this.toolService.hideLoading();
           
