@@ -4,10 +4,11 @@ import { Router } from "@angular/router";
 import { Observable, throwError } from "rxjs";
 import { map, catchError } from 'rxjs/operators';
 import { AuthService } from "./auth.service";
+import { ToolService } from "./tool.service";
 
 @Injectable()
 export class TokenInterceptorService implements HttpInterceptor{
-    constructor(private router: Router, private authService: AuthService) { }
+    constructor(private router: Router, private authService: AuthService, private toolService:ToolService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // const authService = this.injector.get(AuthService);
@@ -38,12 +39,15 @@ export class TokenInterceptorService implements HttpInterceptor{
         };
         switch (error.status) {
           case 500:
-            // TODO:this.router.navigateByUrl('/login');
+            this.toolService.showToast(error.error.msg, 'OK');
             break;
           case 403:
+            break;
+          case 401:
             localStorage.removeItem('token');
             localStorage.removeItem('username');
             localStorage.removeItem('permission');
+            this.toolService.showToast(error.error.msg, 'OK');
             this.router.navigateByUrl('/login');
             break;
           case 404:
