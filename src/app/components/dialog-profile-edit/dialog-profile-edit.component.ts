@@ -80,15 +80,13 @@ export class DialogProfileEditComponent implements OnInit {
       this.profile.libelle = this.libelleEdit.value;
       this.profile.description = this.descriptionEdit.value;
 
-      // console.log(this.profileForm.value);
       this.apiService.put(Url.PROFILE_EDIT_URL + "/" + this.idEdit.value, this.profile, {}).subscribe(
         (data) => {
           this.dialogRef.close();
-          this.toolService.showToast('Edition de profile reussie', 'OK', 3000);
+          this.toolService.showToast('Edition de profile réussie', 'OK', 3000);
         }, (error) => {
-          // console.log('erreur ' + JSON.stringify(error));
           this.toolService.hideLoading();
-          this.toolService.showToast(error.message, 'OK');
+          this.toolService.showToast(error.error.message, 'OK');
         }, () => {
           this.toolService.hideLoading();
           console.log('complete');

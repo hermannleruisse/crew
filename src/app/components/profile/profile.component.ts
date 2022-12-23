@@ -106,7 +106,6 @@ export class ProfileComponent implements OnInit {
       }, (error) => {
         console.log('erreur ' + JSON.stringify(error));
         this.toolService.hideLoading();
-        // this.toolService.showToast(ToolService.TOAST_ERROR, error.message, 'Profile');
       }, () => {
         this.toolService.hideLoading();
         console.log('complete');

@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
         console.log('data => ' + JSON.stringify(data.body?.user));
         this.toolService.hideLoading();
         if(data.body.user == undefined){
-          this.toolService.showToast(data.body.msg, 'OK');
+          this.toolService.showToast(data.body.message, 'OK');
         }else{
           localStorage.setItem('token', data.headers.get("Authorization"));
           localStorage.setItem('username', data.body.user?.username);

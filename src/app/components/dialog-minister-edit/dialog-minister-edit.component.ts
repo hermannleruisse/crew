@@ -80,9 +80,8 @@ export class DialogMinisterEditComponent implements OnInit {
           this.dialogRef.close();
           this.toolService.showToast('Edition réussie', 'OK', 3000);
         }, (error) => {
-          // console.log('erreur ' + JSON.stringify(error));
           this.toolService.hideLoading();
-          this.toolService.showToast(error.message, 'OK');
+          this.toolService.showToast(error.error.message, 'OK');
         }, () => {
           this.toolService.hideLoading();
           console.log('complete');

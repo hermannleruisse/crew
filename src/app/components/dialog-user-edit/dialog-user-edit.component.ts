@@ -145,12 +145,8 @@ export class DialogUserEditComponent implements OnInit {
           this.dialogRef.close();
           this.toolService.showToast('Edition de profile reussie', 'OK', 3000);
         }, (error:Customerror) => {
-          console.log('erreur =>' + JSON.stringify(error));
           this.toolService.hideLoading();
-          this.toolService.showToast(error.message, 'OK');
-          error.error.errors.forEach(val => {
-            this.toolService.showToast(val, 'OK');
-          });
+          this.toolService.showToast(error.error.message, 'OK');
         }, () => {
           this.toolService.hideLoading();
           console.log('complete');

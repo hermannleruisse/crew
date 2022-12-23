@@ -39,15 +39,16 @@ export class TokenInterceptorService implements HttpInterceptor{
         };
         switch (error.status) {
           case 500:
-            this.toolService.showToast(error.error.msg, 'OK');
+            this.toolService.showToast(error.error.message, 'OK');
             break;
           case 403:
+            this.toolService.showToast(error.error.message, 'OK');
             break;
           case 401:
             localStorage.removeItem('token');
             localStorage.removeItem('username');
             localStorage.removeItem('permission');
-            this.toolService.showToast(error.error.msg, 'OK');
+            this.toolService.showToast(error.error.message, 'OK');
             this.router.navigateByUrl('/login');
             break;
           case 404:
