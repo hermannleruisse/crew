@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Membre } from 'src/app/models/membre';
 import { Ministere } from 'src/app/models/ministere';
@@ -8,7 +8,6 @@ import { ToolService } from 'src/app/services/tool.service';
 import Swal from 'sweetalert2';
 import { DialogMembreAddComponent } from '../dialog-membre-add/dialog-membre-add.component';
 import { DialogMembreEditComponent } from '../dialog-membre-edit/dialog-membre-edit.component';
-import {MatAccordion} from '@angular/material/expansion';
 import { DialogMembreDetailComponent } from '../dialog-membre-detail/dialog-membre-detail.component';
 import { PageEvent } from '@angular/material/paginator';
 
@@ -112,7 +111,7 @@ export class MembreComponent implements OnInit {
       }, (error) => {
         console.log('erreur ' + JSON.stringify(error));
         this.toolService.hideLoading();
-        this.toolService.showToast(error.message, 'OK');
+        this.toolService.showToast(error.error.message, 'OK');
       }, () => {
         this.toolService.hideLoading();
         console.log('complete');
@@ -158,7 +157,7 @@ export class MembreComponent implements OnInit {
         }, (error) => {
           // console.log('erreur ' + JSON.stringify(error));
           this.toolService.hideLoading();
-          this.toolService.showToast(error.message, 'OK');
+          this.toolService.showToast(error.error.message, 'OK');
         }, () => {
           this.toolService.hideLoading();
           console.log('complete');
@@ -181,7 +180,7 @@ export class MembreComponent implements OnInit {
       }, (error) => {
         console.log('erreur ' + JSON.stringify(error));
         this.toolService.hideLoading();
-        this.toolService.showToast(error.message, 'OK');
+        this.toolService.showToast(error.error.message, 'OK');
       }, () => {
         this.toolService.hideLoading();
         console.log('complete');
@@ -210,7 +209,7 @@ export class MembreComponent implements OnInit {
               this.getMembersList();
             }, (error) => {
               this.toolService.hideLoading();
-              this.toolService.showToast(error.message, 'OK');
+              this.toolService.showToast(error.error.message, 'OK');
             }, () => {
               this.toolService.hideLoading();
             });
@@ -237,7 +236,7 @@ export class MembreComponent implements OnInit {
       }, (error) => {
         console.log('erreur ' + JSON.stringify(error));
         this.toolService.hideLoading();
-        this.toolService.showToast(error.message, 'OK');
+        this.toolService.showToast(error.error.message, 'OK');
       }, () => {
         this.toolService.hideLoading();
         console.log('complete');

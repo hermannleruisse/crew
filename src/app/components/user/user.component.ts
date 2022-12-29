@@ -1,13 +1,9 @@
-import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { of } from 'rxjs';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Profile } from 'src/app/models/profile';
 import { User } from 'src/app/models/user';
 import { ToolService } from 'src/app/services/tool.service';
 import Swal from 'sweetalert2';
-// import * as M from 'materialize-css';
 import { ApiService } from 'src/app/services/api.service';
-import { HttpHeaders } from '@angular/common/http';
 import { Url } from 'src/app/url';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogUserAddComponent } from '../dialog-user-add/dialog-user-add.component';
@@ -81,7 +77,7 @@ export class UserComponent implements OnInit, AfterViewInit {
       }, (error) => {
         console.log('erreur ' + JSON.stringify(error));
         this.toolService.hideLoading();
-        this.toolService.showToast(error.message, 'OK');
+        this.toolService.showToast(error.error.message, 'OK');
       }, () => {
         this.toolService.hideLoading();
         console.log('complete');
@@ -103,7 +99,7 @@ export class UserComponent implements OnInit, AfterViewInit {
               this.getUsersList();
             }, (error) => {
               this.toolService.hideLoading();
-              this.toolService.showToast(error.message, 'OK');
+              this.toolService.showToast(error.error.message, 'OK');
             }, () => {
               this.toolService.hideLoading();
             });

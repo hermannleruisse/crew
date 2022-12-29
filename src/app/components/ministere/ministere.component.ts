@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { Ministere } from 'src/app/models/ministere';
 import { ToolService } from 'src/app/services/tool.service';
 import Swal from 'sweetalert2';
@@ -70,7 +69,7 @@ export class MinistereComponent implements OnInit {
       }, (error) => {
         console.log('erreur ' + JSON.stringify(error));
         this.toolService.hideLoading();
-        this.toolService.showToast(error.message, 'OK');
+        this.toolService.showToast(error.error.message, 'OK');
       }, () => {
         this.toolService.hideLoading();
         console.log('complete');
@@ -92,7 +91,7 @@ export class MinistereComponent implements OnInit {
               this.getMinistersList();
             }, (error) => {
               this.toolService.hideLoading();
-              this.toolService.showToast(error.message, 'OK');
+              this.toolService.showToast(error.error.message, 'OK');
             }, () => {
               this.toolService.hideLoading();
             });

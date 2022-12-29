@@ -163,7 +163,7 @@ export class ProfileComponent implements OnInit {
               this.getProfilesList();
             }, (error) => {
               this.toolService.hideLoading();
-              this.toolService.showToast('Echec de supprèssion', 'OK');
+              this.toolService.showToast('Echec de suppression', 'OK');
             }, () => {
               this.toolService.hideLoading();
             });
