@@ -45,7 +45,7 @@ export class DialogMinisterEditComponent implements OnInit {
       id: [{ value: '', disabled: false }],
       code: [{ value: '', disabled: false }, [Validators.required]],
       libelle: [{ value: '', disabled: false }, [Validators.required]],
-      description: [{ value: '', disabled: false }]
+      description: [{ value: '', disabled: false }, [Validators.required]]
     }, {
       updateOn: 'change'
     });

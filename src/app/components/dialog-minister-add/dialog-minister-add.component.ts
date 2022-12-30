@@ -40,7 +40,7 @@ export class DialogMinisterAddComponent implements OnInit {
     this.ministerForm = this.formBuilder.group({
       code: [null, [Validators.required]],
       libelle: [null, [Validators.required]],
-      description: [null]
+      description: [null, [Validators.required]]
     },{
       updateOn: 'blur'
     });
@@ -59,9 +59,9 @@ export class DialogMinisterAddComponent implements OnInit {
       this.apiService.post(Url.MINIS_ADD_URL, this.minister, {}).subscribe(
         (data) => {
           this.dialogRef.close();
-          this.toolService.showToast('Nouveau élément enregistrer', 'OK', 3000);
+          this.toolService.showToast('Nouveau élément enrégistrer', 'OK', 3000);
         }, (error) => {
-          console.log('erreur ' + JSON.stringify(error));
+          console.log('erreur ' + JSON.stringify(error.error.message));
           this.toolService.hideLoading();
           this.toolService.showToast(error.error.message, 'OK');
         }, () => {

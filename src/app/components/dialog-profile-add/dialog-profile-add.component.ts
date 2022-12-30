@@ -44,7 +44,7 @@ export class DialogProfileAddComponent implements OnInit {
     this.profileForm = this.formBuilder.group({
       code: [null, [Validators.required]],
       libelle: [null, [Validators.required]],
-      description: [null]
+      description: [null, [Validators.required]]
     },{
       updateOn: 'blur'
     });

@@ -28,6 +28,9 @@
         <mat-form-field class="example-full-width">
           <mat-label>Description</mat-label>
           <input name="description" type="text" matInput formControlName="description">
+          <mat-error *ngIf="descriptionEdit.invalid && (descriptionEdit.dirty || descriptionEdit.touched)">
+            La description est <strong>obligatoire</strong>
+          </mat-error>
         </mat-form-field>
       </mat-grid-tile>
     </mat-grid-list>
