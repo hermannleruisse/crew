@@ -33,6 +33,7 @@ export class Url {
     static MEMBR_DELETE_URL = Url.SERVER_URL+'api/manager/delete-member';
     static MEMBR_GET_URL = Url.SERVER_URL+'api/manager/member';
     static MEMBR_PRINT_URL = Url.SERVER_URL+'api/manager/report-liste-membre';
+    static MEMBR_DOWNLOAD_URL = Url.SERVER_URL+'api/manager/viewPdf';
     //habilitation
     static HABILIT_LIST_URL = Url.SERVER_URL+'api/security/liste-habilitation';
     static HABILIT_ADD_URL = Url.SERVER_URL+'api/security/save-habilitation';

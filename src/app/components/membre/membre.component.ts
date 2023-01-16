@@ -10,6 +10,8 @@ import { DialogMembreAddComponent } from '../dialog-membre-add/dialog-membre-add
 import { DialogMembreEditComponent } from '../dialog-membre-edit/dialog-membre-edit.component';
 import { DialogMembreDetailComponent } from '../dialog-membre-detail/dialog-membre-detail.component';
 import { PageEvent } from '@angular/material/paginator';
+import { saveAs } from 'file-saver';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-membre',
@@ -231,16 +233,35 @@ export class MembreComponent implements OnInit {
     this.apiService.get(Url.MEMBR_PRINT_URL, {params}).subscribe(
       (data) => {
         console.log('data => ' + JSON.stringify(data));
+        // saveAs(data, 'Liste_des_membres.pdf');
+       
         // this.members = data.content;
         // this.totalElements = data?.totalElements;
+
       }, (error) => {
-        console.log('erreur ' + JSON.stringify(error));
+        console.log('erreur ->' + JSON.stringify(error));
         this.toolService.hideLoading();
         this.toolService.showToast(error.error.message, 'OK');
       }, () => {
         this.toolService.hideLoading();
         console.log('complete');
       });
+  }
+
+  download() {
+    const params = {nomPrenom: this.recherche, sexe: this.sexe, minister:this.minister};
+    this.apiService.export(Url.MEMBR_PRINT_URL, {params}).subscribe(
+      (response: any) => { //when you use stricter type checking
+      console.log('fichier =>'+JSON.stringify(response));
+			let blob:any = new Blob([response], { type: 'application/pdf'});
+			const url = window.URL.createObjectURL(blob);
+			//window.open(url);
+			//window.location.href = response.url;
+			saveAs(blob, 'member_list.pdf');
+		}), 
+    (error: any) => console.log('Error downloading the file'), 
+    //when you use stricter type checking
+    () => console.info('File downloaded successfully');
   }
 
 }
