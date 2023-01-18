@@ -230,16 +230,11 @@ export class MembreComponent implements OnInit {
   print(){
     const params = {nomPrenom: this.recherche, sexe: this.sexe, minister:this.minister};
     this.toolService.showLoading();
-    this.apiService.get(Url.MEMBR_PRINT_URL, {params}).subscribe(
+    this.apiService.export(Url.MEMBR_PRINT_URL, {params}).subscribe(
       (data) => {
-        console.log('data => ' + JSON.stringify(data));
-        // saveAs(data, 'Liste_des_membres.pdf');
-       
-        // this.members = data.content;
-        // this.totalElements = data?.totalElements;
-
+        let blob:any = new Blob([data], { type: 'application/pdf'});
+        saveAs(blob, 'member_list.pdf');
       }, (error) => {
-        console.log('erreur ->' + JSON.stringify(error));
         this.toolService.hideLoading();
         this.toolService.showToast(error.error.message, 'OK');
       }, () => {
@@ -254,7 +249,6 @@ export class MembreComponent implements OnInit {
       (response: any) => { //when you use stricter type checking
       console.log('fichier =>'+JSON.stringify(response));
 			let blob:any = new Blob([response], { type: 'application/pdf'});
-			const url = window.URL.createObjectURL(blob);
 			//window.open(url);
 			//window.location.href = response.url;
 			saveAs(blob, 'member_list.pdf');

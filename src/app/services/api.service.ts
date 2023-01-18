@@ -27,7 +27,6 @@ export class ApiService{
 
     public export(url: string, params): Observable<any> {
       return this.httpClient.get(url, {
-        observe: 'response',
         responseType: 'blob', 
         params: params
       });
