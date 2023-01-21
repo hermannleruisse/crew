@@ -64,7 +64,7 @@
             </mat-grid-tile>
 
             <mat-grid-tile>
-              <button mat-raised-button (click)="print()" color="primary">Imprimer</button>
+              <button mat-raised-button *ngIf="totalElements > 0" (click)="print()" color="primary">Imprimer</button>
             </mat-grid-tile>
 
           </mat-grid-list>

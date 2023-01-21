@@ -12,6 +12,7 @@ import { DialogMembreDetailComponent } from '../dialog-membre-detail/dialog-memb
 import { PageEvent } from '@angular/material/paginator';
 import { saveAs } from 'file-saver';
 import { Observable } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-membre',
@@ -200,7 +201,6 @@ export class MembreComponent implements OnInit {
    * click sur le bouton Supprimer pour supprimmer un membre
    */
   deleteMember(member: Membre){
-    // console.log("idProfile => "+this.idEdit.value)
     this.toolService.showConfirmation("Suppression", "Voulez-vous supprimer ce membre ?", "question", "Oui",
       "Non", false).then((result) =>{
         if(result.isConfirmed){
@@ -228,9 +228,11 @@ export class MembreComponent implements OnInit {
   }
 
   print(){
-    const params = {nomPrenom: this.recherche, sexe: this.sexe, minister:this.minister};
+    let queryParams = new HttpParams().append("nomPrenom", this.recherche)
+    .append("sexe", this.sexe).append("minister", this.minister);
+    
     this.toolService.showLoading();
-    this.apiService.export(Url.MEMBR_PRINT_URL, {params}).subscribe(
+    this.apiService.get(Url.MEMBR_PRINT_URL, {params: queryParams, responseType:'blob'}).subscribe(
       (data) => {
         let blob:any = new Blob([data], { type: 'application/pdf'});
         saveAs(blob, 'member_list.pdf');
@@ -241,21 +243,6 @@ export class MembreComponent implements OnInit {
         this.toolService.hideLoading();
         console.log('complete');
       });
-  }
-
-  download() {
-    const params = {nomPrenom: this.recherche, sexe: this.sexe, minister:this.minister};
-    this.apiService.export(Url.MEMBR_PRINT_URL, {params}).subscribe(
-      (response: any) => { //when you use stricter type checking
-      console.log('fichier =>'+JSON.stringify(response));
-			let blob:any = new Blob([response], { type: 'application/pdf'});
-			//window.open(url);
-			//window.location.href = response.url;
-			saveAs(blob, 'member_list.pdf');
-		}), 
-    (error: any) => console.log('Error downloading the file'), 
-    //when you use stricter type checking
-    () => console.info('File downloaded successfully');
   }
 
 }
