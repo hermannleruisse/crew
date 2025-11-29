@@ -1,7 +1,5 @@
-<!-- <p>habilitation works!</p> -->
-<!-- <p>profile works!</p> -->
 <form [formGroup]="habilitationForm">
-    <div class="row">
+    <!-- <div class="row">
         <div class="input-field col s4">
             <select (change)="changeProfile()" formControlName="selectedProfile" id="profil">
                 <option value="" disabled selected>Choisir un profile</option>
@@ -16,11 +14,55 @@
             </span>
         </div>
         
+    </div> -->
+    <div style="text-align: center;">
+        <mat-form-field appearance="fill">
+            <mat-label>Profile</mat-label>
+            <mat-select formControlName="selectedProfile" (selectionChange)="changeProfile()" required>
+                <mat-option>Choisir un profile</mat-option>
+                <mat-option *ngFor="let p of profiles; let i = index" [value]="profiles[i].id">
+                    {{profiles[i].libelle}}
+                </mat-option>
+            </mat-select>
+
+            <mat-error *ngIf="selectedProfile.invalid && (selectedProfile.dirty || selectedProfile.touched)">
+                <span *ngIf="selectedProfile.errors.required">Le profile est obligatoire</span>
+            </mat-error>
+        </mat-form-field>
     </div>
 
-    <p><b>Fonctionnalites</b></p>
+    <h3>Fonctionnalités ( Sélectionnez les actions selon le profile )</h3>
 
-    <div *ngFor="let f of fonctions; let j = index" class="col s6">
+    <!-- <div class="col s12">
+        <pre>{{habilitationForm.value | json}}</pre>
+        <pre>{{fonctions | json}}</pre>
+    </div> -->
+
+    <mat-grid-list cols="3" rowHeight="3:2">
+        <mat-grid-tile *ngFor="let f of fonctions; let j = index">
+
+            <section class="example-section">
+                <span class="example-list-section">
+                    {{f.menu}}
+                </span>
+                <span class="example-list-section">
+                    <ul>
+                        <li *ngFor="let a of f.permissions; let k = index">
+                            <mat-checkbox [value]="a.checked" [checked]="a.checked" color="primary" (change)="onCheckboxChange(j, k)">
+                                {{a.libelle}}
+                            </mat-checkbox>
+                        </li>
+                    </ul>
+                </span>
+            </section>
+
+        </mat-grid-tile>
+
+    </mat-grid-list>
+
+
+
+    <!-- <div *ngFor="let f of fonctions; let j = index" class="col s6">
         <table class="striped highlight responsive-table">
             <thead>
                 <tr>
@@ -38,10 +80,10 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-    
-    
-    <div class="col s12">
+    </div> -->
+
+
+    <!-- <div class="col s12">
         <pre>{{habilitationForm.value | json}}</pre>
         <pre>{{fonctions | json}}</pre>
     </div>
@@ -52,8 +94,13 @@
 
     <div class="fixed-action-btn">
         <button [disabled]="habilitationForm.invalid" (click)="saveHabilitation()" class="btn-floating btn-large red">
-          <i class="large material-icons">mode_edit</i>
+          <i class="large material-icons">save</i>
+        </button>
+    </div> -->
+    <div class="example-button-container">
+        <button [disabled]="habilitationForm.invalid" class="custom-fab" (click)="saveHabilitation()" mat-fab color="primary" aria-label="icon button with a add icon">
+            <mat-icon>save_as</mat-icon>
         </button>
     </div>
-    
+
 </form>

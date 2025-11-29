@@ -1,16 +1,37 @@
-<!-- <p>home-layout works!</p> -->
-<div class="main">
-    <app-nav-menu></app-nav-menu>
-    <app-side-menu></app-side-menu>
 
-    <!-- <app-preloader-linear [showLinear]="showLinear"></app-preloader-linear> -->
+<mat-drawer-container class="example-container" autosize>
+    <mat-drawer #drawer class="example-sidenav" mode="side" opened>
+        
+        <div style="text-align: center;">
+            <img class="avatar mat-elevation-z8" [src]="url_img" />
 
-    <!-- <app-preloader-circle [showCircle]="showCircle"></app-preloader-circle> -->
-    <div class="row">
-        <div class="col s12">
-            <router-outlet>
-
-            </router-outlet>
+            <h4 class="name">{{authService.getUsername()}}</h4>
+            <p class="designation">{{authService.getProfile()}}</p>
+            <button mat-button (click)="authService.logout()">Se deconnecter</button>
         </div>
-    </div>
-</div>
+        
+        <mat-divider></mat-divider>
+
+        <mat-nav-list role="navigation" aria-label="navigation">
+            <a mat-list-item routerLink="liste-des-membres" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Membre</a>
+            <a mat-list-item routerLink="ministere" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Ministere</a>
+        </mat-nav-list>
+
+        <mat-divider></mat-divider>
+
+        <mat-nav-list role="navigation" aria-label="navigation">
+            <a mat-list-item routerLink="profile" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Profile</a>
+            <a mat-list-item routerLink="user" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Utilisateur</a>
+            <a mat-list-item routerLink="habilitation" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Habilitation</a>
+        </mat-nav-list>   
+        
+    </mat-drawer>
+    <mat-drawer-content style="padding: 20px 20px">
+        <router-outlet>
+                
+        </router-outlet>
+        <!-- Main content -->
+
+    </mat-drawer-content>
+  
+  </mat-drawer-container>

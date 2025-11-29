@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>Editer un profile</h2>
+<!-- {{data | json}} -->
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="editModeProfileForm" class="example-form">
+    <mat-grid-list cols="4" rowHeight="4:2" gutterSize="30px">
+      
+      <mat-grid-tile colspan="2" rowspan="2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Code</mat-label>
+          <input name="code" type="text" matInput formControlName="code">
+          <mat-error *ngIf="codeEdit.invalid && (codeEdit.dirty || codeEdit.touched)">
+            Le code est <strong>obligatoire</strong>
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2" rowspan="2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Libellé</mat-label>
+          <input name="libelle" type="text" matInput formControlName="libelle">
+          <mat-error *ngIf="libelleEdit.invalid && (libelleEdit.dirty || libelleEdit.touched)">
+            Le libellé est <strong>obligatoire</strong>
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="4" rowspan="2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Description</mat-label>
+          <input name="description" type="text" matInput formControlName="description">
+          <mat-error *ngIf="descriptionEdit.invalid && (descriptionEdit.dirty || descriptionEdit.touched)">
+            La description est <strong>obligatoire</strong>
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+    </mat-grid-list>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Annuler</button>
+  <button mat-button cdkFocusInitial (click)="onUpdateForm()">Valider</button>
+  <!-- <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button> -->
+</mat-dialog-actions>

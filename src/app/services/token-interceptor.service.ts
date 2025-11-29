@@ -4,16 +4,21 @@ import { Router } from "@angular/router";
 import { Observable, throwError } from "rxjs";
 import { map, catchError } from 'rxjs/operators';
 import { AuthService } from "./auth.service";
+import { ToolService } from "./tool.service";
 
 @Injectable()
 export class TokenInterceptorService implements HttpInterceptor{
-    constructor(private router: Router, private authService: AuthService) { }
+    constructor(private router: Router, private authService: AuthService, private toolService:ToolService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // const authService = this.injector.get(AuthService);
+    // Authorization: `Bearer ${this.authService.getToken()}`,
     let tokenizedReq = req.clone({
       setHeaders: {
-        Authorization: `Bearer ${this.authService.getToken()}`
+        'Authorization': `${this.authService.getToken()}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Access-Control-Allow-Origin': '*'
       }
     });
 
@@ -32,21 +37,29 @@ export class TokenInterceptorService implements HttpInterceptor{
           message: error && error.message ? error.message : '',
           status: error.status
         };
-
+        switch (error.status) {
+          case 500:
+            this.toolService.showToast(error.error.message, 'OK');
+            break;
+          case 403:
+            this.toolService.showToast(error.error.message, 'OK');
+            break;
+          case 401:
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            localStorage.removeItem('permission');
+            this.toolService.showToast(error.error.message, 'OK');
+            this.router.navigateByUrl('/login');
+            break;
+          case 404:
+            // TODO:this.router.navigateByUrl('/login');
+            break;
+          default:
+            break;
+        }
         console.log('erreur <=> ' + JSON.stringify(error));
-        /*if (error.error.check_login === ToolsService.CHECK_LOGIN) {
-          localStorage.removeItem('token');
-          localStorage.removeItem('username');
-          localStorage.removeItem('permission');
-          this.router.navigate(['login']);
-          this.router.navigateByUrl('/login');
-        }*/
-        /* toast pour afficher l'erreur*/
-
-        // throw new Error("Method not implemented."+error);
+          // this.router.navigate(['login']);
          return throwError(error);
       }));
-
-        // throw new Error("Method not implemented.");
     }
 }

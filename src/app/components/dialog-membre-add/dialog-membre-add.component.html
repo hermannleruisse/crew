@@ -1,0 +1,255 @@
+<!-- <div id="modalAddMember" class="modal modal-fixed-footer">
+    <form [formGroup]="memberForm">
+        <div class="modal-content">
+            <h4>Membre</h4>
+            <p>Ajouter un membre</p>
+
+            <pre>{{userForm.value | json}}</pre>
+
+            <div class="row">
+                <div class="col s4">
+                    <div class="col s12 user-view">
+                        <a href="#user"><img class="circle" width="215" height="215" height="215" [src]="url"></a>
+                        <div class="file-field input-field">
+                            <div class="btn">
+                                <span>Fichier</span>
+                                <input type="file" formControlName="photo" (change)="onSelectFile($event)">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text" placeholder="Charger un fichier">
+                            </div>
+                            <span *ngIf="photo.invalid && (photo.errors || photo.touched)" class="help-text" data-error="wrong">
+                                <p *ngIf="photo.errors.required">* La photo est obligatoire</p>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col s4">
+                    <div class="input-field col s12">
+                        <input id="nom" type="text" formControlName="nom" class="validate" [ngClass]="{ 'invalid': nom.invalid && (nom.dirty || nom.touched)}">
+                        <label for="nom">Nom</label>
+                        <span *ngIf="nom.invalid && (nom.dirty || nom.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="nom.errors.required">* Le nom est obligatoire</p>
+                        </span>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="prenom" type="text" formControlName="prenom" class="validate" [ngClass]="{ 'invalid': prenom.invalid && (prenom.dirty || prenom.touched)}">
+                        <label for="prenom">Prenom</label>
+                        <span *ngIf="prenom.invalid && (prenom.dirty || prenom.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="prenom.errors.required">* Le prenom est obligatoire</p>
+                        </span>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="dateNaissance" type="date" formControlName="dateNaissance" class="validate" [ngClass]="{ 'invalid': dateNaissance.invalid && (dateNaissance.dirty || dateNaissance.touched)}">
+                        <label for="dateNaissance">Date de naissance</label>
+                        <span *ngIf="dateNaissance.invalid && (dateNaissance.dirty || dateNaissance.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="dateNaissance.errors.required">* Le date de naissance est obligatoire</p>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col s4">
+                    <div class="input-field col s12">
+                        <input id="telephone" type="text" formControlName="telephone" class="validate" [ngClass]="{ 'invalid': telephone.invalid && (telephone.dirty || telephone.touched)}">
+                        <label for="telephone">Telephone</label>
+                        <span *ngIf="telephone.invalid && (telephone.dirty || telephone.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="telephone.errors.required">* Le telephone est obligatoire</p>
+                        </span>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <input id="adresse" type="text" formControlName="adresse" class="validate" [ngClass]="{ 'invalid': adresse.invalid && (adresse.dirty || adresse.touched)}">
+                        <label for="adresse">Adresse</label>
+                        <span *ngIf="adresse.invalid && (adresse.dirty || adresse.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="adresse.errors.required">* L'adresse est obligatoire</p>
+                        </span>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <select formControlName="selectedSexe" id="sexe">
+                            <option value="" disabled selected>Choisir le sexe</option>
+                            <option value="F">Feminin</option>
+                            <option value="M">Masculin</option>
+                        </select>
+                        
+                        <label>Sexe</label>
+                        <span *ngIf="selectedSexe.invalid && (selectedSexe.errors || selectedSexe.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="selectedSexe.errors.required">* Le genre est obligatoire</p>
+                        </span>
+                    </div>
+                    
+                    <div class="input-field col s12">
+                        <select formControlName="selectedMinister" id="ministeres">
+                            <option value="" disabled selected>Choisir un profile</option>
+                            <option *ngFor="let m of ministeres; let i = index" [value]="ministeres[i].id">
+                                {{ministeres[i].libelle}}
+                            </option>
+                        </select>
+                        
+                        <label>Ministere</label>
+                        <span *ngIf="selectedMinister.invalid && (selectedMinister.errors || selectedMinister.touched)" class="help-text" data-error="wrong">
+                            <p *ngIf="selectedMinister.errors.required">* Le ministere est obligatoire</p>
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn"  (click)="onSubmitForm()">Ajouter</button>
+            <button class="btn modal-close waves-greeb btn-flat">Fermer</button>
+        </div>
+    </form>
+</div> -->
+
+
+<h2 mat-dialog-title></h2>
+<!-- <h2 mat-dialog-title>Ajouter un membre</h2> -->
+<mat-grid-list cols="1" rowHeight="200px">
+  <mat-grid-tile>
+    <div><img class="circle" width="200px" height="200px" [src]="url"></div>
+  </mat-grid-tile>
+</mat-grid-list>
+
+
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="memberForm" class="example-form">
+    <mat-grid-list cols="6" rowHeight="6:2" gutterSize="30px">
+        <!-- <div class="col s4">
+            <div class="col s12 user-view">
+                <a href="#user"><img class="circle" width="215" height="215" height="215" [src]="url"></a>
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>Fichier</span>
+                        <input type="file" formControlName="photo" (change)="onSelectFile($event)">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text" placeholder="Charger un fichier">
+                    </div>
+                    <span *ngIf="photo.invalid && (photo.errors || photo.touched)" class="help-text" data-error="wrong">
+                        <p *ngIf="photo.errors.required">* La photo est obligatoire</p>
+                    </span>
+                </div>
+            </div>
+        </div> -->
+      <!-- <mat-grid-tile colspan="2" rowspan="2">
+        <mat-form-field class="example-full-width">
+          <mat-label>photo</mat-label>
+          <input name="photo" type="file" formControlName="photo" (change)="onSelectFile($event)">
+          <mat-error *ngIf="photo.invalid && (photo.dirty || photo.touched)">
+            <span *ngIf="photo.errors.required">Le nom est <strong>obligatoire</strong></span>
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile> -->
+
+      <!-- <mat-grid-tile colspan="2" rowspan="2">
+        <div><img class="circle" width="150px" height="150px" [src]="url"></div>
+      </mat-grid-tile>
+ -->
+      <mat-grid-tile colspan="4" rowspan="2">
+        <input type="file" formControlName="photo" accept="image/png, image/jpeg" (change)="onSelectFile($event)">
+        <mat-error *ngIf="photo.invalid && (photo.dirty || photo.touched)">
+          <span *ngIf="photo.errors.required">Le photo est <strong>obligatoire</strong></span>
+        </mat-error>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2" rowspan="2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Nom</mat-label>
+          <input name="nom" type="text" matInput formControlName="nom">
+          <mat-error *ngIf="nom.invalid && (nom.dirty || nom.touched)">
+            <span *ngIf="nom.errors.required">Le nom est <strong>obligatoire</strong></span>
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2" rowspan="2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Prénom</mat-label>
+          <input name="prenom" type="text" matInput formControlName="prenom">
+          <mat-error *ngIf="prenom.invalid && (prenom.dirty || prenom.touched)">
+            <span *ngIf="prenom.errors.required">Le prénom est <strong>obligatoire</strong></span>
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2" rowspan="2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Téléphone</mat-label>
+          <input name="telephone" type="text" matInput formControlName="telephone">
+          <mat-error *ngIf="telephone.invalid && (telephone.dirty || telephone.touched)">
+            <span *ngIf="telephone.errors.required">Le téléphone est <strong>obligatoire</strong></span>
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2" rowspan="2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Adresse</mat-label>
+          <input name="adresse" type="text" matInput formControlName="adresse">
+          <mat-error *ngIf="adresse.invalid && (adresse.dirty || adresse.touched)">
+            <span *ngIf="adresse.errors.required">L'adresse est <strong>obligatoire</strong></span>
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <!-- https://www.techgeeknext.com/spring-boot/spring-boot-jasper-report -->
+      <mat-grid-tile colspan="2" rowspan="2">
+        <!-- <mat-form-field class="example-full-width">
+          <mat-label>Date de naissance</mat-label>
+          <input name="dateNaissance" type="text" matInput formControlName="dateNaissance">
+          <mat-error *ngIf="dateNaissance.invalid && (dateNaissance.dirty || dateNaissance.touched)">
+            <span *ngIf="dateNaissance.errors.required">La date de naissance est <strong>obligatoire</strong></span>
+          </mat-error>
+        </mat-form-field> -->
+
+        <mat-form-field appearance="fill">
+          <mat-label>Date de naissance</mat-label>
+          <input name="dateNaissance" matInput [matDatepicker]="picker" formControlName="dateNaissance">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="dateNaissance.invalid && (dateNaissance.dirty || dateNaissance.touched)">
+            <span *ngIf="dateNaissance.errors.required">La date de naissance est <strong>obligatoire</strong></span>
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2" rowspan="2">
+        <mat-form-field appearance="fill">
+            <mat-label>Sexe</mat-label>
+            <mat-select formControlName="selectedSexe" required>
+              <mat-option>Choisir un genre</mat-option>
+              <mat-option value="F">Féminin</mat-option>
+              <mat-option value="M">Masculin</mat-option>
+            </mat-select>
+            <mat-error *ngIf="selectedSexe.invalid && (selectedSexe.dirty || selectedSexe.touched)">
+              <span *ngIf="selectedSexe.errors.required">Le genre est <strong>obligatoire</strong></span>
+            </mat-error>
+          </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile colspan="2" rowspan="2">
+        <mat-form-field appearance="fill">
+            <mat-label>Ministere</mat-label>
+            <mat-select formControlName="selectedMinister" required>
+              <mat-option>Choisir un ministère</mat-option>
+              <mat-option *ngFor="let m of ministeres; let i = index" [value]="ministeres[i].id">
+                {{ministeres[i].libelle}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="selectedMinister.invalid && (selectedMinister.dirty || selectedMinister.touched)">
+                <span *ngIf="selectedMinister.errors.required">Le ministere est obligatoire</span>
+            </mat-error>
+          </mat-form-field>
+      </mat-grid-tile>
+
+    </mat-grid-list>
+
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Annuler</button>
+  <button mat-button cdkFocusInitial (click)="onSubmitForm()">Ajouter</button>
+</mat-dialog-actions>
+

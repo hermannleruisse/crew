@@ -1,4 +1,4 @@
-<div class="row">
+<!-- <div class="row">
     <div class="col s12 m4 offset-m4">
         <form #loginForm="ngForm" (ngSubmit)="seConnecter(loginForm)"> 
            <div class="card">
@@ -23,7 +23,42 @@
         </div>
     </form>
     </div>
-</div>
+</div> -->
+
+
+<mat-grid-list cols="1" rowHeight="100vh">
+    <mat-grid-tile style="background: pink;">
+        <form #loginForm="ngForm" (ngSubmit)="seConnecter(loginForm)"> 
+          <mat-card >
+            <mat-card-header>
+              <!-- <mat-card-title>EGCI</mat-card-title> -->
+              <mat-card-subtitle>Connexion</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <p>
+                <mat-form-field appearance="outline">
+                    <mat-label>Login</mat-label>
+                    <input name="login" [(ngModel)]="loginUserData.login" matInput placeholder="Saisir le login">
+                </mat-form-field>
+              </p>
+              <p>
+                <mat-form-field appearance="outline">
+                    <mat-label>Mots de passe</mat-label>
+                    <input name="password" [(ngModel)]="loginUserData.password" matInput placeholder="Saisir le mots de passe" [type]="hide ? 'password' : 'text'">
+                    <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                  </mat-form-field>
+              </p>
+            </mat-card-content>
+            <mat-card-actions style="text-align: center;">
+              <button mat-flat-button color="primary" type="submit">Se connecter</button>
+            </mat-card-actions>
+          </mat-card>
+        </form>
+    </mat-grid-tile>
+</mat-grid-list>
+
 
             
     

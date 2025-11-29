@@ -1,25 +1,25 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
+import { Url } from "../url";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService{
-  private static LOGIN_URL = 'http://127.0.0.1:8000/api/login';
 
   constructor(private http: HttpClient, private router: Router) { }
+  isLoggedIn = new BehaviorSubject(false);
 
   public onSignIn(username: string, password: string): Observable<any> {
     const headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Accept', 'application/json');
-    // headers.append('Authorization', 'Bearer ' + '');
-    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append("Content-Type", "application/json");
+    headers.append("Accept", "application/json");
+    headers.append("Access-Control-Allow-Origin", "*");
 
-    return this.http.post(AuthService.LOGIN_URL, { 'username': username, 'password': password },
-      { headers: headers, responseType: 'json' }
+    return this.http.post(Url.LOGIN_URL, { 'username': username, 'password': password },
+      { headers: headers, responseType: 'json', observe: 'response' }
     );
   }
 
@@ -27,10 +27,13 @@ export class AuthService{
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     localStorage.removeItem('permission');
+    localStorage.removeItem('profile');
+    this.isLoggedIn.next(false);
     this.router.navigate(['login']);
   }
 
   public loggedIn(): boolean {
+    this.isLoggedIn.next(true);
     return !!localStorage.getItem('token');
   }
 
@@ -40,5 +43,9 @@ export class AuthService{
 
   public getUsername() {
     return localStorage.getItem('username');
+  }
+
+  public getProfile() {
+    return localStorage.getItem('profile');
   }
 }
