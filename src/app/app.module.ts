@@ -54,6 +54,7 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { getFrenchPaginatorIntl } from './services/french-paginator-intl';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { DialogMembreDetailComponent } from './components/dialog-membre-detail/dialog-membre-detail.component';
+import { TableauDeBordComponent } from './components/tableau-de-bord/tableau-de-bord.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { DialogMembreDetailComponent } from './components/dialog-membre-detail/d
     DialogMembreEditComponent,
     MembreComponent,
     DialogMembreDetailComponent,
+    TableauDeBordComponent,
   ],
   imports: [
     BrowserModule,
